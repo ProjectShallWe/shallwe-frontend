@@ -24,6 +24,10 @@ export default {
   box-sizing: border-box;
   margin: 0;
 }
+/*body {*/
+/*  width: 100%;*/
+/*  height: 100vh;*/
+/*}*/
 
 a,
 a:active

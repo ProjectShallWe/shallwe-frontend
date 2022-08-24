@@ -19,21 +19,19 @@ export default {}
 </script>
 
 <style scoped>
-.col-2 {
+.wrapper {
+  /* 항상 화면 정중앙에 배치*/
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
 
-.wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
   border: #D3D3D3 solid 2px;
-  width: 100%;
-  min-width: 280px;
+  width: 280px;
   height: 420px;
   padding: 20px;
 }
