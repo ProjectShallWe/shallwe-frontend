@@ -26,8 +26,8 @@
           </router-link>
         </li>
       </ul>
-      <!-- Login -->
-      <div class="login">
+      <!-- User -->
+      <div class="user">
         <router-link
             cl
             :to="{name: 'login'}"
@@ -55,7 +55,8 @@ export default {
 .wrapper {
   display: flex;
   justify-content: space-between;
-  background-color: #D3D3D3;
+  color: #FFFFFF;
+  background-color: #8977AD;
 }
 
 .wrapper a h1 {
@@ -80,16 +81,16 @@ export default {
   margin-right: 0;
 }
 
-.login {
+.user {
   font-size: 12px;
   padding: 16px;
 }
 
-.login a {
+.user a {
   margin-right: 8px;
 }
 
-.login a:last-child {
+.user a:last-child {
   margin-right: 0;
 }
 
