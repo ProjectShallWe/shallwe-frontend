@@ -1,9 +1,6 @@
 <template>
   <Navbar />
-  <div class="container">
-    <router-view/>
-    <h1> App.vue </h1>
-  </div>
+  <router-view/>
 </template>
 
 <script>
@@ -24,6 +21,7 @@ export default {
   box-sizing: border-box;
   margin: 0;
 }
+
 /*body {*/
 /*  width: 100%;*/
 /*  height: 100vh;*/

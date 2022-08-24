@@ -1,17 +1,15 @@
 <template>
-  <div class="row">
-    <div class="col-2">
-      <div class="wrapper">
-        <h1>회원가입</h1>
-        <form action="" method="post">
-          <input type="email" placeholder="이메일 주소">
-          <input type="password" placeholder="비밀번호 (8자리 이상)">
-          <input type="text" placeholder="닉네임">
-          <button type="submit">회원가입</button>
-        </form>
-      </div>
+  <section class="sign-up">
+    <div class="wrapper">
+      <h1>회원가입</h1>
+      <form action="" method="post">
+        <input type="email" placeholder="이메일 주소">
+        <input type="password" placeholder="비밀번호 (8자리 이상)">
+        <input type="text" placeholder="닉네임">
+        <button type="submit">회원가입</button>
+      </form>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -19,6 +17,12 @@ export default {}
 </script>
 
 <style scoped>
+.sign-up {
+  width: 100%;
+  height: 100vh;
+  background-color: #D3D3D3;
+}
+
 .wrapper {
   /* 항상 화면 정중앙에 배치*/
   position: fixed;
@@ -34,6 +38,7 @@ export default {}
   width: 280px;
   height: 420px;
   padding: 20px;
+  background-color: #FFFFFF;
 }
 
 .wrapper h1 {
