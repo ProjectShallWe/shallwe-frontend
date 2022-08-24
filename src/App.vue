@@ -2,7 +2,7 @@
   <Navbar />
   <div class="container">
     <router-view/>
-    <h1> 안녕하세요! </h1>
+    <h1> App.vue </h1>
   </div>
 </template>
 
@@ -25,7 +25,10 @@ export default {
   margin: 0;
 }
 
-a {
+a,
+a:active
+a:visited,
+a:hover {
   color: inherit;
   text-decoration: none;
 }
