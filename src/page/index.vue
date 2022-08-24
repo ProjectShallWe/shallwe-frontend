@@ -1,5 +1,4 @@
 <template>
-  <Navbar/>
   <section class="landing">
     <h1 class="landing-title">
       <strong>

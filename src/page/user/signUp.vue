@@ -69,7 +69,6 @@ export default {}
   font-size: 16px;
   color: #FFFFFF;
   background-color: #8977AD;
-  border-style: none;
   margin-bottom: 16px;
 }
 

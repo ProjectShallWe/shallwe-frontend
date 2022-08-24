@@ -10,7 +10,7 @@ import Navbar from "@/components/Navbar";
 export default {
   name: 'App',
   components: {
-    Navbar
+    Navbar,
   }
 }
 </script>
@@ -31,16 +31,21 @@ a,
 a:active
 a:visited,
 a:hover {
+  display: block;
   color: inherit;
   text-decoration: none;
 }
 
+button,
 button:focus,
 button:active,
+input,
 input:focus,
 input:active,
+textarea
 textarea:focus,
 textarea:active {
+  border-style: none;
   outline: none;
   box-shadow: none;
 }

@@ -71,17 +71,12 @@ export default {
   font-size: 12px;
 }
 
-.global-link li::after {
-  content: "·";
-  margin-right: 3px;
-}
-
-.global-link li:last-child::after {
-  content: "";
-  margin-right: 0;
+.global-link li {
+  margin-right: 8px;
 }
 
 .user {
+  display: flex;
   font-size: 12px;
   padding: 16px;
 }
