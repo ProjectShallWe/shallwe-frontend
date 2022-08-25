@@ -1,14 +1,18 @@
 <template>
-  <div class="container">
-    <div class="contact">
-      <h2>
-        Contact
-      </h2>
-      <a href="https://github.com/cjsrhd94">GitHub</a>
-      <a href="https://cjsrhd94.tistory.com/">Blog</a>
-      <a href="mailto:cjsrhd94@gmail.com" title="문의 메일 보내기">Email</a>
+  <div class="row">
+    <div class="col-12">
+      <div class="wrapper">
+        <div class="contact">
+          <h2>
+            Contact
+          </h2>
+          <a href="https://github.com/cjsrhd94">GitHub</a>
+          <a href="https://cjsrhd94.tistory.com/">Blog</a>
+          <a href="mailto:cjsrhd94@gmail.com" title="문의 메일 보내기">Email</a>
+        </div>
+        <h3 class="copyright">Copyright © www.shallw2.com All rights reserved. </h3>
+      </div>
     </div>
-    <h3 class="copyright">Copyright © www.shallw2.com All rights reserved. </h3>
   </div>
 </template>
 
@@ -18,7 +22,7 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.wrapper {
   padding: 20px;
   background-color: #D3D3D3;
 }
