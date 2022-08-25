@@ -104,14 +104,12 @@
 </template>
 
 <script>
-export default {}
+export default {
+
+}
 </script>
 
 <style scoped>
-.row {
-  padding: 16px 0;
-}
-
 .board-category {
   display: flex;
   text-align: center;
