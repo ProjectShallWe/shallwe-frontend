@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <Header/>
-    <BoardCategory/>
+    <Header />
+    <BoardCategoryList />
     <div class="row">
       <BoardMini />
       <BoardMini />
@@ -17,7 +17,7 @@
 <script>
 import {useRoute} from 'vue-router';
 import Header from "@/components/Header";
-import BoardCategory from "@/components/BoardCategoryList";
+import BoardCategoryList from "@/components/BoardCategoryList";
 import BoardMini from "@/components/PostListMini";
 import Footer from "@/components/Footer";
 import PostListMain from "@/components/PostListMain";
@@ -26,10 +26,10 @@ import BoardSearchBar from "@/components/BoardSearchBar";
 
 export default {
   components: {
+    BoardCategoryList,
     BoardSearchBar,
     Pagination,
     Header,
-    BoardCategory,
     BoardMini,
     PostListMain,
     Footer
