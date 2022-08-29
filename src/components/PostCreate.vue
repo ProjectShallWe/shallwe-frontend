@@ -16,7 +16,11 @@
             <input type="text" name="title">
           </div>
           <div class="post-content">
-            <textarea placeholder="글을 작성해주세요!"/>
+            <ckeditor
+                :editor="data.editor"
+                v-model="data.editorData"
+                :config="data.editorConfig">
+            </ckeditor>
           </div>
           <div class="button-group">
             <button type="button" class="button-cancel">취소</button>
@@ -29,8 +33,23 @@
 </template>
 
 <script>
+import {ref} from "vue";
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+
 export default {
-  name: "PostCreate"
+  setup() {
+    const data = ref({
+      editor: ClassicEditor,
+      editorData: '<h1>Content of the editor.</h1>',
+      editorConfig: {
+        languages: 'ko'
+      }
+    });
+
+    return {
+      data
+    };
+  }
 }
 </script>
 
@@ -57,6 +76,7 @@ export default {
 .post-content {
   padding: 8px 0;
 }
+
 .post-content textarea {
   width: 100%;
   height: 500px;

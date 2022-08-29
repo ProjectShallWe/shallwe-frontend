@@ -208,9 +208,6 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  font-size: 17px;
-}
 td {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -218,7 +215,8 @@ td {
 }
 
 .board-title {
-  background-color: #D3D3D3;
+  font-size: 17px;
+  padding: 8px 0;
 }
 
 .post-category-list {
