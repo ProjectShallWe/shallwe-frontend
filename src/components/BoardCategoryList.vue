@@ -2,99 +2,22 @@
   <div class="row">
     <div class="col-12">
       <ul class="board-category">
-        <li class="board-category-title">
+        <li
+            v-for="boardCategory in boardCategories"
+            :key="boardCategory.boardCategoryId"
+            class="board-category-title"
+        >
           <a href="#">
-            카테고리
+            {{ boardCategory.topic }}
           </a>
           <ul class="board">
-            <li>
-              <a href="#">게시판 이름 1</a>
-            </li>
-            <li>
-              <a href="#">게시판 이름 2</a>
-            </li>
-            <li>
-              <a href="#">게시판 이름 3</a>
-            </li>
-          </ul>
-        </li>
-        <li class="board-category-title">
-          <a href="#">
-            카테고리
-          </a>
-          <ul class="board">
-            <li>
-              <a href="#">게시판 이름 1</a>
-            </li>
-            <li>
-              <a href="#">게시판 이름 2</a>
-            </li>
-            <li>
-              <a href="#">게시판 이름 3</a>
-            </li>
-          </ul>
-        </li>
-        <li class="board-category-title">
-          <a href="#">
-            카테고리
-          </a>
-          <ul class="board">
-            <li>
-              <a href="#">게시판 이름 1</a>
-            </li>
-            <li>
-              <a href="#">게시판 이름 2</a>
-            </li>
-            <li>
-              <a href="#">게시판 이름 3</a>
-            </li>
-          </ul>
-        </li>
-        <li class="board-category-title">
-          <a href="#">
-            카테고리
-          </a>
-          <ul class="board">
-            <li>
-              <a href="#">게시판 이름 1</a>
-            </li>
-            <li>
-              <a href="#">게시판 이름 2</a>
-            </li>
-            <li>
-              <a href="#">게시판 이름 3</a>
-            </li>
-          </ul>
-        </li>
-        <li class="board-category-title">
-          <a href="#">
-            카테고리
-          </a>
-          <ul class="board">
-            <li>
-              <a href="#">게시판 이름 1</a>
-            </li>
-            <li>
-              <a href="#">게시판 이름 2</a>
-            </li>
-            <li>
-              <a href="#">게시판 이름 3</a>
-            </li>
-          </ul>
-        </li>
-        <li class="board-category-title">
-          <a href="#">
-            카테고리
-          </a>
-          <ul class="board">
-            <li>
-              <a href="#">게시판 이름 1</a>
-            </li>
-            <li>
-              <a href="#">게시판 이름 2</a>
-            </li>
-            <li>
-              <a href="#">게시판 이름 3</a>
+            <li
+                v-for="board in boardCategory.boards"
+                :key="board.boardId"
+            >
+              <router-link :to="`/community/${board.boardId}`" class="button">
+                {{ board.title }}
+              </router-link>
             </li>
           </ul>
         </li>
@@ -104,8 +27,26 @@
 </template>
 
 <script>
+import {ref} from "vue";
+import axios from "@/axios";
 export default {
+  setup() {
+    const boardCategories = ref([]);
 
+    const getBoardCategoryWithBoards = async () => {
+      const res = await axios.get(
+          'api/board-category/board'
+      );
+      boardCategories.value = res.data;
+      console.log(boardCategories);
+    }
+
+    getBoardCategoryWithBoards();
+
+    return {
+      boardCategories,
+    };
+  }
 }
 </script>
 
