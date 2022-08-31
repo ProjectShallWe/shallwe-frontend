@@ -15,9 +15,9 @@
                 v-for="board in boardCategory.boards"
                 :key="board.boardId"
             >
-              <router-link :to="`/community/${board.boardId}`" class="button">
+              <a :href="`/community/${board.boardId}`" class="button">
                 {{ board.title }}
-              </router-link>
+              </a>
             </li>
           </ul>
         </li>
@@ -29,6 +29,7 @@
 <script>
 import {ref} from "vue";
 import axios from "@/axios";
+
 export default {
   setup() {
     const boardCategories = ref([]);
@@ -38,7 +39,7 @@ export default {
           'api/board-category/board'
       );
       boardCategories.value = res.data;
-      console.log(boardCategories);
+      console.log(boardCategories.value)
     }
 
     getBoardCategoryWithBoards();

@@ -5,73 +5,11 @@
         <h1 class="board-title">
           게시판 제목
         </h1>
-        <div class="post-category-list">
-            <a href="#">
-              전체
-            </a>
-            <a href="#">
-              카테고리
-            </a>
-          <a href="#">
-            카테고리
-          </a>
-          <a href="#">
-            카테고리
-          </a><a href="#">
-          카테고리
-        </a>
-          <a href="#">
-            카테고리
-          </a>
-          <a href="#">
-            카테고리
-          </a>
-          <a href="#">
-            카테고리
-          </a><a href="#">
-          카테고리
-        </a>
-          <a href="#">
-            카테고리
-          </a>
-          <a href="#">
-            카테고리
-          </a>
-          <a href="#">
-            카테고리
-          </a>
-          <a href="#">
-            카테고리
-          </a>
-          <a href="#">
-            카테고리
-          </a>
-          <a href="#">
-            카테고리
-          </a>
-          <a href="#">
-            카테고리
-          </a>
-          <a href="#">
-            카테고리
-          </a>
-          <a href="#">
-            카테고리
-          </a>
-          <a href="#">
-            카테고리
-          </a>
-          <a href="#">
-            카테고리
-          </a>
-          <a href="#">
-            카테고리
-          </a>
-          <a href="#">
-            카테고리
-          </a>
-        </div>
-        <table>
+        <PostCategoryList
+            @get-posts-in-board="getPosts"
+            @get-posts-in-category="getPosts"
+        />
+        <table class="post-list">
           <thead>
             <tr>
               <th scope="col" class="category">
@@ -92,106 +30,26 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr
+                v-for="post in posts[0]"
+                :key="post.postId"
+            >
               <td class="category">
-                국내 축구
+                {{ post.postCategory }}
               </td>
               <td class="title">
-                FC 서울 vs 수원 FCQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+                <a href="#">
+                  {{ post.title }}
+                </a>
               </td>
               <td class="nickname">
-                FC 서울팬
+                {{ post.nickname }}
               </td>
               <td class="create_date">
-                07-31
+                {{ post.createdDate }}
               </td>
               <td class="like_count">
-                4
-              </td>
-            </tr>
-            <tr>
-              <td class="category">
-                국내 축구
-              </td>
-              <td class="title">
-                FC 서울 vs 수원 FCQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
-              </td>
-              <td class="nickname">
-                FC 서울팬
-              </td>
-              <td class="create_date">
-                07-31
-              </td>
-              <td class="like_count">
-                4
-              </td>
-            </tr>
-            <tr>
-              <td class="category">
-                국내 축구
-              </td>
-              <td class="title">
-                FC 서울 vs 수원 FCQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
-              </td>
-              <td class="nickname">
-                FC 서울팬
-              </td>
-              <td class="create_date">
-                07-31
-              </td>
-              <td class="like_count">
-                4
-              </td>
-            </tr>
-            <tr>
-              <td class="category">
-                국내 축구
-              </td>
-              <td class="title">
-                FC 서울 vs 수원 FCQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
-              </td>
-              <td class="nickname">
-                FC 서울팬
-              </td>
-              <td class="create_date">
-                07-31
-              </td>
-              <td class="like_count">
-                4
-              </td>
-            </tr>
-            <tr>
-              <td class="category">
-                국내 축구
-              </td>
-              <td class="title">
-                FC 서울 vs 수원 FCQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
-              </td>
-              <td class="nickname">
-                FC 서울팬
-              </td>
-              <td class="create_date">
-                07-31
-              </td>
-              <td class="like_count">
-                4
-              </td>
-            </tr>
-            <tr>
-              <td class="category">
-                국내 축구
-              </td>
-              <td class="title">
-                FC 서울 vs 수원 FCQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
-              </td>
-              <td class="nickname">
-                FC 서울팬
-              </td>
-              <td class="create_date">
-                07-31
-              </td>
-              <td class="like_count">
-                4
+                {{ post.likeCount }}
               </td>
             </tr>
           </tbody>
@@ -202,8 +60,29 @@
 </template>
 
 <script>
+import PostCategoryList from "@/components/PostCategoryList";
+import { ref } from "vue";
+
 export default {
-  name: "PostListMain.vue"
+  name: "PostListMain.vue",
+  components: {PostCategoryList},
+  setup() {
+    const posts = ref([]);
+
+    const getPosts = (post) => {
+      if (posts.value.length != 0) {
+        posts.value = [];
+      }
+
+      posts.value.push(post);
+      console.log(posts)
+    }
+
+    return {
+      posts,
+      getPosts,
+    };
+  }
 }
 </script>
 
@@ -219,20 +98,6 @@ td {
   padding: 8px 0;
 }
 
-.post-category-list {
-  display: inline-flex;
-  flex-wrap: wrap;
-}
-
-.post-category-list a{
-  font-size: 14px;
-  padding: 4px 6px;
-  margin: 4px 4px 4px 0;
-  color: #FFFFFF;
-  background-color: #8977AD;
-  border-radius: 8px;
-}
-
 .wrapper table {
   display: table;
   text-align: center;
@@ -241,13 +106,20 @@ td {
   font-size: 14px;
 }
 
-tbody tr td.title,
-tbody tr td.nickname {
+.post-list thead {
+  border-bottom: #8977AD solid 1px;
+}
+
+.post-list tbody tr td {
+  border-bottom: #D3D3D3 solid 1px;
+}
+
+tbody tr td.title {
   text-align: left;
 }
 
 .category {
-  width: 7%;
+  width: 10%;
   padding: 8px;
 }
 
@@ -256,19 +128,18 @@ tbody tr td.nickname {
   padding: 6px;
 }
 
-.title
 .nickname {
-  width: 13%;
+  width: 12%;
   padding: 6px;
 }
 
 .create_date {
-  width: 10%;
+  width: 6%;
   padding: 6px;
 }
 
 .like_count {
-  width: 10%;
+  width: 12%;
   padding: 6px;
 }
 </style>
