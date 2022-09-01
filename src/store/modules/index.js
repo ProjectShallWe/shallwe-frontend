@@ -1,5 +1,5 @@
-import postCategoryList from "@/store/modules/postCategoryList";
+import postListMain from "@/store/modules/postListMain";
 
 export default {
-    postCategoryList
+    postListMain,
 }

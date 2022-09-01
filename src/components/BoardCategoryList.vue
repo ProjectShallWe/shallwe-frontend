@@ -39,6 +39,7 @@ export default {
           'api/board-category/board'
       );
       boardCategories.value = res.data;
+      console.log("boardCategories =")
       console.log(boardCategories.value)
     }
 
