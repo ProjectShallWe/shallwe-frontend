@@ -15,7 +15,8 @@
               v-for="postCategory in postCategories"
               :key="postCategory.postCategoryId"
               :to="`/community/${boardId}?category=${postCategory.postCategoryId}`"
-              @click="getPostsInPostCategory(postCategory.postCategoryId)">
+              @click="getPostsInPostCategory(postCategory.postCategoryId)"
+          >
             {{ postCategory.topic }}
           </router-link>
         </div>
@@ -48,7 +49,9 @@
               {{ post.postCategory }}
             </td>
             <td class="title">
-              <a href="#">
+              <a
+                :href="`/community/${boardId}/${post.postId}`"
+              >
                 {{ post.title }}
               </a>
             </td>

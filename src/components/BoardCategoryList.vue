@@ -27,27 +27,21 @@
 </template>
 
 <script>
-import {ref} from "vue";
-import axios from "@/axios";
+import {computed} from "vue";
+import {useStore} from "vuex"
 
 export default {
   setup() {
-    const boardCategories = ref([]);
+    const store = useStore();
 
-    const getBoardCategoryWithBoards = async () => {
-      const res = await axios.get(
-          'api/board-category/board'
-      );
-      boardCategories.value = res.data;
-      console.log("boardCategories =")
-      console.log(boardCategories.value)
-    }
-
-    getBoardCategoryWithBoards();
+    const boardCategories = computed(() => store.state.boardCategoryList.boardCategories.boardCategories)
 
     return {
       boardCategories,
     };
+  },
+  created() {
+    this.$store.dispatch('boardCategoryList/getBoardCategoryWithBoards')
   }
 }
 </script>
