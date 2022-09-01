@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import {useRoute} from 'vue-router';
 import Header from "@/components/Header";
 import BoardCategoryList from "@/components/BoardCategoryList";
 import BoardMini from "@/components/PostListMini";
@@ -33,14 +32,7 @@ export default {
     BoardMini,
     PostListMain,
     Footer
-  },
-  setup() {
-    const boardId = useRoute().params.boardId;
-    console.log(boardId);
-    return {
-      boardId,
-    };
-  },
+  }
 }
 </script>
 

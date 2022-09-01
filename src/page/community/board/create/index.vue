@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Header />
-    <BoardCategoryList></BoardCategoryList>
+    <BoardCategoryList />
     <PostCreate />
     <Footer/>
   </div>

@@ -7,7 +7,7 @@
         <input type="password" placeholder="비밀번호 (8자리 이상)">
         <button type="submit">로그인</button>
       </form>
-      <a href="">회원가입</a>
+      <router-link to="/user/sign-up">회원가입</router-link>
     </div>
   </section>
 </template>

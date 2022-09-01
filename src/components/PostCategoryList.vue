@@ -20,26 +20,20 @@
 </template>
 
 <script>
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import axios from "@/axios";
 import {useRoute} from "vue-router";
+import {useStore} from "vuex"
 
 export default {
   setup(props, context) {
     const route = useRoute();
+    const store = useStore();
     const boardId = route.params.boardId;
-    const postCategories = ref([]);
     const posts = ref([]);
     const page = ref(10);
 
-    const getPostCategoriesInBoard = async () => {
-      const res = await axios.get(
-          `api/post-category?board=${boardId}`
-      );
-      postCategories.value = res.data;
-    }
-
-    getPostCategoriesInBoard();
+    const postCategories = computed(() => store.state.postCategoryList.postCategories.postCategories);
 
     const getPostsInBoard = async () => {
       const res = await axios.get(
@@ -66,6 +60,11 @@ export default {
       getPostsInPostCategory,
       getPostsInBoard,
     };
+  },
+  created() {
+    this.$store.dispatch('postCategoryList/getPostCategoriesInBoard', {
+      id: this.$route.params.boardId,
+    })
   }
 }
 </script>
