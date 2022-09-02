@@ -34,7 +34,7 @@ export default {
   setup() {
     const store = useStore();
 
-    const boardCategories = computed(() => store.state.boardCategoryList.boardCategories.boardCategories)
+    const boardCategories = computed(() => store.state.boardCategoryList.boardCategories)
 
     return {
       boardCategories,

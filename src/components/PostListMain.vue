@@ -3,22 +3,22 @@
     <div class="col-12">
       <div class="wrapper">
         <h1 class="board-title">
-          게시판 제목
+          {{ board[0]?.title }}
         </h1>
         <div class="post-category-list">
-          <router-link
-              :to="`/community/${boardId}`"
+          <a
+              :href="`/community/${boardId}`"
               @click="getPostsInBoard">
             전체
-          </router-link>
-          <router-link
-              v-for="postCategory in postCategories"
+          </a>
+          <a
+              v-for="postCategory in board[0]?.postCategories"
               :key="postCategory.postCategoryId"
-              :to="`/community/${boardId}?category=${postCategory.postCategoryId}`"
+              :href="`/community/${boardId}?category=${postCategory.postCategoryId}`"
               @click="getPostsInPostCategory(postCategory.postCategoryId)"
           >
             {{ postCategory.topic }}
-          </router-link>
+          </a>
         </div>
         <table class="post-list">
           <thead>
@@ -91,7 +91,8 @@ export default {
 
     console.log(categoryId);
 
-    const postCategories = computed(() => store.state.postListMain.postCategories.postCategories);
+    const board = computed(() => store.state.postListMain.board);
+    console.log(board);
 
     const getPostsInBoard = async () => {
       const res = await axios.get(
@@ -126,14 +127,14 @@ export default {
       posts,
       boardId,
       categoryId,
-      postCategories,
+      board,
       getPostsInPostCategory,
       getPostsInBoard,
       getPosts,
     };
   },
   created() {
-    this.$store.dispatch('postListMain/getPostCategoriesInBoard', {
+    this.$store.dispatch('postListMain/getBoardWithPostCategories', {
       id: this.$route.params.boardId,
     });
   }

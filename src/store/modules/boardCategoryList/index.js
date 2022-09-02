@@ -6,8 +6,8 @@ export default {
         boardCategories: [],
     },
     mutations: {
-        setBoardCategories(state, boardCategories) {
-            state.boardCategories = boardCategories;
+        setBoardCategories(state, payload) {
+            state.boardCategories = payload;
         },
     },
     actions: {
@@ -16,9 +16,7 @@ export default {
             const res = await axios.get(
                 'api/board-category/board'
             );
-            commit('setBoardCategories', {
-                boardCategories: res.data
-            });
+            commit('setBoardCategories', res.data);
         }
     },
 }

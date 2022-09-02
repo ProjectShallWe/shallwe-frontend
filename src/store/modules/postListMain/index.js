@@ -3,22 +3,20 @@ import axios from "@/axios";
 export default {
     namespaced: true,
     state: {
-        postCategories: [],
+        board: [],
     },
     mutations: {
-        setPostCategories(state, postCategories) {
-            state.postCategories = postCategories;
+        setBoard(state, payload) {
+            state.board = payload;
         },
     },
     actions: {
-        async getPostCategoriesInBoard({commit}, payload) {
+        async getBoardWithPostCategories({commit}, payload) {
 
             const res = await axios.get(
-                `api/post-category?board=${payload.id}`
+                `api/board/${payload.id}`
             );
-            commit('setPostCategories', {
-                postCategories: res.data
-            });
+            commit('setBoard', res.data);
         }
     },
 }

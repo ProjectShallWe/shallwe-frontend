@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-2">
         <h1 class="community-title">
-          <a href="#">
+          <a :href="`/community`">
             <strong>
               ShallWe
             </strong>
