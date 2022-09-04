@@ -8,7 +8,6 @@
       <BoardMini />
     </div>
     <PostListMain />
-    <Pagination />
     <BoardSearchBar />
     <Footer/>
   </div>
@@ -20,14 +19,12 @@ import BoardCategoryList from "@/components/BoardCategoryList";
 import BoardMini from "@/components/PostListMini";
 import Footer from "@/components/Footer";
 import PostListMain from "@/components/PostListMain";
-import Pagination from "@/components/Pagination";
 import BoardSearchBar from "@/components/BoardSearchBar";
 
 export default {
   components: {
     BoardCategoryList,
     BoardSearchBar,
-    Pagination,
     Header,
     BoardMini,
     PostListMain,

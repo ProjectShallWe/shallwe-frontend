@@ -67,6 +67,11 @@
           </tr>
           </tbody>
         </table>
+        <Pagination
+            :page="page"
+            :total-pages="totalPages"
+            @on-click="getPosts"
+        />
       </div>
     </div>
   </div>
@@ -77,47 +82,51 @@ import {computed, ref} from "vue";
 import axios from "@/axios";
 import {useRoute} from "vue-router";
 import {useStore} from "vuex"
+import Pagination from "@/components/Pagination";
 
 export default {
   name: "PostListMain.vue",
-
+  components: {Pagination},
   setup() {
     const route = useRoute();
     const store = useStore();
     const boardId = route.params.boardId;
     const categoryId = route.query.category;
     const posts = ref([]);
-    const page = ref(10);
-
-    console.log(categoryId);
+    const page = ref(0);
+    const totalPages = ref(0);
 
     const board = computed(() => store.state.postListMain.board);
-    console.log(board);
 
-    const getPostsInBoard = async () => {
+    const getPostsInBoard = async (pageParam) => {
       const res = await axios.get(
-          `api/post/all?board=${boardId}&page=${page.value}`
+          `api/post/all?board=${boardId}&page=${pageParam}`
       );
       posts.value = res.data.content;
+      page.value = res.data.number;
+      totalPages.value = res.data.totalPages;
     }
 
-    const getPostsInPostCategory = async (postCategoryId) => {
+    const getPostsInPostCategory = async (pageParam, postCategoryId) => {
       const res = await axios.get(
-          `api/post?category=${postCategoryId}&page=${page.value}`
+          `api/post?category=${postCategoryId}&page=${pageParam}`
       );
       posts.value = res.data.content;
+      page.value = res.data.number;
+      totalPages.value = res.data.totalPages;
     }
 
-    const getPosts = () => {
+    const getPosts = (pageParam = page.value) => {
+      console.log("pageParam = " + pageParam);
       // posts에 값이 들어있다면 초기화.
-      if (posts.value.length != 0) {
+      if (!posts.value.length) {
         posts.value = [];
       }
 
       if (categoryId !== undefined) {
-        return getPostsInPostCategory(categoryId);
+        return getPostsInPostCategory(pageParam, categoryId);
       } else {
-        return getPostsInBoard();
+        return getPostsInBoard(pageParam);
       }
     }
 
@@ -128,6 +137,8 @@ export default {
       boardId,
       categoryId,
       board,
+      page,
+      totalPages,
       getPostsInPostCategory,
       getPostsInBoard,
       getPosts,
