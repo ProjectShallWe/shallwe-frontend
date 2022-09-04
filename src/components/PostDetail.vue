@@ -2,37 +2,30 @@
   <div class="row">
     <div class="col-12">
       <h3 class="post-category">
-        포스트 카테고리
+        {{ postDetail.postCategory }}
       </h3>
       <div class="post-title">
-        <h1>글 제목쓰기</h1>
-        <span>2022.08.25.16:54</span>
+        <h1>{{ postDetail.title }}</h1>
+        <span>{{ postDetail.createdDate }}</span>
       </div>
       <div class="post-info">
         <div class="post-writer">
-          <span>닉네임자리</span>
+          <span>{{ postDetail.nickname }}</span>
         </div>
         <div class="post-hit">
           <span>
             좋아요 수
-            <b>13</b>
+            <b>{{ postDetail.likeCount }}</b>
           </span>
           <span>
             댓글 수
-            <b>12</b>
+            <b>{{ postDetail.commentCount }}</b>
           </span>
         </div>
       </div>
       <div class="post-content">
         <p>
-          글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용
-          글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용
-          글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용
-          글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용
-          글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용
-          글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용
-          글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용
-          글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용글 내용
+          {{ postDetail.content }}
         </p>
       </div>
     </div>
@@ -40,8 +33,30 @@
 </template>
 
 <script>
+import axios from "@/axios";
+import {ref} from "vue";
+import {useRoute} from "vue-router";
+
 export default {
-  name: "PostDetail"
+  setup() {
+    const route = useRoute();
+    const postId = route.params.postId;
+    const postDetail = ref([]);
+
+    const getPostDetails = async () => {
+      const res = await axios.get(
+          `api/post/${postId}`
+      );
+      postDetail.value = res.data
+    }
+
+    getPostDetails();
+
+    return {
+      getPostDetails,
+      postDetail,
+    }
+  },
 }
 </script>
 
