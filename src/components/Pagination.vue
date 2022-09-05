@@ -7,7 +7,7 @@
               :class="{inactive : isPreviousButtonInactive($props.page, displayCount)}"
           >
             <a
-                href="#"
+                href="javascript:void(0);"
                 @click="onClick(calcPreviousButton($props.page, displayCount))"
             >
               이전
@@ -17,7 +17,7 @@
               :key="page"
               class="page">
             <a
-                href="#"
+                href="javascript:void(0);"
                 @click="onClick(page)"
             >
               {{ page }}
@@ -28,7 +28,7 @@
               :class="{inactive : isNextButtonInactive($props.page, $props.totalPages, displayCount)}"
           >
             <a
-                href="#"
+                href="javascript:void(0);"
                 @click="onClick(calcNextButton($props.page, displayCount))"
             >
               다음
