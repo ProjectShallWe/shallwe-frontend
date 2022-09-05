@@ -28,6 +28,10 @@
           {{ postDetail.content }}
         </p>
       </div>
+      <div class="comment-list-header">
+        <h3>댓글</h3>
+        <span>({{ postDetail.commentCount }})</span>
+      </div>
     </div>
   </div>
 </template>
@@ -81,6 +85,8 @@ export default {
 }
 
 .post-title span {
+  font-size: 14px;
+  line-height: 29px;
   /*display: block;*/
 }
 
@@ -101,6 +107,7 @@ export default {
 }
 
 .post-hit span {
+  font-size: 13px;
   padding: 0 6px;
 }
 
@@ -111,6 +118,21 @@ export default {
 
 .post-content {
   padding: 16px 0;
+}
+
+.comment-list-header {
+  display: flex;
+  padding: 8px 0;
+  border-bottom: #D3D3D3 solid 1px;
+}
+
+.comment-list-header h3,
+.comment-list-header span {
+  font-size: 15px;
+}
+
+.comment-list-header h3 {
+  margin-top: 2px;
 }
 
 </style>
