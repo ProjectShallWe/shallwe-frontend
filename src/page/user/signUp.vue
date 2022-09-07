@@ -2,10 +2,12 @@
   <section class="sign-up">
     <div class="wrapper">
       <h1>회원가입</h1>
-      <form action="" method="post">
-        <input type="email" placeholder="이메일 주소">
-        <input type="password" placeholder="비밀번호 (8자리 이상)">
-        <input type="text" placeholder="닉네임">
+      <form
+          @submit.prevent="signUp"
+      >
+        <input type="email" placeholder="이메일 주소" v-model="user.form.email">
+        <input type="password" placeholder="비밀번호 (8자리 이상)" v-model="user.form.password">
+        <input type="text" placeholder="닉네임" v-model="user.form.nickname">
         <button type="submit">회원가입</button>
       </form>
     </div>
@@ -13,7 +15,34 @@
 </template>
 
 <script>
-export default {}
+import {ref} from "vue";
+import {useStore} from "vuex";
+
+export default {
+  setup() {
+    const user = ref({
+      form: {
+        email: '',
+        password: '',
+        nickname: '',
+      }
+    });
+
+    const store = useStore();
+    const signUp = async () => {
+      await store.dispatch("signUp/signUp", {
+        email: user.value.form.email,
+        password: user.value.form.password,
+        nickname: user.value.form.nickname,
+      });
+    }
+
+    return {
+      user,
+      signUp
+    }
+  }
+}
 </script>
 
 <style scoped>
