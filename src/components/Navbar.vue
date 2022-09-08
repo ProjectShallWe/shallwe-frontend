@@ -27,7 +27,7 @@
         </li>
       </ul>
       <!-- User -->
-      <div class="user">
+      <div class="user" v-if="!loggedIn">
         <router-link
             cl
             :to="{name: 'login'}"
@@ -41,13 +41,29 @@
           회원가입
         </router-link>
       </div>
+      <div v-else class="user">
+        {{ nickname }}님 환영합니다!
+      </div>
     </div>
   </nav>
 </template>
 
 <script>
+import {computed} from "vue";
+import {useStore} from "vuex";
+
 export default {
-  name: "Navbar"
+  setup() {
+    const store = useStore();
+
+    const loggedIn = computed(() => store.getters["login/loggedIn"]);
+    const nickname = computed(() => store.state.login.nickname);
+
+    return {
+      loggedIn,
+      nickname,
+    };
+  }
 }
 </script>
 

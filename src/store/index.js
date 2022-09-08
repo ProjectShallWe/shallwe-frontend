@@ -1,6 +1,10 @@
 import { createStore } from "vuex";
 import modules from "@/store/modules";
+import createPersistedState from "vuex-persistedstate";
 
 export default createStore({
-    modules
+    modules,
+    plugins: [
+        createPersistedState()
+    ]
 });

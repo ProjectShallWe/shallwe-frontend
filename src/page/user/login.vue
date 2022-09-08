@@ -2,9 +2,11 @@
   <section class="login">
     <div class="wrapper">
       <h1>로그인</h1>
-      <form action="" method="post">
-        <input type="email" placeholder="이메일 주소">
-        <input type="password" placeholder="비밀번호 (8자리 이상)">
+      <form
+          @submit.prevent="login"
+      >
+        <input type="email" placeholder="이메일 주소" v-model="user.form.email">
+        <input type="password" placeholder="비밀번호 (8자리 이상)" v-model="user.form.password">
         <button type="submit">로그인</button>
       </form>
       <router-link to="/user/sign-up">회원가입</router-link>
@@ -13,7 +15,37 @@
 </template>
 
 <script>
-export default {}
+import {ref} from "vue";
+import {useStore} from "vuex";
+import router from "@/router";
+
+export default {
+  setup() {
+    const user = ref({
+      form: {
+        email: '',
+        password: '',
+      }
+    });
+    const store = useStore();
+    const login = async () => {
+      await store.dispatch("login/login", {
+        email: user.value.form.email,
+        password: user.value.form.password
+      })
+          .then(() => {
+            router.push({name: 'community'})
+          })
+          .catch(() => {
+          });
+    }
+
+    return {
+      user,
+      login,
+    }
+  },
+}
 </script>
 
 <style scoped>
