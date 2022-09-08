@@ -5,11 +5,11 @@
         <div class="reply-write-form">
           <h3>댓글 작성</h3>
           <form
-              @submit.prevent="writeParentComment(content)"
+              @submit.prevent="writeParentComment"
               class="reply-write-content"
           >
             <textarea
-                v-model="content"
+                v-model="parentContent"
                 placeholder="댓글을 작성해주세요."
             />
             <button type="submit">등록</button>
@@ -28,9 +28,7 @@
             </div>
           </div>
           <div class="comment-content">
-            <p>
-              {{ comment.content }}
-            </p>
+            <p v-html="getContent(comment.content)"></p>
           </div>
           <div class="reply-line">
             <button
@@ -46,11 +44,11 @@
           >
             <h3>댓글 작성</h3>
             <form
-                @submit.prevent="writeChildComment(comment.commentId, content)"
+                @submit.prevent="writeChildComment(comment.commentId)"
                 class="reply-write-content"
             >
               <textarea
-                  v-model="content"
+                  v-model="childContent"
                   placeholder="댓글을 작성해주세요."
               />
               <button type="submit">등록</button>
@@ -72,9 +70,7 @@
                 </div>
               </div>
               <div class="reply-content">
-                <p>
-                  {{ reply.content }}
-                </p>
+                <p v-html="getContent(reply.content)"></p>
               </div>
               <div class="reply-line">
               </div>
@@ -96,7 +92,8 @@ export default {
     const route = useRoute();
     const postId = route.params.postId;
     const commentList = ref([]);
-    const content = ref("");
+    const parentContent = ref("");
+    const childContent = ref("");
 
     const addIsShowReplyForm = () => {
       for (const comment of commentList.value) {
@@ -121,32 +118,49 @@ export default {
         return comment.isShowReplyWriteForm = !comment.isShowReplyWriteForm;
     };
 
-    const writeParentComment = async (content) => {
+    const writeParentComment = async () => {
      await axios.post(
           `api/comment?post=${postId}`, {
-            content: content.value,
-          }
+            content: parentContent.value,
+          },
+         {
+           headers: {
+             Authorization: localStorage.getItem('userToken'),
+           }
+         }
       )
+      parentContent.value = "";
       await getCommentsInPost();
     }
 
-    const writeChildComment = async (commentId, content) => {
+    const writeChildComment = async (commentId) => {
       await axios.post(
           `api/comment/${commentId}?post=${postId}`, {
-            content: content.value,
+            content: childContent.value,
+          },
+          {
+            headers: {
+              Authorization: localStorage.getItem('userToken'),
+            }
           }
       )
-      console.log(commentId);
+      childContent.value = "";
       await getCommentsInPost();
+    }
+
+    const getContent = (content) => {
+      return content.split('\n').join('<br>');
     }
 
     return {
       commentList,
-      content,
+      parentContent,
+      childContent,
       getCommentsInPost,
       showReplyWriteForm,
       writeParentComment,
-      writeChildComment
+      writeChildComment,
+      getContent
     }
   },
 }
@@ -227,6 +241,7 @@ export default {
   width: 100%;
   height: 60px;
   margin-right: 16px;
+  white-space: pre-wrap;
 }
 
 .reply-write-content button {
