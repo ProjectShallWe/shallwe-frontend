@@ -29,20 +29,23 @@
       <!-- User -->
       <div class="user" v-if="!loggedIn">
         <router-link
-            cl
             :to="{name: 'login'}"
         >
           로그인
         </router-link>
         <router-link
-            class=""
             :to="{name: 'signUp'}"
         >
           회원가입
         </router-link>
       </div>
       <div v-else class="user">
-        {{ nickname }}님 환영합니다!
+        <a>
+          {{ nickname }}님
+        </a>
+        <button type="button" @click="logOut">
+          로그아웃
+        </button>
       </div>
     </div>
   </nav>
@@ -57,10 +60,14 @@ export default {
     const store = useStore();
 
     const loggedIn = computed(() => store.getters["login/loggedIn"]);
+    const logOut = () => {
+      store.dispatch("login/logout");
+    };
     const nickname = computed(() => store.state.login.nickname);
 
     return {
       loggedIn,
+      logOut,
       nickname,
     };
   }
@@ -103,6 +110,10 @@ export default {
 
 .user a:last-child {
   margin-right: 0;
+}
+
+.user button {
+  border-radius: 8px;
 }
 
 </style>

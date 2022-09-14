@@ -16,6 +16,13 @@ export default {
             localStorage.setItem('userToken', payload);
             axios.defaults.headers.common['Authorization'] = `Bearer ${payload}`;
         },
+        logout(state) {
+            state.token = '';
+            state.nickname = '';
+            state.email = '';
+            localStorage.removeItem("userToken");
+            axios.defaults.headers.common['Authorization'] = '';
+        }
     },
     actions: {
         login({commit}, payload) {
@@ -27,6 +34,10 @@ export default {
             }).catch(() => {
                 alert("로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요");
             })
+        },
+        logout({commit}) {
+            commit("logout");
+            alert("로그아웃되었습니다.")
         }
     },
     getters: {

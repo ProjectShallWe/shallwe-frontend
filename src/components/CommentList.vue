@@ -241,7 +241,6 @@ export default {
   width: 100%;
   height: 60px;
   margin-right: 16px;
-  white-space: pre-wrap;
 }
 
 .reply-write-content button {
