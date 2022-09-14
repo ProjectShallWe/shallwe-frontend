@@ -2,7 +2,9 @@
   <div class="row">
     <div class="col-12">
       <ul class="comment-list">
-        <div class="reply-write-form">
+        <div v-if="loggedIn"
+             class="reply-write-form"
+        >
           <h3>댓글 작성</h3>
           <form
               @submit.prevent="writeParentComment"
@@ -39,7 +41,7 @@
             </button>
           </div>
           <div
-              v-if="comment.isShowReplyWriteForm"
+              v-if="comment.isShowReplyWriteForm && loggedIn"
               class="reply-write-form"
           >
             <h3>댓글 작성</h3>
@@ -84,8 +86,9 @@
 
 <script>
 import {useRoute} from "vue-router";
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import axios from "@/axios";
+import store from "@/store";
 
 export default {
   setup() {
@@ -94,6 +97,8 @@ export default {
     const commentList = ref([]);
     const parentContent = ref("");
     const childContent = ref("");
+
+    const loggedIn = computed(() => store.getters["login/loggedIn"]);
 
     const addIsShowReplyForm = () => {
       for (const comment of commentList.value) {
@@ -156,11 +161,12 @@ export default {
       commentList,
       parentContent,
       childContent,
+      loggedIn,
       getCommentsInPost,
       showReplyWriteForm,
       writeParentComment,
       writeChildComment,
-      getContent
+      getContent,
     }
   },
 }
