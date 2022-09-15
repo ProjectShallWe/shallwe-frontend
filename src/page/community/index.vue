@@ -2,14 +2,7 @@
   <div class="container">
     <Header/>
     <BoardCategory/>
-    <div class="row">
-      <BoardMini />
-      <BoardMini />
-      <BoardMini />
-      <BoardMini />
-      <BoardMini />
-      <BoardMini />
-    </div>
+    <SixPostLists />
     <Footer/>
   </div>
 
@@ -19,11 +12,11 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import BoardCategory from "@/components/BoardCategoryList";
-import BoardMini from "@/components/PostListMini";
+import SixPostLists from "@/components/SixPostLists";
 
 export default {
   components: {
-    BoardMini,
+    SixPostLists,
     Header,
     BoardCategory,
     Footer,

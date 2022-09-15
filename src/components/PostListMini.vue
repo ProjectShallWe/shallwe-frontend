@@ -4,6 +4,9 @@
       {{ $props.recommendPosts.boardTitle }}
     </h2>
     <ul class="board-recommend">
+        <h3 v-if="$props.recommendPosts.recommendPosts.length === 0">
+          추천글이 없습니다.
+        </h3>
       <li v-for="post in $props.recommendPosts.recommendPosts"
           :key="post.postId"
           class="recommend-post"
@@ -46,6 +49,13 @@ export default {
   padding: 10px 8px;
 }
 
+.board-recommend h3 {
+  padding: 8px 0;
+  font-size: 14px;
+  color: #000000;
+  text-align: center;
+}
+
 .recommend-post a {
   display: flex;
   font-size: 14px;
@@ -63,6 +73,10 @@ export default {
 }
 
 .recommend-title {
-  margin-right: 8px;
+  margin-right: 6px;
+}
+
+.recommend-commentCount {
+  color: #8977AD;
 }
 </style>

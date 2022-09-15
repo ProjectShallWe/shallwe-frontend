@@ -5,6 +5,7 @@ export default {
     state: {
         allRecommendPosts: [],
         boardRecommendPosts: [],
+        boardsRecommendPosts: [],
     },
     mutations: {
         setAllRecommendPosts(state, payload) {
@@ -12,7 +13,10 @@ export default {
         },
         setBoardRecommendPosts(state, payload) {
             state.boardRecommendPosts = payload;
-        }
+        },
+        setBoardsRecommendPosts(state, payload) {
+            state.boardsRecommendPosts = payload;
+        },
     },
     actions: {
         async getRecommendPostsFromRedis({commit}) {
@@ -28,6 +32,19 @@ export default {
                 `api/post/recommend?board=${payload.id}`
             );
             commit('setBoardRecommendPosts', res.data);
+        },
+        async getRecommendPostsInBoardsFromRedis({commit}, payload) {
+
+            const boardArr = [];
+
+            for (const id of payload.boardCategoryIdLists) {
+                const res = await axios.get(
+                    `api/post/recommend?board=${id}`
+                );
+                boardArr.push(res.data);
+            }
+
+            commit('setBoardsRecommendPosts', boardArr);
         }
     },
 }
