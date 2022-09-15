@@ -114,6 +114,7 @@ export default {
 
 .user button {
   border-radius: 8px;
+  background-color: #F8F8F8;
 }
 
 </style>

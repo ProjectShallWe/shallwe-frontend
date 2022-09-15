@@ -3,7 +3,7 @@
     <div class="col-12">
       <div class="wrapper">
         <h1 class="board-title">
-          {{ board[0]?.title }}
+          {{ board[0]?.title }} 게시판
         </h1>
         <div class="post-category-list">
           <a

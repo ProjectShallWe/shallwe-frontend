@@ -1,134 +1,24 @@
 <template>
-  <div class="col-4">
-    <h2 class="board-title">게시판 이름</h2>
+  <div class="col-6">
+    <h2 class="board-title">
+      {{ $props.recommendPosts.boardTitle }}
+    </h2>
     <ul class="board-recommend">
-      <li class="recommend-post">
-        <a href="#">
-          <div>
-            게시글 카테고리
+      <li v-for="post in $props.recommendPosts.recommendPosts"
+          :key="post.postId"
+          class="recommend-post"
+      >
+        <a
+            :href="`/community/${post.boardId}/${post.postId}`"
+        >
+          <div class="recommend-postCategory">
+            {{ post.postCategory }}
           </div>
-          <div>
-            게시글 제목
+          <div class="recommend-title">
+            {{ post.title }}
           </div>
-          <div>
-            100
-          </div>
-        </a>
-      </li>
-      <li class="recommend-post">
-        <a href="#">
-          <div>
-            게시글 카테고리
-          </div>
-          <div>
-            게시글 제목
-          </div>
-          <div>
-            100
-          </div>
-        </a>
-      </li>
-      <li class="recommend-post">
-        <a href="#">
-          <div>
-            게시글 카테고리
-          </div>
-          <div>
-            게시글 제목
-          </div>
-          <div>
-            100
-          </div>
-        </a>
-      </li>
-      <li class="recommend-post">
-        <a href="#">
-          <div>
-            게시글 카테고리
-          </div>
-          <div>
-            게시글 제목
-          </div>
-          <div>
-            100
-          </div>
-        </a>
-      </li>
-      <li class="recommend-post">
-        <a href="#">
-          <div>
-            게시글 카테고리
-          </div>
-          <div>
-            게시글 제목
-          </div>
-          <div>
-            100
-          </div>
-        </a>
-      </li>
-      <li class="recommend-post">
-        <a href="#">
-          <div>
-            게시글 카테고리
-          </div>
-          <div>
-            게시글 제목
-          </div>
-          <div>
-            100
-          </div>
-        </a>
-      </li>
-      <li class="recommend-post">
-        <a href="#">
-          <div>
-            게시글 카테고리
-          </div>
-          <div>
-            게시글 제목
-          </div>
-          <div>
-            100
-          </div>
-        </a>
-      </li>
-      <li class="recommend-post">
-        <a href="#">
-          <div>
-            게시글 카테고리
-          </div>
-          <div>
-            게시글 제목
-          </div>
-          <div>
-            100
-          </div>
-        </a>
-      </li>
-      <li class="recommend-post">
-        <a href="#">
-          <div>
-            게시글 카테고리
-          </div>
-          <div>
-            게시글 제목
-          </div>
-          <div>
-            100
-          </div>
-        </a>
-      </li>
-      <li class="recommend-post">
-        <a href="#">
-          <div>
-            게시글 카테고리
-          </div>
-          <div>
-            게시글 제목
-          </div>
-          <div>
-            100
+          <div class="recommend-commentCount">
+            [{{ post.commentCount }}]
           </div>
         </a>
       </li>
@@ -138,7 +28,12 @@
 
 <script>
 export default {
-  name: "BoardMini"
+  props: {
+    recommendPosts: {
+      type: Object,
+      required: true,
+    }
+  },
 }
 </script>
 
@@ -160,5 +55,14 @@ export default {
 .recommend-post a div {
   width: auto;
   display: block;
+}
+
+.recommend-postCategory {
+  color: #8977AD;
+  margin-right: 10px;
+}
+
+.recommend-title {
+  margin-right: 8px;
 }
 </style>
