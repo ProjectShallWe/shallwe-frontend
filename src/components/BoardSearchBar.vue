@@ -1,12 +1,14 @@
 <template>
   <div class="row justify-content-center">
     <div class="col-4">
-      <form action="" method="get">
-        <select>
-          <option>제목+내용</option>
-          <option>제목</option>
-          <option>내용</option>
-          <option>닉네임</option>
+      <form
+          @submit.prevent="search"
+      >
+        <select name="type">
+          <option value="ticon">제목+내용</option>
+          <option value="title">제목</option>
+          <option value="content">내용</option>
+          <option value="nickname">닉네임</option>
         </select>
         <input type="text" name="keyword">
         <button type="submit">검색</button>
@@ -17,7 +19,12 @@
 
 <script>
 export default {
-  name: "BoardSearchBar"
+  setup() {
+
+    return {
+
+    }
+  }
 }
 </script>
 

@@ -8,14 +8,14 @@
         <div class="post-category-list">
           <a
               :href="`/community/${boardId}`"
-              @click="getPostsInBoard">
+              @click="getPostsInBoard(0)">
             전체
           </a>
           <a
               v-for="postCategory in board[0]?.postCategories"
               :key="postCategory.postCategoryId"
               :href="`/community/${boardId}?category=${postCategory.postCategoryId}`"
-              @click="getPostsInPostCategory(postCategory.postCategoryId)"
+              @click="getPostsInPostCategory(postCategory.postCategoryId, 0)"
           >
             {{ postCategory.topic }}
           </a>
@@ -72,63 +72,49 @@
             :total-pages="totalPages"
             @on-click="getPosts"
         />
+        <BoardSearchBar />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {computed, ref} from "vue";
-import axios from "@/axios";
+import {computed} from "vue";
 import {useRoute} from "vue-router";
 import {useStore} from "vuex"
 import Pagination from "@/components/Pagination";
+import BoardSearchBar from "@/components/BoardSearchBar";
 
 export default {
   name: "PostListMain.vue",
-  components: {Pagination},
+  components: {
+    Pagination,
+    BoardSearchBar
+  },
   setup() {
     const route = useRoute();
     const store = useStore();
     const boardId = route.params.boardId;
     const categoryId = route.query.category;
-    const posts = ref([]);
-    const page = ref(0);
-    const totalPages = ref(0);
+    const posts = computed(() => store.state.postListMain.posts);
+    const page = computed(() => store.state.postListMain.page);
+    const totalPages = computed(() => store.state.postListMain.totalPages);
 
     const board = computed(() => store.state.postListMain.board);
 
-    const getPostsInBoard = async (pageParam) => {
-      const res = await axios.get(
-          `api/post/all?board=${boardId}&page=${pageParam}`
-      );
-      posts.value = res.data.content;
-      page.value = res.data.number;
-      totalPages.value = res.data.totalPages;
-    }
+    const getPostsInBoard = (page) =>
+        store.dispatch("postListMain/getPostsInBoard", { boardId, page });
 
-    const getPostsInPostCategory = async (pageParam, postCategoryId) => {
-      const res = await axios.get(
-          `api/post?category=${postCategoryId}&page=${pageParam}`
-      );
-      posts.value = res.data.content;
-      page.value = res.data.number;
-      totalPages.value = res.data.totalPages;
-    }
+    const getPostsInPostCategory = (categoryId, page) =>
+        store.dispatch("postListMain/getPostsInPostCategory", { categoryId, page });
 
-    const getPosts = (pageParam = page.value) => {
-      console.log("pageParam = " + pageParam);
-      // posts에 값이 들어있다면 초기화.
-      if (!posts.value.length) {
-        posts.value = [];
-      }
-
+    const getPosts = (p = page.value) => {
       if (categoryId !== undefined) {
-        return getPostsInPostCategory(pageParam, categoryId);
+        return getPostsInPostCategory(categoryId, p);
       } else {
-        return getPostsInBoard(pageParam);
+        return getPostsInBoard(p);
       }
-    }
+    };
 
     getPosts();
 

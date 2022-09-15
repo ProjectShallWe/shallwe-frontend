@@ -98,7 +98,7 @@ export default {
     };
 
     const calcNextButton = (page, displayCount) => {
-      return Math.ceil(page / displayCount) * displayCount + 1
+      return Math.ceil((page + 1) / displayCount) * displayCount + 1
     };
 
     return {

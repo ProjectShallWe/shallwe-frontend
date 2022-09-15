@@ -1,10 +1,18 @@
-import { createStore } from "vuex";
+import {createStore} from "vuex";
 import modules from "@/store/modules";
 import createPersistedState from "vuex-persistedstate";
 
 export default createStore({
     modules,
     plugins: [
-        createPersistedState()
+        createPersistedState({
+            paths: [
+                'login',
+                'boardSearchBar',
+                'boardCategoryList',
+                'postListMain',
+                'postListMini'
+            ]
+        }),
     ]
 });
