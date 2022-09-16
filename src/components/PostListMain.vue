@@ -50,7 +50,7 @@
             </td>
             <td class="title">
               <a
-                :href="`/community/${boardId}/${post.postId}`"
+                  :href="`/community/${boardId}/${post.postId}`"
               >
                 {{ post.title }}
               </a>
@@ -68,18 +68,20 @@
           </tbody>
         </table>
         <Pagination
-            :page="page"
+            :page="pageNum"
             :total-pages="totalPages"
             @on-click="getPosts"
         />
-        <BoardSearchBar />
+        <BoardSearchBar
+            :page="pageNum"
+            @search="getPosts"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {computed} from "vue";
+import {computed, ref} from "vue";
 import {useRoute} from "vue-router";
 import {useStore} from "vuex"
 import Pagination from "@/components/Pagination";
@@ -97,33 +99,59 @@ export default {
     const boardId = route.params.boardId;
     const categoryId = route.query.category;
     const posts = computed(() => store.state.postListMain.posts);
-    const page = computed(() => store.state.postListMain.page);
+    const pageNum = computed(() => store.state.postListMain.page);
     const totalPages = computed(() => store.state.postListMain.totalPages);
+
+    const types = ref('');
+    const keywords = ref('');
 
     const board = computed(() => store.state.postListMain.board);
 
     const getPostsInBoard = (page) =>
-        store.dispatch("postListMain/getPostsInBoard", { boardId, page });
+        store.dispatch("postListMain/getPostsInBoard", {boardId, page});
 
     const getPostsInPostCategory = (categoryId, page) =>
-        store.dispatch("postListMain/getPostsInPostCategory", { categoryId, page });
+        store.dispatch("postListMain/getPostsInPostCategory", {categoryId, page});
 
-    const getPosts = (p = page.value) => {
-      if (categoryId !== undefined) {
-        return getPostsInPostCategory(categoryId, p);
+    const getPostsBySearchKeywordInBoard = (page, type, keyword) =>
+        store.dispatch("postListMain/getPostsBySearchKeywordInBoard", {boardId, page, type, keyword});
+
+    const getPostsBySearchKeywordInPostCategory = (categoryId, page, type, keyword) =>
+        store.dispatch("postListMain/getPostsBySearchKeywordInPostCategory", {boardId, categoryId, page, type, keyword})
+
+    const getPosts = (page = 0, type, keyword) => {
+      if(type !== undefined) {
+        types.value = type;
+        keywords.value = keyword;
+      }
+      console.log("page = " + page);
+      console.log("type = " + types.value);
+      console.log("keywords = " + keywords.value)
+      if (categoryId === undefined) {
+        if (types.value === undefined) {
+          console.log("getPostsInBoard");
+          return getPostsInBoard(page);
+        } else {
+          console.log("getPostsBySearchKeywordInBoard");
+          return getPostsBySearchKeywordInBoard(page, types.value, keywords.value);
+        }
       } else {
-        return getPostsInBoard(p);
+        if (types.value === undefined) {
+          console.log("getPostsInPostCategory");
+          return getPostsInPostCategory(categoryId, page);
+        } else {
+          console.log("getPostsBySearchKeywordInPostCategory");
+          return getPostsBySearchKeywordInPostCategory(categoryId, page, types.value, keywords.value);
+        }
       }
     };
-
-    getPosts();
 
     return {
       posts,
       boardId,
       categoryId,
       board,
-      page,
+      pageNum,
       totalPages,
       getPostsInPostCategory,
       getPostsInBoard,

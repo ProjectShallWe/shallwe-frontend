@@ -4,13 +4,13 @@
       <form
           @submit.prevent="search"
       >
-        <select name="type">
+        <select v-model="type">
           <option value="ticon">제목+내용</option>
           <option value="title">제목</option>
           <option value="content">내용</option>
           <option value="nickname">닉네임</option>
         </select>
-        <input type="text" name="keyword">
+        <input type="text" v-model="keyword">
         <button type="submit">검색</button>
       </form>
     </div>
@@ -18,11 +18,28 @@
 </template>
 
 <script>
+import {ref} from "vue";
+
 export default {
-  setup() {
+  props: {
+    page: {
+      type: Number,
+      required: true,
+    },
+  },
+  emits: ['search'],
+  setup(props, context) {
+    const keyword = ref('');
+    const type = ref('ticon');
+
+    const search = () => {
+      context.emit('search', props.page, type.value, keyword.value);
+    }
 
     return {
-
+      type,
+      keyword,
+      search,
     }
   }
 }

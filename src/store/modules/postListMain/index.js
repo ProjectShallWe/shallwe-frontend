@@ -48,5 +48,28 @@ export default {
                 totalPages: res.data.totalPages
             });
         },
+        async getPostsBySearchKeywordInBoard({commit}, {boardId, page, type, keyword}) {
+            const res = await axios.get(
+                `api/post/search?board=${boardId}&page=${page}&type=${type}&keyword=${keyword}`
+            );
+            console.log(res.data);
+            commit('setPosts', {
+                content: res.data.content,
+                number: res.data.number,
+                totalPages: res.data.totalPages
+            });
+        },
+        async getPostsBySearchKeywordInPostCategory({commit}, {boardId, categoryId, page, type, keyword}) {
+
+            const res = await axios.get(
+                `api/post/search?board=${boardId}&category=${categoryId}&page=${page}&type=${type}&keyword=${keyword}`
+            );
+            console.log(res.data);
+            commit('setPosts', {
+                content: res.data.content,
+                number: res.data.number,
+                totalPages: res.data.totalPages
+            });
+        },
     },
 }
