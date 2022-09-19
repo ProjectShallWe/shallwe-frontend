@@ -35,7 +35,7 @@ export default {
   },
   created() {
     this.$store.dispatch('postListMini/getRecommendPostsInBoardsFromRedis', {
-      boardCategoryIdLists: [1, 3, 6, 4, 7, 8]
+      boardCategoryIdLists: [1, 3, 6, 4, 9, 11]
     })
   }
 }

@@ -119,32 +119,35 @@ export default {
     const getPostsBySearchKeywordInPostCategory = (categoryId, page, type, keyword) =>
         store.dispatch("postListMain/getPostsBySearchKeywordInPostCategory", {boardId, categoryId, page, type, keyword})
 
+    // SearchCondition에 Param이 있는지 확인
+    const isSearchCondition = (types, keywords) => {
+      return types.value && keywords.value;
+    }
+
     const getPosts = (page = 0, type, keyword) => {
-      if(type !== undefined) {
+      // SearchCondition 을 유지하면서 Pagination 하기 위해 변수에 저장
+      if (type !== undefined && keyword !== undefined) {
         types.value = type;
         keywords.value = keyword;
       }
-      console.log("page = " + page);
-      console.log("type = " + types.value);
-      console.log("keywords = " + keywords.value)
-      if (categoryId === undefined) {
-        if (types.value === undefined) {
-          console.log("getPostsInBoard");
-          return getPostsInBoard(page);
-        } else {
-          console.log("getPostsBySearchKeywordInBoard");
-          return getPostsBySearchKeywordInBoard(page, types.value, keywords.value);
-        }
-      } else {
-        if (types.value === undefined) {
-          console.log("getPostsInPostCategory");
-          return getPostsInPostCategory(categoryId, page);
-        } else {
-          console.log("getPostsBySearchKeywordInPostCategory");
-          return getPostsBySearchKeywordInPostCategory(categoryId, page, types.value, keywords.value);
-        }
+
+      // Category Yes, SearchCondition No
+      if (categoryId && !isSearchCondition(types, keywords)) {
+        return getPostsInPostCategory(categoryId, page);
       }
+      // Category No, SearchCondition Yes
+      if (!categoryId && isSearchCondition(types, keywords)) {
+        return getPostsBySearchKeywordInBoard(page, types.value, keywords.value);
+      }
+      // Category Yes, SearchCondition Yes
+      if (categoryId && isSearchCondition(types, keywords)) {
+        return getPostsBySearchKeywordInPostCategory(categoryId, page, types.value, keywords.value);
+      }
+      // Category No, SearchCondition No
+      return getPostsInBoard(page);
     };
+
+    getPosts();
 
     return {
       posts,
