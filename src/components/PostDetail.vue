@@ -23,11 +23,7 @@
           </span>
         </div>
       </div>
-      <div class="post-content">
-        <p>
-          {{ postDetail.content }}
-        </p>
-      </div>
+      <div class="post-content" v-html="postDetail.content" />
       <div class="comment-list-header">
         <h3>댓글</h3>
         <span>({{ postDetail.commentCount }})</span>

@@ -54,8 +54,7 @@ textarea:active {
 }
 
 ul,
-ol,
-li {
+ol {
   list-style-type: none;
   padding-left: 0;
   margin-left: 0;
