@@ -50,9 +50,14 @@
             </td>
             <td class="title">
               <a
-                  :href="`/community/${boardId}/${post.postId}`"
+                  :href="getPostDetailUrl(post)"
               >
-                {{ post.title }}
+                <div>
+                  {{ post.title }}
+                </div>
+                <div class="comment-count">
+                  [{{post.commentCount}}]
+                </div>
               </a>
             </td>
             <td class="nickname">
@@ -102,10 +107,22 @@ export default {
     const pageNum = computed(() => store.state.postListMain.page);
     const totalPages = computed(() => store.state.postListMain.totalPages);
 
-    const types = ref('');
-    const keywords = ref('');
+    const url = ref("");
+
+    const types = ref("");
+    const keywords = ref("");
 
     const board = computed(() => store.state.postListMain.board);
+
+    const getPostDetailUrl = (post) => {
+      if (categoryId) {
+        return url.value = `/community/${boardId}/${post.postId}?category=${post.postCategoryId}`
+      }
+
+      if (!categoryId) {
+        return url.value = `/community/${boardId}/${post.postId}`
+      }
+    }
 
     const getPostsInBoard = (page) =>
         store.dispatch("postListMain/getPostsInBoard", {boardId, page});
@@ -156,6 +173,7 @@ export default {
       board,
       pageNum,
       totalPages,
+      getPostDetailUrl,
       getPostsInPostCategory,
       getPostsInBoard,
       getPosts,
@@ -223,6 +241,19 @@ tbody tr td.title {
 .title {
   width: 60%;
   padding: 6px;
+}
+
+.title a {
+  display: flex;
+}
+
+.title div {
+  margin-right: 6px;
+}
+
+.title div:last-child {
+  color: #8977AD;
+  margin-right: 0px;
 }
 
 .nickname {

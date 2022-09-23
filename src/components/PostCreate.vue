@@ -137,8 +137,9 @@ export default {
   setup() {
     const store = useStore();
     const boardId = useRoute().params.boardId;
+    const category = useRoute().query.category;
     const title = ref('');
-    const category = ref('default');
+
     const editor = useEditor({
       content: "",
       extensions: [
