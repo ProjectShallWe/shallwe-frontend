@@ -11,11 +11,9 @@
           <option value="nickname">닉네임</option>
         </select>
         <input type="text" v-model="keyword">
-<!--        <a :href="addSearchParamUrl(type, keyword)">-->
-          <button type="submit" @click="addSearchParamUrl(type, keyword)">
-            검색
-          </button>
-<!--        </a>-->
+        <button type="submit" @click="addSearchParamUrl(type, keyword)">
+          검색
+        </button>
       </form>
     </div>
   </div>
@@ -51,7 +49,7 @@ export default {
     }
 
     const search = () => {
-      context.emit('search', 0, type.value, keyword.value);
+      context.emit('search', type.value, keyword.value);
     }
 
     return {

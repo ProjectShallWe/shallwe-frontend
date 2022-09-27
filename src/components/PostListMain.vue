@@ -75,10 +75,10 @@
         <Pagination
             :page="pageNum"
             :total-pages="totalPages"
-            @on-click="getPosts"
+            @on-click="setPaginationParam"
         />
         <BoardSearchBar
-            @search="getPosts"/>
+            @search="setSearchConditionParam"/>
       </div>
     </div>
   </div>
@@ -102,9 +102,9 @@ export default {
     const store = useStore();
     const boardId = route.params.boardId;
     const categoryId = route.query.category;
-    const pageParam = route.query.page;
-    const typeParam = route.query.type;
-    const keywordParam = route.query.keyword;
+    const pageParam = ref(route.query.page);
+    const typeParam = ref(route.query.type);
+    const keywordParam = ref(route.query.keyword);
     const posts = computed(() => store.state.postListMain.posts);
     const pageNum = computed(() => store.state.postListMain.page);
     const totalPages = computed(() => store.state.postListMain.totalPages);
@@ -143,7 +143,20 @@ export default {
       return types.value && keywords.value;
     }
 
+    const setPaginationParam = (page) => {
+      pageParam.value = page;
+    }
+
+    const setSearchConditionParam = (type, keyword) => {
+      typeParam.value = type;
+      keywordParam.value = keyword;
+    }
+
     const getPosts = (page, type, keyword, categoryId) => {
+      console.log("page = " + page);
+      console.log("type = " + type);
+      console.log("keyword = " + keyword);
+      console.log("categoryId = " + categoryId);
       // SearchCondition 을 유지하면서 Pagination 하기 위해 변수에 저장
       if (type !== undefined && keyword !== undefined) {
         types.value = type;
@@ -172,13 +185,13 @@ export default {
 
     const pageParamResolver = (page) => {
       // pageParam이 undefined일 경우, page값이 NAN이 되는 것을 방지하기 위한 방어코드.
-      if (!pageParam) {
+      if (!pageParam.value) {
         return 0;
       }
       return page;
     }
 
-    getPosts(pageParamResolver(pageParam -1), typeParam, keywordParam, categoryId);
+    getPosts(pageParamResolver(pageParam.value -1), typeParam.value, keywordParam.value, categoryId);
 
     return {
       posts,
@@ -187,6 +200,8 @@ export default {
       board,
       pageNum,
       totalPages,
+      setPaginationParam,
+      setSearchConditionParam,
       getPostDetailUrl,
       getPostsInPostCategory,
       getPostsInBoard,
