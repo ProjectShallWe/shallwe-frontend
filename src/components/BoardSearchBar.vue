@@ -11,7 +11,11 @@
           <option value="nickname">닉네임</option>
         </select>
         <input type="text" v-model="keyword">
-        <button type="submit">검색</button>
+<!--        <a :href="addSearchParamUrl(type, keyword)">-->
+          <button type="submit" @click="addSearchParamUrl(type, keyword)">
+            검색
+          </button>
+<!--        </a>-->
       </form>
     </div>
   </div>
@@ -21,25 +25,40 @@
 import {ref} from "vue";
 
 export default {
-  props: {
-    page: {
-      type: Number,
-      required: true,
-    },
-  },
   emits: ['search'],
   setup(props, context) {
     const keyword = ref('');
     const type = ref('ticon');
 
+    const url = ref(window.location.href);
+    const isTypeParam = new URL(url.value).searchParams.has("type");
+    const isKeywordParam = new URL(url.value).searchParams.has("keyword");
+
+    const addSearchParamUrl = (type, keyword) => {
+      const changedUrl = new URL(url.value);
+
+      if (isTypeParam) {
+        changedUrl.searchParams.delete("type");
+      }
+
+      if (isKeywordParam) {
+        changedUrl.searchParams.delete("keyword");
+      }
+
+      changedUrl.searchParams.append("type", type);
+      changedUrl.searchParams.append("keyword", keyword);
+      return location.href = changedUrl.toString();
+    }
+
     const search = () => {
-      context.emit('search', props.page, type.value, keyword.value);
+      context.emit('search', 0, type.value, keyword.value);
     }
 
     return {
       type,
       keyword,
       search,
+      addSearchParamUrl,
     }
   }
 }
@@ -71,4 +90,5 @@ button {
   color: #FFFFFF;
   background-color: #8977AD;
 }
+
 </style>

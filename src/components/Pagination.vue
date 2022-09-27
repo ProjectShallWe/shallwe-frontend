@@ -7,7 +7,7 @@
               :class="{inactive : isPreviousButtonInactive($props.page, displayCount)}"
           >
             <a
-                href="javascript:void(0);"
+                :href="addPageParamUrl(calcPreviousButton($props.page, displayCount))"
                 @click="onClick(calcPreviousButton($props.page, displayCount))"
             >
               이전
@@ -17,7 +17,7 @@
               :key="page"
               class="page">
             <a
-                href="javascript:void(0);"
+                :href="addPageParamUrl(page)"
                 @click="onClick(page)"
             >
               {{ page }}
@@ -28,7 +28,7 @@
               :class="{inactive : isNextButtonInactive($props.page, $props.totalPages, displayCount)}"
           >
             <a
-                href="javascript:void(0);"
+                :href="addPageParamUrl(calcNextButton($props.page, displayCount))"
                 @click="onClick(calcNextButton($props.page, displayCount))"
             >
               다음
@@ -56,7 +56,21 @@ export default {
   },
   emits: ['on-click'],
   setup(props, context) {
+    const url = ref(window.location.href);
+    const isPageParam = new URL(url.value).searchParams.has("page");
+
     const displayCount = ref(10);
+
+    const addPageParamUrl = (page) => {
+      const changedUrl = new URL(url.value);
+
+      if (isPageParam) {
+        changedUrl.searchParams.delete("page");
+      }
+
+      changedUrl.searchParams.append("page", page);
+      return changedUrl;
+    }
 
     const onClick = (page) => {
       /*
@@ -102,7 +116,9 @@ export default {
     };
 
     return {
+      url,
       displayCount,
+      addPageParamUrl,
       pageNumList,
       onClick,
       isPreviousButtonInactive,

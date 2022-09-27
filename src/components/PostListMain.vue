@@ -78,7 +78,6 @@
             @on-click="getPosts"
         />
         <BoardSearchBar
-            :page="pageNum"
             @search="getPosts"/>
       </div>
     </div>
@@ -103,6 +102,9 @@ export default {
     const store = useStore();
     const boardId = route.params.boardId;
     const categoryId = route.query.category;
+    const pageParam = route.query.page;
+    const typeParam = route.query.type;
+    const keywordParam = route.query.keyword;
     const posts = computed(() => store.state.postListMain.posts);
     const pageNum = computed(() => store.state.postListMain.page);
     const totalPages = computed(() => store.state.postListMain.totalPages);
@@ -115,13 +117,13 @@ export default {
     const board = computed(() => store.state.postListMain.board);
 
     const getPostDetailUrl = (post) => {
+      url.value = `/community/${boardId}/${post.postId}`;
+
       if (categoryId) {
-        return url.value = `/community/${boardId}/${post.postId}?category=${post.postCategoryId}`
+        return url.value + `?category=${post.postCategoryId}`;
       }
 
-      if (!categoryId) {
-        return url.value = `/community/${boardId}/${post.postId}`
-      }
+      return url.value;
     }
 
     const getPostsInBoard = (page) =>
@@ -141,7 +143,7 @@ export default {
       return types.value && keywords.value;
     }
 
-    const getPosts = (page = 0, type, keyword) => {
+    const getPosts = (page, type, keyword, categoryId) => {
       // SearchCondition 을 유지하면서 Pagination 하기 위해 변수에 저장
       if (type !== undefined && keyword !== undefined) {
         types.value = type;
@@ -150,21 +152,33 @@ export default {
 
       // Category Yes, SearchCondition No
       if (categoryId && !isSearchCondition(types, keywords)) {
+        console.log("getPostsInPostCategory");
         return getPostsInPostCategory(categoryId, page);
       }
       // Category No, SearchCondition Yes
       if (!categoryId && isSearchCondition(types, keywords)) {
+        console.log("getPostsBySearchKeywordInBoard");
         return getPostsBySearchKeywordInBoard(page, types.value, keywords.value);
       }
       // Category Yes, SearchCondition Yes
       if (categoryId && isSearchCondition(types, keywords)) {
+        console.log("getPostsBySearchKeywordInPostCategory");
         return getPostsBySearchKeywordInPostCategory(categoryId, page, types.value, keywords.value);
       }
       // Category No, SearchCondition No
+      console.log("getPostsInBoard")
       return getPostsInBoard(page);
     };
 
-    getPosts();
+    const pageParamResolver = (page) => {
+      // pageParam이 undefined일 경우, page값이 NAN이 되는 것을 방지하기 위한 방어코드.
+      if (!pageParam) {
+        return 0;
+      }
+      return page;
+    }
+
+    getPosts(pageParamResolver(pageParam -1), typeParam, keywordParam, categoryId);
 
     return {
       posts,
@@ -253,7 +267,7 @@ tbody tr td.title {
 
 .title div:last-child {
   color: #8977AD;
-  margin-right: 0px;
+  margin-right: 0;
 }
 
 .nickname {
