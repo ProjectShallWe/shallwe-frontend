@@ -2,9 +2,15 @@
   <div class="row">
     <div class="col-12">
       <div class="wrapper">
-        <h1 class="board-title">
-          {{ board[0]?.title }} 게시판
-        </h1>
+        <div class="post-list-top">
+          <h1 class="board-title">
+            {{ board[0]?.title }} 게시판
+          </h1>
+          <button type="button" class="post-create-button"
+                  @click="movePostCreate">
+            글쓰기
+          </button>
+        </div>
         <div class="post-category-list">
           <a
               :href="`/community/${boardId}`"
@@ -114,6 +120,16 @@ export default {
 
     const board = computed(() => store.state.postListMain.board);
 
+    const movePostCreate = () => {
+      const basicUrl = `/community/${boardId}/create`;
+
+      if (categoryId) {
+        return location.href = basicUrl + `?category=${categoryId}`;
+      }
+
+      return location.href = `/community/${boardId}/create`
+    }
+
     const getPostDetailUrl = (post) => {
       const basicUrl = `/community/${boardId}/${post.postId}`;
       const urlParams = new URLSearchParams(window.location.search);
@@ -195,6 +211,7 @@ export default {
       board,
       pageNum,
       totalPages,
+      movePostCreate,
       setPaginationParam,
       setSearchConditionParam,
       getPostDetailUrl,
@@ -218,6 +235,21 @@ td {
   white-space: nowrap;
 }
 
+.post-list-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+
+}
+
+.post-create-button {
+  height: 40px;
+  width: 80px;
+  color: #F8F8F8;
+  background-color: #8977AD;
+  border-radius: 8px;
+}
+
 .board-title {
   font-size: 17px;
   padding: 8px 0;
@@ -234,6 +266,7 @@ td {
 .post-category-list {
   display: inline-flex;
   flex-wrap: wrap;
+  margin-bottom: 8px;
 }
 
 .post-category-list a {
