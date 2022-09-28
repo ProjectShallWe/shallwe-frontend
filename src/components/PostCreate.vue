@@ -137,7 +137,7 @@ export default {
   setup() {
     const store = useStore();
     const boardId = useRoute().params.boardId;
-    const category = useRoute().query.category;
+    const category = ref(useRoute().query.category);
     const title = ref('');
 
     const editor = useEditor({
@@ -164,6 +164,10 @@ export default {
 
     const cancel = () => {
       return router.push(`/community/${boardId}`)
+    }
+
+    if (!category.value) {
+      category.value = "default";
     }
 
     return {
