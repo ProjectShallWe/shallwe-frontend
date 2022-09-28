@@ -109,21 +109,16 @@ export default {
     const pageNum = computed(() => store.state.postListMain.page);
     const totalPages = computed(() => store.state.postListMain.totalPages);
 
-    const url = ref("");
-
     const types = ref("");
     const keywords = ref("");
 
     const board = computed(() => store.state.postListMain.board);
 
     const getPostDetailUrl = (post) => {
-      url.value = `/community/${boardId}/${post.postId}`;
+      const basicUrl = `/community/${boardId}/${post.postId}`;
+      const urlParams = new URLSearchParams(window.location.search);
 
-      if (categoryId) {
-        return url.value + `?category=${post.postCategoryId}`;
-      }
-
-      return url.value;
+      return basicUrl + "?" + urlParams.toString();
     }
 
     const getPostsInBoard = (page) =>
