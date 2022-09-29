@@ -39,6 +39,7 @@
           </div>
           <div class="reply-line">
             <button
+                v-if="loggedIn"
                 @click="showReplyWriteForm(comment)"
                 type="button"
             >
@@ -49,14 +50,14 @@
               v-if="comment.isShowReplyWriteForm && loggedIn"
               class="reply-write-form"
           >
-            <h3>댓글 작성</h3>
+            <h3>답글 작성</h3>
             <form
                 @submit.prevent="writeChildComment(comment.commentId)"
                 class="reply-write-content"
             >
               <textarea
                   v-model="childContent"
-                  placeholder="댓글을 작성해주세요."
+                  placeholder="답글을 작성해주세요."
               />
               <button type="submit">등록</button>
             </form>
@@ -97,14 +98,13 @@
 <script>
 import {useRoute} from "vue-router";
 import {computed, ref} from "vue";
-import axios from "@/axios";
 import store from "@/store";
 
 export default {
   setup() {
     const route = useRoute();
     const postId = route.params.postId;
-    const commentList = ref([]);
+    const commentList = ref(computed(() => store.state.commentList.comments));
     const parentContent = ref("");
     const childContent = ref("");
 
@@ -114,66 +114,61 @@ export default {
       for (const comment of commentList.value) {
         comment.isShowReplyWriteForm = false;
       }
-    }
-
-    const getCommentsInPost = async () => {
-      const res = await axios.get(
-          `api/comment?post=${postId}`
-      );
-      commentList.value = res.data
-      addIsShowReplyForm();
     };
 
-    getCommentsInPost();
-
     const showReplyWriteForm = (comment) => {
+      // 만약 답글 작성 창이 열려 있으면 닫아준다.
       if (!comment.isShowReplyWriteForm) {
         addIsShowReplyForm();
       }
-        return comment.isShowReplyWriteForm = !comment.isShowReplyWriteForm;
+      // 이후 현재 답글 작성 창을 토글로 열고 닫는다.
+      return comment.isShowReplyWriteForm = !comment.isShowReplyWriteForm;
+    };
+
+    const getCommentsInPost = async () => {
+      await store.dispatch("commentList/getCommentsInPost", {
+        postId: postId,
+      });
+      addIsShowReplyForm();
     };
 
     const writeParentComment = async () => {
-     await axios.post(
-          `api/comment?post=${postId}`, {
-            content: parentContent.value,
-          },
-         {
-           headers: {
-             Authorization: localStorage.getItem('userToken'),
-           }
-         }
-      )
-      parentContent.value = "";
-      await getCommentsInPost();
-    }
+      await store.dispatch("commentList/writeParentComment", {
+        postId,
+        content: parentContent.value,
+      }).then(() => {
+        parentContent.value = "";
+        getCommentsInPost()
+      });
+    };
 
     const writeChildComment = async (commentId) => {
-      await axios.post(
-          `api/comment/${commentId}?post=${postId}`, {
-            content: childContent.value,
-          },
-          {
-            headers: {
-              Authorization: localStorage.getItem('userToken'),
-            }
-          }
-      )
-      childContent.value = "";
-      await getCommentsInPost();
-    }
+      await store.dispatch("commentList/writeChildComment", {
+        postId,
+        commentId,
+        content: childContent.value,
+      }).then(() => {
+        childContent.value = "";
+        getCommentsInPost();
+      });
+    };
 
     const getContent = (content) => {
       return content.split('\n').join('<br>');
-    }
+    };
 
     const addLikeCount = async (commentId) => {
       const agree = confirm("해당 댓글에 공감하시겠습니까?")
       if (agree) {
-        await store.dispatch("commentList/addLikeCount", {commentId})
-        await getCommentsInPost();
+        await store.dispatch("commentList/addLikeCount", {
+          commentId
+        }).then(() => {
+         getCommentsInPost();
+        });
       }
-    }
+    };
+
+    getCommentsInPost();
 
     return {
       commentList,
