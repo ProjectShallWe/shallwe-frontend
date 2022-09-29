@@ -26,7 +26,12 @@
               <span class="comment-created-date">({{ comment.createdDate }})</span>
             </div>
             <div class="comment-reaction">
-              <span class="comment-like">like button</span>
+              <div @click = "addLikeCount(comment.commentId)"
+                  class="comment-like-button">
+                <span class="comment-like-count">
+                  {{comment.likeCommentCount}}
+                </span>
+              </div>
             </div>
           </div>
           <div class="comment-content">
@@ -67,8 +72,13 @@
                   <span class="reply-writer">{{ reply.nickname }}</span>
                   <span class="reply-created-date">({{ reply.createdDate }})</span>
                 </div>
-                <div class="reply-reaction">
-                  <span class="reply-like">like button</span>
+                <div class="comment-reaction">
+                  <div @click = "addLikeCount(comment.commentId)"
+                       class="comment-like-button">
+                <span class="comment-like-count">
+                  {{reply.likeCommentCount}}
+                </span>
+                  </div>
                 </div>
               </div>
               <div class="reply-content">
@@ -157,6 +167,14 @@ export default {
       return content.split('\n').join('<br>');
     }
 
+    const addLikeCount = async (commentId) => {
+      const agree = confirm("해당 댓글에 공감하시겠습니까?")
+      if (agree) {
+        await store.dispatch("commentList/addLikeCount", {commentId})
+        await getCommentsInPost();
+      }
+    }
+
     return {
       commentList,
       parentContent,
@@ -167,6 +185,7 @@ export default {
       writeParentComment,
       writeChildComment,
       getContent,
+      addLikeCount
     }
   },
 }
@@ -204,6 +223,34 @@ export default {
 .comment-content p,
 .reply-content p {
   width: 100%;
+}
+
+.comment-reaction {
+  display: flex;
+  align-content: center;
+}
+
+.comment-like-button {
+  display: flex;
+  border: #C34747 solid 1px;
+  border-radius: 8px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.comment-like-count {
+  font-size: 12px;
+}
+
+.comment-like-count::before {
+  display: inline-block;
+  content: "";
+  background-image: url("../assets/thumb_up_black_24dp.svg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  width: 14px;
+  height: 12px;
+  margin-right: 4px;
 }
 
 .reply {
