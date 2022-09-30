@@ -76,9 +76,9 @@
                 <div class="comment-reaction">
                   <div @click = "addLikeCount(comment.commentId)"
                        class="comment-like-button">
-                <span class="comment-like-count">
-                  {{reply.likeCommentCount}}
-                </span>
+                    <span class="comment-like-count">
+                      {{reply.likeCommentCount}}
+                    </span>
                   </div>
                 </div>
               </div>

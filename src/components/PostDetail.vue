@@ -24,6 +24,15 @@
         </div>
       </div>
       <div class="post-content" v-html="postDetail.content" />
+      <div class="post-reaction">
+        <a @click = "addLikeCount(postDetail.postId)"
+          class="post-like-button"
+        >
+          <span class="post-like-count">
+            {{postDetail.likeCount}}
+          </span>
+        </a>
+      </div>
       <div class="comment-list-header">
         <h3>댓글</h3>
         <span>({{ postDetail.commentCount }})</span>
@@ -36,9 +45,11 @@
 import axios from "@/axios";
 import {ref} from "vue";
 import {useRoute} from "vue-router";
+import {useStore} from "vuex";
 
 export default {
   setup() {
+    const store = useStore();
     const route = useRoute();
     const postId = route.params.postId;
     const postDetail = ref([]);
@@ -50,11 +61,23 @@ export default {
       postDetail.value = res.data
     }
 
+    const addLikeCount = async () => {
+      const agree = confirm("해당 글에 공감하시겠습니까?");
+      if (agree) {
+        await store.dispatch("postDetail/addLikeCount", {
+          postId
+        }).then(() => {
+          getPostDetails();
+        });
+      }
+    }
+
     getPostDetails();
 
     return {
       getPostDetails,
       postDetail,
+      addLikeCount,
     }
   },
 }
@@ -114,6 +137,35 @@ export default {
 
 .post-content {
   padding: 16px 0;
+}
+
+.post-reaction {
+  display: flex;
+  justify-content: center;
+}
+
+.post-like-button {
+  display: flex;
+  border: #D3D3D3 solid 1px;
+  border-radius: 4px;
+  padding: 12px 20px;
+  cursor: pointer;
+}
+
+.post-like-count {
+  font-size: 16px;
+  color: #C34747;
+}
+
+.post-like-count::before {
+  display: inline-block;
+  content: "";
+  background-image: url("../assets/thumb_up_black_24dp.svg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  width: 24px;
+  height: 21px;
+  margin-right: 4px;
 }
 
 .comment-list-header {
