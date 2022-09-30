@@ -42,8 +42,7 @@
 </template>
 
 <script>
-import axios from "@/axios";
-import {ref} from "vue";
+import {ref, computed} from "vue";
 import {useRoute} from "vue-router";
 import {useStore} from "vuex";
 
@@ -52,13 +51,12 @@ export default {
     const store = useStore();
     const route = useRoute();
     const postId = route.params.postId;
-    const postDetail = ref([]);
+    const postDetail = ref(computed(() => store.state.postDetail.postDetail));
 
     const getPostDetails = async () => {
-      const res = await axios.get(
-          `api/post/${postId}`
-      );
-      postDetail.value = res.data
+      await store.dispatch("postDetail/getPostDetails", {
+        postId
+      });
     }
 
     const addLikeCount = async () => {
@@ -75,8 +73,8 @@ export default {
     getPostDetails();
 
     return {
-      getPostDetails,
       postDetail,
+      getPostDetails,
       addLikeCount,
     }
   },
