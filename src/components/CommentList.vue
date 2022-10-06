@@ -74,7 +74,7 @@
                   <span class="reply-created-date">({{ reply.createdDate }})</span>
                 </div>
                 <div class="comment-reaction">
-                  <div @click = "addLikeCount(comment.commentId)"
+                  <div @click = "addLikeCount(reply.commentId)"
                        class="comment-like-button">
                     <span class="comment-like-count">
                       {{reply.likeCommentCount}}
