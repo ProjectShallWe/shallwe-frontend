@@ -4,6 +4,7 @@ import Community from "@/page/community/index";
 import Board from "@/page/community/board/_id"
 import PostCreate from "@/page/community/board/create"
 import PostDetail from "@/page/community/board/post/_id"
+import Search from "@/page/community/board/search/index"
 import Login from "@/page/user/login";
 import SignUp from "@/page/user/signUp";
 
@@ -34,6 +35,11 @@ const router = createRouter({
             path: '/community/:boardId/:postId',
             name: 'postDetail',
             component: PostDetail
+        },
+        {
+            path: '/community/search',
+            name: 'search',
+            component: Search
         },
         {
             path: '/user/login',

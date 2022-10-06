@@ -11,9 +11,14 @@
         </h1>
       </div>
       <div class="col-3 community-search">
-        <form action="" method="get">
-          <input type="email" placeholder="커뮤니티 통합 검색">
-          <button type="button">검색</button>
+        <form
+            @submit.prevent="search"
+        >
+          <input
+              v-model="keyword"
+              type="text"
+              placeholder=" 커뮤니티 통합 검색">
+          <button type="submit">검색</button>
         </form>
       </div>
     </div>
@@ -21,7 +26,23 @@
 </template>
 
 <script>
-export default {}
+import {ref} from "vue";
+
+export default {
+  setup() {
+    const keyword = ref("");
+
+    const search = () => {
+      // keyword를 query로 전달
+      return location.href = `/community/search?keyword=${keyword.value}`;
+    }
+
+    return {
+      keyword,
+      search,
+    }
+  }
+}
 </script>
 
 <style scoped>
