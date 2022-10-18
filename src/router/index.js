@@ -60,4 +60,13 @@ const router = createRouter({
     ]
 });
 
+const makeTitle = (title) => {
+    return title ? `${title} - Shallwe` : "Shallwe";
+}
+
+router.beforeEach((to, from, next) => {
+    document.title = makeTitle(to.meta.title);
+    next()
+})
+
 export default router;
