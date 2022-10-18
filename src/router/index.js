@@ -5,6 +5,7 @@ import Board from "@/page/community/board/_id"
 import PostCreate from "@/page/community/board/create"
 import PostDetail from "@/page/community/board/post/_id"
 import Search from "@/page/community/board/search/index"
+import Info from "@/page/user/index"
 import Login from "@/page/user/login";
 import SignUp from "@/page/user/signUp";
 
@@ -40,6 +41,11 @@ const router = createRouter({
             path: '/community/search',
             name: 'search',
             component: Search
+        },
+        {
+            path: '/user/:nickname',
+            name: 'info',
+            component: Info
         },
         {
             path: '/user/login',

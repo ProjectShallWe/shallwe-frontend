@@ -22,6 +22,9 @@ export default {
             state.email = '';
             localStorage.removeItem("userToken");
             axios.defaults.headers.common['Authorization'] = '';
+        },
+        changeNickname(state, {nickname}) {
+            state.nickname = nickname;
         }
     },
     actions: {
@@ -38,7 +41,10 @@ export default {
         logout({commit}) {
             commit("logout");
             alert("로그아웃되었습니다.")
-        }
+        },
+        changeNickname({commit}, {nickname}) {
+            commit("changeNickname", {nickname})
+        },
     },
     getters: {
         loggedIn(state) {

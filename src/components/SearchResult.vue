@@ -78,7 +78,7 @@ export default {
     const posts = computed(() => store.state.searchResult.posts);
 
     const setPaginationParam = (page) => {
-      page.value = page;
+      pageParam.value = page;
     }
 
     const pageParamResolver = (page) => {

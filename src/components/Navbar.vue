@@ -40,7 +40,7 @@
         </router-link>
       </div>
       <div v-else class="user">
-        <a>
+        <a :href="`/user/${nickname}`">
           {{ nickname }}님
         </a>
         <button type="button" @click="logOut">
