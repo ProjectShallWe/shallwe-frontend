@@ -18,13 +18,6 @@
             커뮤니티
           </router-link>
         </li>
-        <li>
-          <router-link
-              :to="{name: 'community'}"
-          >
-            커뮤니티
-          </router-link>
-        </li>
       </ul>
       <!-- User -->
       <div class="user" v-if="!loggedIn">
