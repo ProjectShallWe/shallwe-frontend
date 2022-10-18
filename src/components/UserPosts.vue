@@ -34,8 +34,8 @@
         {{ post.boardTitle }}
       </td>
       <td class="post-title">
-        <a
-            :href="`/community/${post.boardId}/${post.postId}`"
+        <router-link
+            :to="`/community/${post.boardId}/${post.postId}`"
         >
           <div>
             {{ post.title }}
@@ -43,7 +43,7 @@
           <div class="post-comment-count">
             [{{post.commentCount}}]
           </div>
-        </a>
+        </router-link>
       </td>
       <td class="post-create_date">
         {{ post.createdDate }}

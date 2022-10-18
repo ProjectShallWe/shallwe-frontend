@@ -7,17 +7,20 @@
             :key="boardCategory.boardCategoryId"
             class="board-category-title"
         >
-          <a href="#">
+          <router-link to="#">
             {{ boardCategory.topic }}
-          </a>
+          </router-link>
           <ul class="board">
             <li
                 v-for="board in boardCategory.boards"
                 :key="board.boardId"
             >
-              <a :href="`/community/${board.boardId}`" class="button">
+              <router-link
+                  :to="`/community/${board.boardId}`"
+                  class="button"
+              >
                 {{ board.title }}
-              </a>
+              </router-link>
             </li>
           </ul>
         </li>

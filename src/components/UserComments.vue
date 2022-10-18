@@ -34,13 +34,13 @@
         {{ comment.boardTitle }}
       </td>
       <td class="post-title">
-        <a
-            :href="`/community/${comment.boardId}/${comment.postId}`"
+        <router-link
+            :to="`/community/${comment.boardId}/${comment.postId}`"
         >
           <div>
             {{ comment.content }}
           </div>
-        </a>
+        </router-link>
       </td>
       <td class="post-create_date">
         {{ comment.createdDate }}

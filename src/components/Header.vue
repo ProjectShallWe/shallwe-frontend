@@ -3,11 +3,13 @@
     <div class="row">
       <div class="col-2">
         <h1 class="community-title">
-          <a :href="`/community`">
+          <router-link
+              :to="`/community`"
+          >
             <strong>
               ShallWe
             </strong>
-          </a>
+          </router-link>
         </h1>
       </div>
       <div class="col-3 community-search">

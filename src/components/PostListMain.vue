@@ -12,19 +12,19 @@
           </button>
         </div>
         <div class="post-category-list">
-          <a
-              :href="`/community/${boardId}`"
+          <router-link
+              :to="`/community/${boardId}`"
               @click="getPostsInBoard(0)">
             전체
-          </a>
-          <a
+          </router-link>
+          <router-link
               v-for="postCategory in board[0]?.postCategories"
               :key="postCategory.postCategoryId"
-              :href="`/community/${boardId}?category=${postCategory.postCategoryId}`"
+              :to="`/community/${boardId}?category=${postCategory.postCategoryId}`"
               @click="getPostsInPostCategory(postCategory.postCategoryId, 0)"
           >
             {{ postCategory.topic }}
-          </a>
+          </router-link>
         </div>
         <table class="post-list">
           <thead>
@@ -55,8 +55,8 @@
               {{ post.postCategory }}
             </td>
             <td class="title">
-              <a
-                  :href="getPostDetailUrl(post)"
+              <router-link
+                  :to="getPostDetailUrl(post)"
               >
                 <div>
                   {{ post.title }}
@@ -64,7 +64,7 @@
                 <div class="comment-count">
                   [{{post.commentCount}}]
                 </div>
-              </a>
+              </router-link>
             </td>
             <td class="nickname">
               {{ post.nickname }}

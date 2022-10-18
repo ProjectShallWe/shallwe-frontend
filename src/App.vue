@@ -1,6 +1,8 @@
 <template>
-  <Navbar />
-  <router-view/>
+  <div id="App">
+    <Navbar />
+    <router-view :key="$route.fullPath"/>
+  </div>
 </template>
 
 <script>
@@ -10,7 +12,7 @@ export default {
   name: 'App',
   components: {
     Navbar,
-  }
+  },
 }
 </script>
 
@@ -31,7 +33,7 @@ h1,h2,h3,p {
 }
 
 a,
-a:active
+a:active,
 a:visited,
 a:hover {
   display: block;
@@ -45,7 +47,7 @@ button:active,
 input,
 input:focus,
 input:active,
-textarea
+textarea,
 textarea:focus,
 textarea:active {
   border-style: none;

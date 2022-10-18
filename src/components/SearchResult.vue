@@ -14,9 +14,11 @@
           :key="board.boardId"
           class="board">
         <h2 class="board-title">
-          <a :href="`/community/${board.boardId}`">
+          <router-link
+              :to="`/community/${board.boardId}`"
+          >
             {{ board.title }} 게시판
-          </a>
+          </router-link>
         </h2>
       </li>
     </ul>
@@ -32,18 +34,22 @@
           :key="post.postId"
           class="post">
         <h3 class="post-title">
-          <a :href="`/community/${post.boardId}/${post.postId}`">
+          <router-link
+              :to="`/community/${post.boardId}/${post.postId}`"
+          >
             {{ post.title }}
-          </a>
+          </router-link>
         </h3>
         <p class="post-content">
           {{ post.content }}
         </p>
         <div class="post-info">
-          <a :href="`/community/${post.boardId}`"
-             class="post-board">
+          <router-link
+              :to="`/community/${post.boardId}`"
+              class="post-board"
+          >
             {{ post.boardTitle }} 게시판
-          </a>
+          </router-link>
           <p class="post-date">
             {{ post.createdDate }}
           </p>

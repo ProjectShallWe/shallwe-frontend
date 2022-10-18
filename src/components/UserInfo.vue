@@ -5,24 +5,32 @@
       <div class="info-menu-wrapper">
         <ul class="info-menu">
           <li class="info-user">
-            <a :href="`/user/${nickname}`">
+            <router-link
+                :to="`/user/${nickname}`"
+            >
               내 정보
-            </a>
+            </router-link>
           </li>
           <li class="info-security">
-            <a :href="`/user/${nickname}?mode=security`">
+            <router-link
+                :to="`/user/${nickname}?mode=security`"
+            >
               보안 설정
-            </a>
+            </router-link>
           </li>
           <li class="info-post">
-            <a :href="`/user/${nickname}?mode=post`">
+            <router-link
+                :to="`/user/${nickname}?mode=post`"
+            >
               게시글
-            </a>
+            </router-link>
           </li>
           <li class="info-comment">
-            <a :href="`/user/${nickname}?mode=comment`">
+            <router-link
+                :to="`/user/${nickname}?mode=comment`"
+            >
               댓글
-            </a>
+            </router-link>
           </li>
         </ul>
       </div>
@@ -218,6 +226,7 @@ input {
   font-size: 14px;
   margin-bottom: 16px;
 }
+
 .nowUse,
 .regExp,
 .duplicate {

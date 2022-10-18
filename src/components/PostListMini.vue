@@ -11,8 +11,8 @@
           :key="post.postId"
           class="recommend-post"
       >
-        <a
-            :href="`/community/${post.boardId}/${post.postId}`"
+        <router-link
+            :to="`/community/${post.boardId}/${post.postId}`"
         >
           <div class="recommend-postCategory">
             {{ post.postCategory }}
@@ -23,7 +23,7 @@
           <div class="recommend-commentCount">
             [{{ post.commentCount }}]
           </div>
-        </a>
+        </router-link>
       </li>
     </ul>
   </div>
