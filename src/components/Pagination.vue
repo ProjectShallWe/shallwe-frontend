@@ -6,33 +6,33 @@
           <li class="previous-page"
               :class="{inactive : isPreviousButtonInactive($props.page, displayCount)}"
           >
-            <a
-                :href="addPageParamUrl(calcPreviousButton($props.page, displayCount))"
+            <router-link
+                :to="addPageParamUrl(calcPreviousButton($props.page, displayCount))"
                 @click="onClick(calcPreviousButton($props.page, displayCount))"
             >
               이전
-            </a>
+            </router-link>
           </li>
           <li v-for="page in pageNumList($props.page, $props.totalPages, displayCount)"
               :key="page"
               class="page">
-            <a
-                :href="addPageParamUrl(page)"
+            <router-link
+                :to="addPageParamUrl(page)"
                 @click="onClick(page)"
             >
               {{ page }}
-            </a>
+            </router-link>
           </li>
           <li
               class="next-page"
               :class="{inactive : isNextButtonInactive($props.page, $props.totalPages, displayCount)}"
           >
-            <a
-                :href="addPageParamUrl(calcNextButton($props.page, displayCount))"
+            <router-link
+                :to="addPageParamUrl(calcNextButton($props.page, displayCount))"
                 @click="onClick(calcNextButton($props.page, displayCount))"
             >
               다음
-            </a>
+            </router-link>
           </li>
         </ul>
       </nav>
@@ -69,7 +69,7 @@ export default {
       }
 
       changedUrl.searchParams.append("page", page);
-      return changedUrl;
+      return changedUrl.pathname + changedUrl.search;
     }
 
     const onClick = (page) => {
