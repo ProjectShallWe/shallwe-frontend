@@ -5,7 +5,9 @@
         <h1 class="post-write-title">
           {{ board[0]?.title }} 게시판 글쓰기
         </h1>
-        <form @submit.prevent="write">
+        <form
+            @submit.prevent="write"
+        >
           <div class="post-title">
             <select v-model="category">
               <option value="default">카테고리 선택</option>
@@ -101,10 +103,30 @@
                 <button type="button" @click="editor.chain().focus().redo().run()">
                   redo
                 </button>
+                <button type="button" @click="toggleUrlModal">
+                  setImage
+                </button>
+              </div>
+              <div
+                  v-if="urlModal"
+                  class="image-url"
+              >
+                <h3>URL</h3>
+                <input
+                    v-model="url"
+                    type="text"
+                    placeholder="이미지의 URL을 입력해주세요"
+                >
+                <button
+                    type="button"
+                    @click="editor.chain().focus().setImage({src: url}).run(), initModal()"
+                >
+                  확인
+                </button>
               </div>
               <editor-content class="editor-content" :editor="editor"/>
             </div>
-            <!-- tiptap editor start -->
+            <!-- tiptap editor end -->
           </div>
           <div class="button-group">
             <button
@@ -123,11 +145,12 @@
 </template>
 
 <script>
-import {ref, computed} from "vue";
+import {computed, ref} from "vue";
 import {useStore} from "vuex";
 import {useRoute} from "vue-router";
-import {useEditor, EditorContent} from '@tiptap/vue-3';
+import {EditorContent, useEditor} from '@tiptap/vue-3';
 import StarterKit from '@tiptap/starter-kit';
+import Image from '@tiptap/extension-image'
 import router from "@/router";
 
 export default {
@@ -138,16 +161,28 @@ export default {
     const store = useStore();
     const boardId = useRoute().params.boardId;
     const category = ref(useRoute().query.category);
-    const title = ref('');
+    const title = ref("");
+    const urlModal = ref(false);
+    const url = ref("");
 
     const editor = useEditor({
       content: "",
       extensions: [
         StarterKit,
+        Image,
       ],
     });
 
     const board = computed(() => store.state.postListMain.board);
+
+    const toggleUrlModal = () => {
+      urlModal.value = !urlModal.value;
+    }
+
+    const initModal = () => {
+      urlModal.value = false;
+      url.value = "";
+    }
 
     const write = async () => {
       if (!category.value || category.value === "default") {
@@ -172,6 +207,10 @@ export default {
 
     return {
       title,
+      url,
+      urlModal,
+      toggleUrlModal,
+      initModal,
       editor,
       board,
       category,
@@ -183,7 +222,7 @@ export default {
     this.$store.dispatch('postListMain/getBoardWithPostCategories', {
       id: this.$route.params.boardId,
     });
-  }
+  },
 }
 </script>
 
@@ -305,6 +344,32 @@ export default {
 
 .editor-menu {
   border-bottom: 1px solid #D3D3D3;
+}
+
+.image-url {
+  display: flex;
+  text-align: center;
+  width: 100%;
+  color: #F8F8F8;
+  background-color: #8977AD;
+  border: #8977AD solid 2px;
+  border-radius: 8px;
+}
+
+.image-url h3 {
+  width: 80px;
+  font-size: 18px;
+}
+
+.image-url input {
+  width: 100%;
+}
+
+.image-url button {
+  width: 80px;
+  font-size: 18px;
+  background-color: #8977AD;
+  color: #F8F8F8;
 }
 
 .editor-content {

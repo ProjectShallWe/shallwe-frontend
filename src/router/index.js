@@ -61,7 +61,7 @@ const router = createRouter({
 });
 
 const makeTitle = (title) => {
-    return title ? `${title} - Shallwe` : "Shallwe";
+    return title ? `${title} - ShallWe` : "ShallWe";
 }
 
 router.beforeEach((to, from, next) => {
