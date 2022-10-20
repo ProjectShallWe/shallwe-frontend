@@ -27,124 +27,107 @@
               <div class="editor-menu" v-if="editor">
                 <button type="button" @click="editor.chain().focus().toggleBold().run()"
                         :class="{ 'is-active': editor.isActive('bold') }">
-                  bold
+                  <img src="../assets/tiptap/bold.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().toggleItalic().run()"
                         :class="{ 'is-active': editor.isActive('italic') }">
-                  italic
+                  <img src="../assets/tiptap/italic.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().toggleStrike().run()"
                         :class="{ 'is-active': editor.isActive('strike') }">
-                  strike
+                  <img src="../assets/tiptap/strikethrough.svg">
                 </button>
-                <button type="button" @click="editor.chain().focus().toggleCode().run()"
-                        :class="{ 'is-active': editor.isActive('code') }">
-                  code
-                </button>
-                <button type="button" @click="editor.chain().focus().unsetAllMarks().run()">
-                  clear marks
-                </button>
-                <button type="button" @click="editor.chain().focus().clearNodes().run()">
-                  clear nodes
+                <button type="button" @click="clearMarksAndNodes(editor)">
+                  <img src="../assets/tiptap/format-clear.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().setParagraph().run()"
                         :class="{ 'is-active': editor.isActive('paragraph') }">
-                  paragraph
+                  <img src="../assets/tiptap/paragraph.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
                         :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
-                  h1
+                  <img src="../assets/tiptap/h-1.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
                         :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }">
-                  h2
+                  <img src="../assets/tiptap/h-2.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
                         :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }">
-                  h3
-                </button>
-                <button type="button" @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
-                        :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }">
-                  h4
-                </button>
-                <button type="button" @click="editor.chain().focus().toggleHeading({ level: 5 }).run()"
-                        :class="{ 'is-active': editor.isActive('heading', { level: 5 }) }">
-                  h5
-                </button>
-                <button type="button" @click="editor.chain().focus().toggleHeading({ level: 6 }).run()"
-                        :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }">
-                  h6
+                  <img src="../assets/tiptap/h-3.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().toggleBulletList().run()"
                         :class="{ 'is-active': editor.isActive('bulletList') }">
-                  bullet list
+                  <img src="../assets/tiptap/list-unordered.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().toggleOrderedList().run()"
                         :class="{ 'is-active': editor.isActive('orderedList') }">
-                  ordered list
+                  <img src="../assets/tiptap/list-ordered.svg">
+                </button>
+                <button type="button" @click="editor.chain().focus().toggleCode().run()"
+                        :class="{ 'is-active': editor.isActive('code') }">
+                  <img src="../assets/tiptap/code-line.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().toggleCodeBlock().run()"
                         :class="{ 'is-active': editor.isActive('codeBlock') }">
-                  code block
+                  <img src="../assets/tiptap/code-box-line.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().toggleBlockquote().run()"
                         :class="{ 'is-active': editor.isActive('blockquote') }">
-                  blockquote
+                  <img src="../assets/tiptap/double-quotes-l.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().setHorizontalRule().run()">
-                  horizontal rule
+                  <img src="../assets/tiptap/separator.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().setHardBreak().run()">
-                  hard break
+                  <img src="../assets/tiptap/text-wrap.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().undo().run()">
-                  undo
+                  <img src="../assets/tiptap/arrow-go-back-line.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().redo().run()">
-                  redo
+                  <img src="../assets/tiptap/arrow-go-forward-line.svg">
                 </button>
-                <button type="button" @click="toggleUrlModal">
-                  setImage
-                </button>
-                <button type="button" @click="toggleUploadModal">
-                  uploadImage
+                <button type="button" @click="toggleImageModal">
+                  <img src="../assets/tiptap/image-line.svg">
                 </button>
               </div>
-              <div
-                  v-if="urlModal"
-                  class="image-url"
-              >
-                <h3>URL</h3>
-                <input
-                    v-model="url"
-                    type="text"
-                    placeholder="이미지의 URL을 입력해주세요"
-                >
-                <button
-                    type="button"
-                    @click="setImage(editor)"
-                >
-                  확인
-                </button>
-              </div>
-              <div>
+              <div v-if="imageModal">
                 <div
-                    v-if="uploadModal"
-                    class="image-upload"
+                    class="image-url"
                 >
-                  <h3>upload</h3>
-                  <input type="file" @change="onInputImage">
-                  <button
-                    type="button"
-                    @click="uploadImage(editor)"
+                  <h3>URL</h3>
+                  <input
+                      v-model="url"
+                      type="text"
+                      placeholder="이미지의 URL을 입력해주세요"
                   >
-                   확인
+                  <button
+                      type="button"
+                      @click="setImage(editor)"
+                  >
+                    확인
                   </button>
+                </div>
+                <div>
+                  <div
+                      class="image-upload"
+                  >
+                    <h3>upload</h3>
+                    <input type="file" @change="onInputImage">
+                    <button
+                      type="button"
+                      @click="uploadImage(editor)"
+                    >
+                     확인
+                    </button>
 
+                  </div>
                 </div>
               </div>
-
-              <editor-content class="editor-content" :editor="editor"/>
+              <div class="editor-content-wrap">
+                <editor-content class="editor-content" :editor="editor"/>
+              </div>
             </div>
             <!-- tiptap editor end -->
           </div>
@@ -184,15 +167,13 @@ export default {
 
     const title = ref("");
 
-    const urlModal = ref(false);
+    const imageModal = ref(false);
     const url = ref('');
 
-    const uploadModal = ref(false);
     const image = ref('');
     const imageUrl = computed(() => store.state.postCreate.imageUrl);
 
     const board = computed(() => store.state.postListMain.board);
-
 
     const editor = useEditor({
       content: "",
@@ -202,23 +183,24 @@ export default {
       ],
     });
 
-    const toggleUrlModal = () => {
-      urlModal.value = !urlModal.value;
+    const clearMarksAndNodes = (editor) => {
+      editor.chain().focus().unsetAllMarks().run()
+      editor.chain().focus().clearNodes().run()
     }
 
-    const toggleUploadModal = () => {
-      uploadModal.value = !uploadModal.value;
+    const toggleImageModal = () => {
+      imageModal.value = !imageModal.value;
+    }
+
+    const initModal = () => {
+      imageModal.value = false;
+      url.value = '';
     }
 
     const setImage = (editor) => {
       editor.chain().focus().setImage({src : url.value}).run();
 
-      initModal(urlModal)
-    }
-
-    const initModal = (modal) => {
-      modal.value = false;
-      url.value = '';
+      initModal();
     }
 
     const onInputImage = (e) => {
@@ -234,7 +216,7 @@ export default {
 
       editor.chain().focus().setImage({src: url.value}).run();
 
-      initModal(uploadModal);
+      initModal();
     }
 
     const write = async () => {
@@ -264,10 +246,9 @@ export default {
       imageUrl,
       board,
       category,
-      urlModal,
-      uploadModal,
-      toggleUrlModal,
-      toggleUploadModal,
+      imageModal,
+      clearMarksAndNodes,
+      toggleImageModal,
       setImage,
       initModal,
       onInputImage,
@@ -357,7 +338,7 @@ export default {
   list-style-type: decimal;
 }
 
-.ProseMirror h1, h2, h3, h4, h5, h6 {
+.ProseMirror h1, h2, h3 {
   line-height: 1.1;
 }
 
@@ -402,7 +383,16 @@ export default {
 }
 
 .editor-menu {
+  background-color: #F0F0F0;
   border-bottom: 1px solid #D3D3D3;
+}
+
+.editor-menu button {
+  border-right: #D3D3D3 solid 1px;
+}
+
+.editor-menu button:last-child {
+  border-style: none;
 }
 
 .image-url {
@@ -434,5 +424,6 @@ export default {
 .editor-content {
   height: 400px;
   overflow: auto;
+  padding: 16px 25px 0 25px;
 }
 </style>
