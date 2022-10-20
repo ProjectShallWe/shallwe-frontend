@@ -106,6 +106,9 @@
                 <button type="button" @click="toggleUrlModal">
                   setImage
                 </button>
+                <button type="button" @click="toggleUploadModal">
+                  uploadImage
+                </button>
               </div>
               <div
                   v-if="urlModal"
@@ -119,11 +122,28 @@
                 >
                 <button
                     type="button"
-                    @click="editor.chain().focus().setImage({src: url}).run(), initModal()"
+                    @click="setImage(editor)"
                 >
                   확인
                 </button>
               </div>
+              <div>
+                <div
+                    v-if="uploadModal"
+                    class="image-upload"
+                >
+                  <h3>upload</h3>
+                  <input type="file" @change="onInputImage">
+                  <button
+                    type="button"
+                    @click="uploadImage(editor)"
+                  >
+                   확인
+                  </button>
+
+                </div>
+              </div>
+
               <editor-content class="editor-content" :editor="editor"/>
             </div>
             <!-- tiptap editor end -->
@@ -161,9 +181,18 @@ export default {
     const store = useStore();
     const boardId = useRoute().params.boardId;
     const category = ref(useRoute().query.category);
+
     const title = ref("");
+
     const urlModal = ref(false);
-    const url = ref("");
+    const url = ref('');
+
+    const uploadModal = ref(false);
+    const image = ref('');
+    const imageUrl = computed(() => store.state.postCreate.imageUrl);
+
+    const board = computed(() => store.state.postListMain.board);
+
 
     const editor = useEditor({
       content: "",
@@ -173,15 +202,39 @@ export default {
       ],
     });
 
-    const board = computed(() => store.state.postListMain.board);
-
     const toggleUrlModal = () => {
       urlModal.value = !urlModal.value;
     }
 
-    const initModal = () => {
-      urlModal.value = false;
-      url.value = "";
+    const toggleUploadModal = () => {
+      uploadModal.value = !uploadModal.value;
+    }
+
+    const setImage = (editor) => {
+      editor.chain().focus().setImage({src : url.value}).run();
+
+      initModal(urlModal)
+    }
+
+    const initModal = (modal) => {
+      modal.value = false;
+      url.value = '';
+    }
+
+    const onInputImage = (e) => {
+      image.value = e.target.files[0];
+    }
+
+    const uploadImage = async (editor) => {
+      await store.dispatch("postCreate/uploadPostImage", {
+        file: image.value
+      })
+
+      url.value = imageUrl.value
+
+      editor.chain().focus().setImage({src: url.value}).run();
+
+      initModal(uploadModal);
     }
 
     const write = async () => {
@@ -208,12 +261,18 @@ export default {
     return {
       title,
       url,
-      urlModal,
-      toggleUrlModal,
-      initModal,
-      editor,
+      imageUrl,
       board,
       category,
+      urlModal,
+      uploadModal,
+      toggleUrlModal,
+      toggleUploadModal,
+      setImage,
+      initModal,
+      onInputImage,
+      uploadImage,
+      editor,
       write,
       cancel,
     }

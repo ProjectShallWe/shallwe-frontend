@@ -5,11 +5,15 @@ export default {
     namespaced: true,
     state: {
         board: [],
+        imageUrl: '',
     },
     mutations: {
         setBoard(state, payload) {
             state.board = payload;
         },
+        setImageUrl(state, payload) {
+            state.imageUrl = payload;
+        }
     },
     actions: {
         async getBoardWithPostCategories({commit}, payload) {
@@ -19,6 +23,23 @@ export default {
             );
             commit('setBoard', res.data);
         },
+
+        async uploadPostImage({commit}, {file}) {
+            let data = new FormData();
+            data.append('file', file);
+
+            const res = await axios.post(
+                `api/file/upload`,
+                data,
+                {
+                    headers: {
+                        'content-type': 'multipart/form-data',
+                    }
+                }
+            )
+            await commit('setImageUrl', res.data);
+        },
+
         async writePost({commit}, payload) {
             await axios.post(
                 `api/post?category=${payload.categoryId}`,
