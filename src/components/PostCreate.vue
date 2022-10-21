@@ -91,6 +91,10 @@
                 <button type="button" @click="toggleImageModal">
                   <img src="../assets/tiptap/image-line.svg">
                 </button>
+                <button type="button" @click="setLink(editor)"
+                        :class="{ 'is-active': editor.isActive('link') }">
+                  <img src="../assets/tiptap/link.svg">
+                </button>
               </div>
               <div v-if="imageModal">
                 <div
@@ -153,7 +157,8 @@ import {useStore} from "vuex";
 import {useRoute} from "vue-router";
 import {EditorContent, useEditor} from '@tiptap/vue-3';
 import StarterKit from '@tiptap/starter-kit';
-import Image from '@tiptap/extension-image'
+import Image from '@tiptap/extension-image';
+import Link from '@tiptap/extension-link';
 import router from "@/router";
 
 export default {
@@ -180,6 +185,7 @@ export default {
       extensions: [
         StarterKit,
         Image,
+        Link,
       ],
     });
 
@@ -219,6 +225,42 @@ export default {
       initModal();
     }
 
+    const setLink = (editor) => {
+      const previousUrl = editor.getAttributes('link').href
+      let linkUrl = window.prompt('URL', previousUrl)
+
+      if (!linkUrl.match('^https?://')) {
+        linkUrl = 'https://' + linkUrl;
+      }
+
+      console.log(linkUrl);
+
+      // cancelled
+      if (linkUrl === null) {
+        return
+      }
+
+      // empty
+      if (linkUrl === '') {
+        editor
+            .chain()
+            .focus()
+            .extendMarkRange('link')
+            .unsetLink()
+            .run()
+
+        return
+      }
+
+      // update link
+      editor
+          .chain()
+          .focus()
+          .extendMarkRange('link')
+          .setLink({ href: linkUrl })
+          .run()
+    }
+
     const write = async () => {
       if (!category.value || category.value === "default") {
         return alert("카테고리를 선택해주세요.");
@@ -253,6 +295,7 @@ export default {
       initModal,
       onInputImage,
       uploadImage,
+      setLink,
       editor,
       write,
       cancel,
@@ -376,6 +419,10 @@ export default {
   border: none;
   border-top: 2px solid rgba(13, 13, 13, 0.1);
   margin: 2rem 0;
+}
+
+.ProseMirror a {
+  color: #1a0dab;
 }
 
 .editor {
