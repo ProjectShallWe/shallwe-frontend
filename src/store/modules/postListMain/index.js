@@ -48,9 +48,10 @@ export default {
                 totalPages: res.data.totalPages
             });
         },
-        async getPostsBySearchKeywordInBoard({commit}, {boardId, page, type, keyword}) {
+        async getPostsBySearchKeywordInBoard({commit}, {id, page, type, keyword}) {
+
             const res = await axios.get(
-                `api/post/search?board=${boardId}&page=${page}&type=${type}&keyword=${keyword}`
+                `api/post/search?board=${id}&page=${page}&type=${type}&keyword=${keyword}`
             );
             commit('setPosts', {
                 content: res.data.content,

@@ -138,16 +138,33 @@ export default {
     }
 
     const getPostsInBoard = (page) =>
-        store.dispatch("postListMain/getPostsInBoard", {boardId, page});
+        store.dispatch("postListMain/getPostsInBoard", {
+          id: boardId,
+          page
+        });
 
     const getPostsInPostCategory = (categoryId, page) =>
-        store.dispatch("postListMain/getPostsInPostCategory", {categoryId, page});
+        store.dispatch("postListMain/getPostsInPostCategory", {
+          id: categoryId,
+          page
+        });
 
     const getPostsBySearchKeywordInBoard = (page, type, keyword) =>
-        store.dispatch("postListMain/getPostsBySearchKeywordInBoard", {boardId, page, type, keyword});
+        store.dispatch("postListMain/getPostsBySearchKeywordInBoard", {
+          id: boardId,
+          page,
+          type,
+          keyword
+        });
 
     const getPostsBySearchKeywordInPostCategory = (categoryId, page, type, keyword) =>
-        store.dispatch("postListMain/getPostsBySearchKeywordInPostCategory", {boardId, categoryId, page, type, keyword})
+        store.dispatch("postListMain/getPostsBySearchKeywordInPostCategory", {
+          boardId,
+          categoryId,
+          page,
+          type,
+          keyword
+        })
 
     // SearchCondition에 Param이 있는지 확인
     const isSearchCondition = (types, keywords) => {

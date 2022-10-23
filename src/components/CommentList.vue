@@ -127,14 +127,14 @@ export default {
 
     const getCommentsInPost = async () => {
       await store.dispatch("commentList/getCommentsInPost", {
-        postId: postId,
+        id: postId,
       });
       addIsShowReplyForm();
     };
 
     const writeParentComment = async () => {
       await store.dispatch("commentList/writeParentComment", {
-        postId,
+        id: postId,
         content: parentContent.value,
       }).then(() => {
         parentContent.value = "";
