@@ -19,17 +19,17 @@ export default {
         }
     },
     actions: {
-        async getBoardWithPostCategories({commit}, payload) {
+        async getBoardWithPostCategories({commit}, {id}) {
 
             const res = await axios.get(
-                `api/board/${payload.id}`
+                `api/board/${id}`
             );
             commit('setBoard', res.data);
         },
-        async getPostsInBoard({commit}, {boardId, page}) {
+        async getPostsInBoard({commit}, {id, page}) {
 
             const res = await axios.get(
-                `api/post/all?board=${boardId}&page=${page}`
+                `api/post/all?board=${id}&page=${page}`
             );
             commit('setPosts', {
                 content: res.data.content,
@@ -37,10 +37,10 @@ export default {
                 totalPages: res.data.totalPages
             });
         },
-        async getPostsInPostCategory({commit}, {categoryId, page}) {
+        async getPostsInPostCategory({commit}, {id, page}) {
 
             const res = await axios.get(
-                `api/post?category=${categoryId}&page=${page}`
+                `api/post?category=${id}&page=${page}`
             );
             commit('setPosts', {
                 content: res.data.content,
@@ -52,7 +52,6 @@ export default {
             const res = await axios.get(
                 `api/post/search?board=${boardId}&page=${page}&type=${type}&keyword=${keyword}`
             );
-            console.log(res.data);
             commit('setPosts', {
                 content: res.data.content,
                 number: res.data.number,
@@ -64,7 +63,6 @@ export default {
             const res = await axios.get(
                 `api/post/search?board=${boardId}&category=${categoryId}&page=${page}&type=${type}&keyword=${keyword}`
             );
-            console.log(res.data);
             commit('setPosts', {
                 content: res.data.content,
                 number: res.data.number,

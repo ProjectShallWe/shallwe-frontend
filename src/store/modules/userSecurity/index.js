@@ -10,8 +10,8 @@ export default {
         changePassword({commit}, {nowPassword, newPassword}) {
             axios.put(
                 `api/user/password`, {
-                    nowPassword: nowPassword,
-                    newPassword: newPassword
+                    nowPassword,
+                    newPassword
                 },
                 {
                     headers: {

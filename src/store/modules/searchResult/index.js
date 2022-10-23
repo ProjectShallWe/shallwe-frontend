@@ -27,7 +27,6 @@ export default {
             commit('setBoardsByKeyword', res.data);
         },
         async getPostsByKeyword({commit}, {keyword, page}) {
-            console.log(keyword, page)
 
             const res = await axios.get(
                 `api/post/search/common?keyword=${keyword}&page=${page}`

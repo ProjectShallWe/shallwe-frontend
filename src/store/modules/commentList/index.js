@@ -11,19 +11,19 @@ export default {
         }
     },
     actions: {
-        async getCommentsInPost({commit}, {postId}) {
+        async getCommentsInPost({commit}, {id}) {
             const res = await axios.get(
-                `api/comment?post=${postId}`
+                `api/comment?post=${id}`
             );
             commit('setComments', res.data)
         },
 
-        async writeParentComment({commit}, {postId, content}) {
+        async writeParentComment({commit}, {id, content}) {
 
             await axios.post(
-                `api/comment?post=${postId}`,
+                `api/comment?post=${id}`,
                 {
-                    content: content,
+                    content,
                 },
                 {
                     headers: {

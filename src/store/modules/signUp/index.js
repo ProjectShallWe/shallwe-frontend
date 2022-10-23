@@ -12,10 +12,14 @@ export default {
         },
     },
     actions: {
-        signUp({commit}, payload) {
+        signUp({commit}, {email, password, nickname}) {
 
             axios.post(
-                `/api/user`, payload
+                `/api/user`, {
+                    email,
+                    password,
+                    nickname
+                }
             ).then((res) => {
                 commit("setUserId", res.data)
                 alert("회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.")

@@ -22,24 +22,24 @@ export default {
         async getRecommendPostsFromRedis({commit}) {
 
             const res = await axios.get(
-                `api/post/recommend/all`
+                `/api/post/recommend/all`
             );
             commit('setAllRecommendPosts', res.data);
         },
-        async getRecommendPostsInBoardFromRedis({commit}, payload) {
+        async getRecommendPostsInBoardFromRedis({commit}, {id}) {
 
             const res = await axios.get(
-                `api/post/recommend?board=${payload.id}`
+                `/api/post/recommend?board=${id}`
             );
             commit('setBoardRecommendPosts', res.data);
         },
-        async getRecommendPostsInBoardsFromRedis({commit}, payload) {
+        async getRecommendPostsInBoardsFromRedis({commit}, {boardCategoryIdLists}) {
 
             const boardArr = [];
 
-            for (const id of payload.boardCategoryIdLists) {
+            for (const id of boardCategoryIdLists) {
                 const res = await axios.get(
-                    `api/post/recommend?board=${id}`
+                    `/api/post/recommend?board=${id}`
                 );
                 boardArr.push(res.data);
             }

@@ -28,9 +28,12 @@ export default {
         }
     },
     actions: {
-        login({commit}, payload) {
+        login({commit}, {email, password}) {
             axios.post(
-                `/login`, payload
+                `/login`, {
+                    email,
+                    password,
+                }
             ).then((res) => {
                 commit("setUser", res.headers.authorization);
                 alert("로그인에 성공했습니다.");

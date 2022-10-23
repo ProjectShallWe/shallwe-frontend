@@ -11,19 +11,19 @@ export default {
         }
     },
     actions: {
-        async getPostDetails ({commit}, {postId}) {
+        async getPostDetails ({commit}, {id}) {
 
             const res = await axios.get(
-                `api/post/${postId}`
+                `api/post/${id}`
             )
 
             commit("setPostDetails", res.data)
         },
 
-        async addLikeCount({commit}, {postId}) {
+        async addLikeCount({commit}, {id}) {
 
             await axios.post(
-                `api/like-post?post=${postId}`,
+                `api/like-post?post=${id}`,
                 {},
                 {
                     headers: {

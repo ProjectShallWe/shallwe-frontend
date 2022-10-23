@@ -16,10 +16,10 @@ export default {
         }
     },
     actions: {
-        async getBoardWithPostCategories({commit}, payload) {
+        async getBoardWithPostCategories({commit}, {id}) {
 
             const res = await axios.get(
-                `api/board/${payload.id}`
+                `api/board/${id}`
             );
             commit('setBoard', res.data);
         },
@@ -40,12 +40,12 @@ export default {
             await commit('setImageUrl', res.data);
         },
 
-        async writePost({commit}, payload) {
+        async writePost({commit}, {boardId, categoryId, title, content}) {
             await axios.post(
-                `api/post?category=${payload.categoryId}`,
+                `api/post?category=${categoryId}`,
                 {
-                        title: payload.title,
-                        content: payload.content,
+                        title,
+                        content,
                 },
                 {
                     headers: {
@@ -54,7 +54,7 @@ export default {
                 }
             ).then(() => {
                 alert("작성하신 글이 정상 등록되었습니다.")
-                router.push(`/community/${payload.boardId}?category=${payload.categoryId}`)
+                router.push(`/community/${boardId}?category=${categoryId}`)
             }).catch(() => {
                 alert("글 등록에 실패했습니다.")
             })

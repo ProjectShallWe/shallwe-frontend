@@ -14,7 +14,7 @@ export default {
         async checkNicknameDuplicate({commit}, {nickname}) {
             await axios.post(
                 `api/user/check`, {
-                    nickname: nickname
+                    nickname
                 }
             ).then((res) => {
                 commit("setDuplicateCheck", res.data)
@@ -23,7 +23,7 @@ export default {
         async changeNickname({commit}, {nickname}) {
             await axios.put(
                 `api/user/nickname`, {
-                    nickname: nickname
+                    nickname
                 },
                 {
                     headers: {
