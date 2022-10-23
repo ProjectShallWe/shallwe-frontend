@@ -4,7 +4,7 @@
       {{ recommendPostList.boardTitle }}
     </h2>
     <ul class="board-recommend">
-        <h3 v-if="recommendPostList.recommendPosts === 0">
+        <h3 v-if="Array.isArray(recommendPostList.recommendPosts)">
           추천글이 없습니다.
         </h3>
       <li v-for="post in recommendPostList.recommendPosts"
@@ -40,7 +40,6 @@ export default {
     }
   },
   setup(props) {
-
     const recommendPostList = ref(props.recommendPosts);
 
     return {
