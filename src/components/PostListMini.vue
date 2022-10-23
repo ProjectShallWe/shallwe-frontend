@@ -1,13 +1,13 @@
 <template>
   <div class="col-6">
     <h2 class="board-title">
-      {{ $props.recommendPosts.boardTitle }}
+      {{ recommendPostList.boardTitle }}
     </h2>
     <ul class="board-recommend">
-        <h3 v-if="$props.recommendPosts.recommendPosts.length === 0">
+        <h3 v-if="recommendPostList.recommendPosts === 0">
           추천글이 없습니다.
         </h3>
-      <li v-for="post in $props.recommendPosts.recommendPosts"
+      <li v-for="post in recommendPostList.recommendPosts"
           :key="post.postId"
           class="recommend-post"
       >
@@ -30,11 +30,21 @@
 </template>
 
 <script>
+import {ref} from "vue";
+
 export default {
   props: {
     recommendPosts: {
       type: Object,
       required: true,
+    }
+  },
+  setup(props) {
+
+    const recommendPostList = ref(props.recommendPosts);
+
+    return {
+      recommendPostList,
     }
   },
 }

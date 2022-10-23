@@ -38,14 +38,16 @@ export default {
     const store = useStore();
 
     const boardCategories = computed(() => store.state.boardCategoryList.boardCategories)
+    const getBoardCategoryWithBoards = async () => {
+      await store.dispatch('boardCategoryList/getBoardCategoryWithBoards');
+    };
+
+    getBoardCategoryWithBoards();
 
     return {
       boardCategories,
     };
   },
-  created() {
-    this.$store.dispatch('boardCategoryList/getBoardCategoryWithBoards')
-  }
 }
 </script>
 

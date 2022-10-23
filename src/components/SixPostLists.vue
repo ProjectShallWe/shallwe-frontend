@@ -1,17 +1,10 @@
 <template>
   <div class="row">
     <PostListMini
-        :recommend-posts="boardsRecommendPosts[0]"/>
-    <PostListMini
-        :recommend-posts="boardsRecommendPosts[1]"/>
-    <PostListMini
-        :recommend-posts="boardsRecommendPosts[2]"/>
-    <PostListMini
-        :recommend-posts="boardsRecommendPosts[3]"/>
-    <PostListMini
-        :recommend-posts="boardsRecommendPosts[4]"/>
-    <PostListMini
-        :recommend-posts="boardsRecommendPosts[5]"/>
+        v-for="boardRecommendPost in boardsRecommendPosts"
+        :key="boardRecommendPost.boardId"
+        :recommend-posts="boardRecommendPost"
+    />
   </div>
 </template>
 
@@ -28,16 +21,19 @@ export default {
     const store = useStore();
 
     const boardsRecommendPosts = computed(() => store.state.postListMini.boardsRecommendPosts);
+    console.log(boardsRecommendPosts);
+    const getRecommendPostsInBoardsFromRedis = async () => {
+      await store.dispatch("postListMini/getRecommendPostsInBoardsFromRedis", {
+        boardCategoryIdLists: [1, 3, 6, 4, 9, 11]
+      })
+    };
+
+    getRecommendPostsInBoardsFromRedis();
 
     return {
-      boardsRecommendPosts
+      boardsRecommendPosts,
     }
   },
-  created() {
-    this.$store.dispatch('postListMini/getRecommendPostsInBoardsFromRedis', {
-      boardCategoryIdLists: [1, 3, 6, 4, 9, 11]
-    })
-  }
 }
 </script>
 
