@@ -81,7 +81,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .post-category {
   font-size: 16px;
   padding: 8px 0;
@@ -135,6 +135,15 @@ export default {
 
 .post-content {
   padding: 16px 0;
+}
+
+.post-content a {
+  color: #1a0dab;
+}
+
+.post-content blockquote {
+  padding-left: 1rem;
+  border-left: 2px solid rgba(13, 13, 13, 0.1);
 }
 
 .post-reaction {
