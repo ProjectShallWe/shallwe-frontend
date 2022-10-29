@@ -13,11 +13,6 @@ export default {
                     nowPassword,
                     newPassword
                 },
-                {
-                    headers: {
-                        Authorization: localStorage.getItem('userToken'),
-                    }
-                }
             ).then((res) => {
                 if (res.data === -1) {
                     return alert("현재 비밀번호를 다시 확인해주세요.")

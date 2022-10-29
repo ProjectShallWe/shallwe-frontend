@@ -47,11 +47,6 @@ export default {
                         title,
                         content,
                 },
-                {
-                    headers: {
-                        Authorization: localStorage.getItem('userToken'),
-                    }
-                }
             ).then(() => {
                 alert("작성하신 글이 정상 등록되었습니다.")
                 router.push(`/community/${boardId}?category=${categoryId}`)

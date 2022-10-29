@@ -19,11 +19,6 @@ export default {
 
             const res = await axios.get(
                 `api/comment/nickname?page=${page}`,
-                {
-                    headers: {
-                        Authorization: localStorage.getItem('userToken'),
-                    }
-                }
             );
             commit('setComments', {
                 content: res.data.content,

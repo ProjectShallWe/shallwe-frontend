@@ -25,11 +25,6 @@ export default {
                 `api/user/nickname`, {
                     nickname
                 },
-                {
-                    headers: {
-                        Authorization: localStorage.getItem('userToken'),
-                    }
-                }
             ).then(() => {
                 return alert("닉네임을 변경했습니다.")
             }).then(() => {
