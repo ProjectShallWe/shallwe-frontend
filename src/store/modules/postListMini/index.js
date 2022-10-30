@@ -1,4 +1,4 @@
-import axios from "@/axios";
+import {axiosBasic} from "@/axios";
 
 export default {
     namespaced: true,
@@ -21,14 +21,14 @@ export default {
     actions: {
         async getRecommendPostsFromRedis({commit}) {
 
-            const res = await axios.get(
+            const res = await axiosBasic.get(
                 `/api/post/recommend/all`
             );
             commit('setAllRecommendPosts', res.data);
         },
         async getRecommendPostsInBoardFromRedis({commit}, {id}) {
 
-            const res = await axios.get(
+            const res = await axiosBasic.get(
                 `/api/post/recommend?board=${id}`
             );
             commit('setBoardRecommendPosts', res.data);
@@ -38,7 +38,7 @@ export default {
             const boardArr = [];
 
             for (const id of boardCategoryIdLists) {
-                const res = await axios.get(
+                const res = await axiosBasic.get(
                     `/api/post/recommend?board=${id}`
                 );
                 boardArr.push(res.data);

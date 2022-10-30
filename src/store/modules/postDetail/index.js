@@ -1,4 +1,4 @@
-import axios from "@/axios";
+import {axiosAuth, axiosBasic} from "@/axios";
 
 export default {
     namespaced: true,
@@ -13,7 +13,7 @@ export default {
     actions: {
         async getPostDetails ({commit}, {id}) {
 
-            const res = await axios.get(
+            const res = await axiosBasic.get(
                 `api/post/${id}`
             )
 
@@ -22,7 +22,7 @@ export default {
 
         async addLikeCount({commit}, {id}) {
 
-            await axios.post(
+            await axiosAuth.post(
                 `api/like-post?post=${id}`,
                 {},
             ).then((res) => {

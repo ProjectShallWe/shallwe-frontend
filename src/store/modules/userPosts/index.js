@@ -1,4 +1,4 @@
-import axios from "@/axios";
+import {axiosAuth} from "@/axios";
 
 export default {
     namespaced: true,
@@ -17,7 +17,7 @@ export default {
     actions: {
         async getPostsByNickname({commit}, {page}) {
 
-            const res = await axios.get(
+            const res = await axiosAuth.get(
                 `api/post/nickname?page=${page}`,
             );
             commit('setPosts', {

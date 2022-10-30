@@ -1,4 +1,4 @@
-import axios from "@/axios";
+import {axiosAuth, axiosBasic} from "@/axios";
 
 export default {
     namespaced: true,
@@ -12,7 +12,7 @@ export default {
     },
     actions: {
         async getCommentsInPost({commit}, {id}) {
-            const res = await axios.get(
+            const res = await axiosBasic.get(
                 `api/comment?post=${id}`
             );
             commit('setComments', res.data)
@@ -20,7 +20,7 @@ export default {
 
         async writeParentComment({commit}, {id, content}) {
 
-            await axios.post(
+            await axiosAuth.post(
                 `api/comment?post=${id}`,
                 {
                     content,
@@ -30,7 +30,7 @@ export default {
 
         async writeChildComment({commit}, {postId, commentId, content}) {
 
-            await axios.post(
+            await axiosAuth.post(
                 `api/comment/${commentId}?post=${postId}`,
                 {
                     content: content,
@@ -40,7 +40,7 @@ export default {
 
         async addLikeCount({commit}, {commentId}) {
 
-            await axios.post(
+            await axiosAuth.post(
                 `api/like-comment?comment=${commentId}`,
                 {},
             ).then((res) => {

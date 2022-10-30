@@ -1,4 +1,4 @@
-import axios from "@/axios";
+import {axiosBasic} from "@/axios";
 
 export default {
     namespaced: true,
@@ -13,7 +13,7 @@ export default {
     actions: {
         async getBoardCategoryWithBoards({commit}) {
 
-            const res = await axios.get(
+            const res = await axiosBasic.get(
                 'api/board-category/board'
             );
             commit('setBoardCategories', res.data);

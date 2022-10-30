@@ -1,4 +1,4 @@
-import axios from "@/axios";
+import {axiosAuth} from "@/axios";
 
 export default {
     namespaced: true,
@@ -7,8 +7,8 @@ export default {
     mutations: {
     },
     actions: {
-        changePassword({commit}, {nowPassword, newPassword}) {
-            axios.put(
+        async changePassword({commit}, {nowPassword, newPassword}) {
+            await axiosAuth.put(
                 `api/user/password`, {
                     nowPassword,
                     newPassword

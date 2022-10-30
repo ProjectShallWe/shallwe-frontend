@@ -1,4 +1,4 @@
-import axios from "@/axios";
+import {axiosBasic} from "@/axios";
 
 export default {
     namespaced: true,
@@ -21,14 +21,14 @@ export default {
     actions: {
         async getBoardWithPostCategories({commit}, {id}) {
 
-            const res = await axios.get(
+            const res = await axiosBasic.get(
                 `api/board/${id}`
             );
             commit('setBoard', res.data);
         },
         async getPostsInBoard({commit}, {id, page}) {
 
-            const res = await axios.get(
+            const res = await axiosBasic.get(
                 `api/post/all?board=${id}&page=${page}`
             );
             commit('setPosts', {
@@ -39,7 +39,7 @@ export default {
         },
         async getPostsInPostCategory({commit}, {id, page}) {
 
-            const res = await axios.get(
+            const res = await axiosBasic.get(
                 `api/post?category=${id}&page=${page}`
             );
             commit('setPosts', {
@@ -50,7 +50,7 @@ export default {
         },
         async getPostsBySearchKeywordInBoard({commit}, {id, page, type, keyword}) {
 
-            const res = await axios.get(
+            const res = await axiosBasic.get(
                 `api/post/search?board=${id}&page=${page}&type=${type}&keyword=${keyword}`
             );
             commit('setPosts', {
@@ -61,7 +61,7 @@ export default {
         },
         async getPostsBySearchKeywordInPostCategory({commit}, {boardId, categoryId, page, type, keyword}) {
 
-            const res = await axios.get(
+            const res = await axiosBasic.get(
                 `api/post/search?board=${boardId}&category=${categoryId}&page=${page}&type=${type}&keyword=${keyword}`
             );
             commit('setPosts', {

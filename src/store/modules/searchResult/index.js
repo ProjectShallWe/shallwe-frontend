@@ -1,4 +1,4 @@
-import axios from "@/axios";
+import {axiosBasic} from "@/axios";
 
 export default {
     namespaced: true,
@@ -21,14 +21,14 @@ export default {
     actions: {
         async getBoardsByKeyword({commit}, {keyword}) {
 
-            const res = await axios.get(
+            const res = await axiosBasic.get(
                 `api/board?keyword=${keyword}`
             );
             commit('setBoardsByKeyword', res.data);
         },
         async getPostsByKeyword({commit}, {keyword, page}) {
 
-            const res = await axios.get(
+            const res = await axiosBasic.get(
                 `api/post/search/common?keyword=${keyword}&page=${page}`
             );
             commit('setPostsByKeyword', {

@@ -1,4 +1,4 @@
-import axios from "@/axios";
+import {axiosBasic} from "@/axios";
 import jwt_decode from "jwt-decode";
 import {useCookies} from "vue3-cookies";
 
@@ -30,8 +30,8 @@ export default {
         }
     },
     actions: {
-        login({commit}, {email, password}) {
-            axios.post(
+        async login({commit}, {email, password}) {
+            await axiosBasic.post(
                 `/login`, {
                     email,
                     password,
@@ -49,8 +49,8 @@ export default {
                 alert("로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요");
             })
         },
-        logout({commit}) {
-            axios.post(
+        async logout({commit}) {
+            await axiosBasic.post(
                 `/api/auth/logout`, {
                     refreshToken: useCookies().cookies.get('refreshToken'),
                 }

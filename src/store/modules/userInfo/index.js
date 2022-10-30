@@ -1,4 +1,4 @@
-import axios from "@/axios";
+import {axiosAuth, axiosBasic} from "@/axios";
 
 export default {
     namespaced: true,
@@ -12,7 +12,7 @@ export default {
     },
     actions: {
         async checkNicknameDuplicate({commit}, {nickname}) {
-            await axios.post(
+            await axiosAuth.post(
                 `api/user/check`, {
                     nickname
                 }
@@ -21,7 +21,7 @@ export default {
             })
         },
         async changeNickname({commit}, {nickname}) {
-            await axios.put(
+            await axiosAuth.put(
                 `api/user/nickname`, {
                     nickname
                 },

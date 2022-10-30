@@ -1,4 +1,4 @@
-import axios from "@/axios";
+import {axiosBasic} from "@/axios";
 import router from "@/router";
 
 export default {
@@ -12,9 +12,9 @@ export default {
         },
     },
     actions: {
-        signUp({commit}, {email, password, nickname}) {
+        async signUp({commit}, {email, password, nickname}) {
 
-            axios.post(
+            await axiosBasic.post(
                 `/api/user`, {
                     email,
                     password,

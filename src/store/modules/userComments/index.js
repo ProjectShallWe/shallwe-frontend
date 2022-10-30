@@ -1,4 +1,4 @@
-import axios from "@/axios";
+import {axiosAuth} from "@/axios";
 
 export default {
     namespaced: true,
@@ -17,7 +17,7 @@ export default {
     actions: {
         async getCommentsByNickname({commit}, {page}) {
 
-            const res = await axios.get(
+            const res = await axiosAuth.get(
                 `api/comment/nickname?page=${page}`,
             );
             commit('setComments', {

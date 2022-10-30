@@ -1,4 +1,4 @@
-import axios from "@/axios";
+import {axiosAuth, axiosBasic} from "@/axios";
 import router from "@/router";
 
 export default {
@@ -18,7 +18,7 @@ export default {
     actions: {
         async getBoardWithPostCategories({commit}, {id}) {
 
-            const res = await axios.get(
+            const res = await axiosBasic.get(
                 `api/board/${id}`
             );
             commit('setBoard', res.data);
@@ -28,7 +28,7 @@ export default {
             let data = new FormData();
             data.append('file', file);
 
-            const res = await axios.post(
+            const res = await axiosAuth.post(
                 `api/file/upload`,
                 data,
                 {
@@ -41,7 +41,7 @@ export default {
         },
 
         async writePost({commit}, {boardId, categoryId, title, content}) {
-            await axios.post(
+            await axiosAuth.post(
                 `api/post?category=${categoryId}`,
                 {
                         title,
