@@ -45,6 +45,9 @@
             <th scope="col" class="create_date">
               날짜
             </th>
+            <th scope="col" class="hits">
+              조회 수
+            </th>
             <th scope="col" class="like_count">
               좋아요
             </th>
@@ -75,6 +78,9 @@
             </td>
             <td class="create_date">
               {{ post.createdDate }}
+            </td>
+            <td class="hits">
+              {{ post.hits }}
             </td>
             <td class="like_count">
               {{ post.likeCount }}
@@ -347,8 +353,12 @@ tbody tr td.title {
   padding: 6px;
 }
 
+.hits {
+  width: 6%;
+}
+
 .like_count {
-  width: 12%;
+  width: 6%;
   padding: 6px;
 }
 </style>
