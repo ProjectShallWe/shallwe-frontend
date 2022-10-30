@@ -13,6 +13,10 @@
           <span>{{ postDetail.nickname }}</span>
         </div>
         <div class="post-hit">
+           <span>
+            조회 수
+            <b>{{ postDetail.hits }}</b>
+          </span>
           <span>
             좋아요 수
             <b>{{ postDetail.likeCount }}</b>
