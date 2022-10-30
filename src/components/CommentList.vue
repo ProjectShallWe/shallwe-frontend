@@ -17,6 +17,11 @@
             <button type="submit">등록</button>
           </form>
         </div>
+        <li v-if="isEmpty()"
+             class="empty"
+        >
+          작성된 댓글이 없습니다. 첫 댓글을 남겨주세요.
+        </li>
         <li v-for="comment in commentList"
             :key="comment.commentId"
             class="comment">
@@ -110,6 +115,11 @@ export default {
 
     const loggedIn = computed(() => store.getters["login/loggedIn"]);
 
+    const isEmpty = () => {
+      const arr = commentList.value;
+      return Array.isArray(arr) && arr.length === 0;
+    }
+
     const addIsShowReplyForm = () => {
       for (const comment of commentList.value) {
         comment.isShowReplyWriteForm = false;
@@ -172,6 +182,7 @@ export default {
       parentContent,
       childContent,
       loggedIn,
+      isEmpty,
       getCommentsInPost,
       showReplyWriteForm,
       writeParentComment,
@@ -185,6 +196,13 @@ export default {
 
 <style scoped>
 .comment {
+  border-bottom: #D3D3D3 solid 1px;
+}
+
+.comment-list .empty {
+  text-align: center;
+  padding: 24px 0;
+  border-top: #D3D3D3 solid 1px;
   border-bottom: #D3D3D3 solid 1px;
 }
 
