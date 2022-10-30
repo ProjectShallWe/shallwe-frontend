@@ -5,7 +5,7 @@
     </h2>
     <ul class="board-recommend">
       <li class="empty"
-          v-if="isNotEmpty()"
+          v-if="isEmpty()"
       >
           추천글이 없습니다.
       </li>
@@ -45,14 +45,14 @@ export default {
     const recommendPostList = ref(props.recommendPosts);
 
 
-    const isNotEmpty = () => {
+    const isEmpty = () => {
       const arr = recommendPostList.value.recommendPosts;
       return Array.isArray(arr) && arr.length === 0;
     }
 
     return {
       recommendPostList,
-      isNotEmpty,
+      isEmpty,
     }
   },
 }
