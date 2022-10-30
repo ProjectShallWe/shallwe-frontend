@@ -60,14 +60,11 @@ export default {
     }
 
     const addLikeCount = async () => {
-      const agree = confirm("해당 글에 공감하시겠습니까?");
-      if (agree) {
-        await store.dispatch("postDetail/addLikeCount", {
-          id: postId
-        }).then(() => {
-          getPostDetails();
-        });
-      }
+      await store.dispatch("postDetail/addLikeCount", {
+        id: postId
+      }).then(() => {
+        getPostDetails();
+      });
     }
 
     getPostDetails();
