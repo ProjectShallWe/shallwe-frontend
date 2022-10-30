@@ -222,6 +222,8 @@ export default {
 
       editor.chain().focus().setImage({src: url.value}).run();
 
+      image.value = '';
+
       initModal();
     }
 
