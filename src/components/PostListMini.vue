@@ -4,9 +4,11 @@
       {{ recommendPostList.boardTitle }}
     </h2>
     <ul class="board-recommend">
-        <h3 v-if="Array.isArray(recommendPostList.recommendPosts)">
+      <li class="empty"
+          v-if="isNotEmpty()"
+      >
           추천글이 없습니다.
-        </h3>
+      </li>
       <li v-for="post in recommendPostList.recommendPosts"
           :key="post.postId"
           class="recommend-post"
@@ -42,8 +44,15 @@ export default {
   setup(props) {
     const recommendPostList = ref(props.recommendPosts);
 
+
+    const isNotEmpty = () => {
+      const arr = recommendPostList.value.recommendPosts;
+      return Array.isArray(arr) && arr.length === 0;
+    }
+
     return {
       recommendPostList,
+      isNotEmpty,
     }
   },
 }
@@ -58,7 +67,7 @@ export default {
   padding: 10px 8px;
 }
 
-.board-recommend h3 {
+.board-recommend .empty{
   padding: 8px 0;
   font-size: 14px;
   color: #000000;
