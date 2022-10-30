@@ -6,8 +6,12 @@
           <h1 class="board-title">
             {{ board[0]?.title }} 게시판
           </h1>
-          <button type="button" class="post-create-button"
-                  @click="movePostCreate">
+          <button
+              v-if="loggedIn"
+              type="button"
+              class="post-create-button"
+              @click="movePostCreate"
+          >
             글쓰기
           </button>
         </div>
@@ -96,6 +100,7 @@ import {useRoute} from "vue-router";
 import {useStore} from "vuex"
 import Pagination from "@/components/Pagination";
 import BoardSearchBar from "@/components/BoardSearchBar";
+import store from "@/store";
 
 export default {
   name: "PostListMain.vue",
@@ -114,6 +119,7 @@ export default {
     const posts = computed(() => store.state.postListMain.posts);
     const pageNum = computed(() => store.state.postListMain.page);
     const totalPages = computed(() => store.state.postListMain.totalPages);
+    const loggedIn = computed(() => store.getters["login/loggedIn"]);
 
     const types = ref("");
     const keywords = ref("");
@@ -228,6 +234,7 @@ export default {
       board,
       pageNum,
       totalPages,
+      loggedIn,
       movePostCreate,
       setPaginationParam,
       setSearchConditionParam,
