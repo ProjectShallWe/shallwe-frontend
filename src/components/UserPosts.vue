@@ -17,6 +17,9 @@
       <th scope="col" class="post-create_date">
         날짜
       </th>
+      <th scope="col" class="post-hits">
+        조회 수
+      </th>
       <th scope="col" class="post-like_count">
         좋아요
       </th>
@@ -47,6 +50,9 @@
       </td>
       <td class="post-create_date">
         {{ post.createdDate }}
+      </td>
+      <td class="post-hits">
+        {{ post.hits }}
       </td>
       <td class="post-like_count">
         {{ post.likeCount }}
