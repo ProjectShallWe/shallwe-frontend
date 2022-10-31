@@ -5,7 +5,6 @@
     <PostDetail />
     <CommentList />
     <PostListMain />
-    <Footer/>
   </div>
 </template>
 
@@ -15,7 +14,7 @@ import BoardCategoryList from "@/components/BoardCategoryList";
 import PostListMain from "@/components/PostListMain";
 import PostDetail from "@/components/PostDetail";
 import CommentList from "@/components/CommentList";
-import Footer from "@/components/Footer"
+
 export default {
   components: {
     CommentList,
@@ -23,7 +22,6 @@ export default {
     PostListMain,
     BoardCategoryList,
     Header,
-    Footer,
   },
 }
 </script>

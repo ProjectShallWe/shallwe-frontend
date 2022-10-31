@@ -106,7 +106,6 @@ import {useRoute} from "vue-router";
 import {useStore} from "vuex"
 import Pagination from "@/components/Pagination";
 import BoardSearchBar from "@/components/BoardSearchBar";
-import store from "@/store";
 
 export default {
   name: "PostListMain.vue",

@@ -21,21 +21,24 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .wrapper {
+  text-align: center;
   padding: 20px;
-  background-color: #D3D3D3;
+  background-color: $PRIMARY_COLOR;
 }
 
 .contact {
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 100%;
   margin-bottom: 20px;
 }
 
 .contact h2 {
   font-size: 16px;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   margin-right: 18px;
 }
 

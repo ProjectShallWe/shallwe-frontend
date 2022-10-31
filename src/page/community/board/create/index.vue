@@ -3,13 +3,11 @@
     <Header />
     <BoardCategoryList />
     <PostCreate />
-    <Footer/>
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import BoardCategoryList from "@/components/BoardCategoryList";
 import PostCreate from "@/components/PostCreate";
 export default {
@@ -17,7 +15,6 @@ export default {
     PostCreate,
     BoardCategoryList,
     Header,
-    Footer
   }
 }
 </script>

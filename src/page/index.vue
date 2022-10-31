@@ -23,7 +23,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
 .landing {
   display: flex;
   flex-direction: column;
