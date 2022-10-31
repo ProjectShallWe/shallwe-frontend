@@ -38,14 +38,12 @@ footer {
     margin-bottom: 20px;
 
     h2 {
-      margin-bottom: 0;
       margin-right: 18px;
     }
 
     .contact-list {
       display: inherit;
       justify-content: center;
-      margin-bottom: 0;
 
       li {
         margin-right: 18px;

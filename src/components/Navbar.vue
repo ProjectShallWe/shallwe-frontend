@@ -1,16 +1,16 @@
 <template>
-  <nav class="navigation-bar">
+  <nav>
     <div class="wrapper">
       <!-- Logo -->
       <router-link
           :to="{name: 'home'}"
       >
-        <h1>
+        <h1 class="logo fs-m">
           ShallWe
         </h1>
       </router-link>
       <!-- Global Link -->
-      <ul class="global-link">
+      <ul class="global-link fs-sm">
         <li>
           <router-link
               :to="{name: 'community'}"
@@ -20,27 +20,41 @@
         </li>
       </ul>
       <!-- User -->
-      <div class="user" v-if="!loggedIn">
-        <router-link
-            :to="{name: 'login'}"
-        >
-          로그인
-        </router-link>
-        <router-link
-            :to="{name: 'signUp'}"
-        >
-          회원가입
-        </router-link>
+      <div class="user fs-sm" v-if="!loggedIn">
+        <ul>
+          <li>
+            <router-link
+                :to="{name: 'login'}"
+                class="to-login"
+            >
+              로그인
+            </router-link>
+          </li>
+          <li>
+            <router-link
+                :to="{name: 'signUp'}"
+                class="to-sign-up"
+            >
+              회원가입
+            </router-link>
+          </li>
+        </ul>
       </div>
       <div v-else class="user">
-        <router-link
-            :to="`/user/${nickname}`"
-        >
-          {{ nickname }}님
-        </router-link>
-        <button type="button" @click="logOut">
-          로그아웃
-        </button>
+        <ul>
+          <li>
+            <router-link
+                :to="`/user/${nickname}`"
+            >
+              {{ nickname }}님
+            </router-link>
+          </li>
+          <li>
+            <button type="button" @click="logOut">
+              로그아웃
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
   </nav>
@@ -69,47 +83,54 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
 .wrapper {
   display: flex;
   justify-content: space-between;
-  color: #FFFFFF;
-  background-color: #8977AD;
-}
+  color: $SECONDARY_COLOR;
+  background-color: $PRIMARY_COLOR;
+  border-bottom: $TERTIARY_COLOR solid 1px;
 
-.wrapper a h1 {
-  font-size: 16px;
-  padding: 16px;
-  margin-bottom: 0;
-}
+  a {
+    h1 {
+      font-weight: bold;
+      padding: 16px;
+    }
+  }
 
-.global-link {
-  display: flex;
-  margin: auto 0;
-  font-size: 12px;
-}
+  .global-link {
+    display: flex;
+    margin: auto 0;
+  }
 
-.global-link li {
-  margin-right: 8px;
-}
+  .global-link li {
+    margin-right: 8px;
+  }
 
-.user {
-  display: flex;
-  font-size: 12px;
-  padding: 16px;
-}
+  .user {
+    font-size: 12px;
+    padding: 16px;
 
-.user a {
-  margin-right: 8px;
-}
+    ul {
+      display: flex;
 
-.user a:last-child {
-  margin-right: 0;
-}
+      li:hover {
+        color: $EMPHASIS_COLOR;
+      }
+    }
 
-.user button {
-  border-radius: 8px;
-  background-color: #F8F8F8;
-}
+    a {
+      margin-right: 8px;
 
+      :last-child {
+        margin-right: 0;
+      }
+    }
+
+    button {
+      border-radius: 8px;
+    }
+  }
+}
 </style>

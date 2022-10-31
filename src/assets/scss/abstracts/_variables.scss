@@ -3,6 +3,7 @@
 $PRIMARY_COLOR: #fff;
 $SECONDARY_COLOR: #222;
 $TERTIARY_COLOR: #D3D3D3;
+$EMPHASIS_COLOR: #E60000;
 
 // Text Color and Font Size
 .fs {
@@ -15,4 +16,8 @@ $TERTIARY_COLOR: #D3D3D3;
   &-lg {
     font-size: 24px;
   }
+}
+
+.logo {
+  font-style: italic;
 }
