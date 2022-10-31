@@ -27,73 +27,73 @@
               <div class="editor-menu" v-if="editor">
                 <button type="button" @click="editor.chain().focus().toggleBold().run()"
                         :class="{ 'is-active': editor.isActive('bold') }">
-                  <img src="../assets/tiptap/bold.svg">
+                  <img src="../assets/images/tiptap/bold.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().toggleItalic().run()"
                         :class="{ 'is-active': editor.isActive('italic') }">
-                  <img src="../assets/tiptap/italic.svg">
+                  <img src="../assets/images/tiptap/italic.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().toggleStrike().run()"
                         :class="{ 'is-active': editor.isActive('strike') }">
-                  <img src="../assets/tiptap/strikethrough.svg">
+                  <img src="../assets/images/tiptap/strikethrough.svg">
                 </button>
                 <button type="button" @click="clearMarksAndNodes(editor)">
-                  <img src="../assets/tiptap/format-clear.svg">
+                  <img src="../assets/images/tiptap/format-clear.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().setParagraph().run()"
                         :class="{ 'is-active': editor.isActive('paragraph') }">
-                  <img src="../assets/tiptap/paragraph.svg">
+                  <img src="../assets/images/tiptap/paragraph.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
                         :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
-                  <img src="../assets/tiptap/h-1.svg">
+                  <img src="../assets/images/tiptap/h-1.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
                         :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }">
-                  <img src="../assets/tiptap/h-2.svg">
+                  <img src="../assets/images/tiptap/h-2.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
                         :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }">
-                  <img src="../assets/tiptap/h-3.svg">
+                  <img src="../assets/images/tiptap/h-3.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().toggleBulletList().run()"
                         :class="{ 'is-active': editor.isActive('bulletList') }">
-                  <img src="../assets/tiptap/list-unordered.svg">
+                  <img src="../assets/images/tiptap/list-unordered.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().toggleOrderedList().run()"
                         :class="{ 'is-active': editor.isActive('orderedList') }">
-                  <img src="../assets/tiptap/list-ordered.svg">
+                  <img src="../assets/images/tiptap/list-ordered.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().toggleCode().run()"
                         :class="{ 'is-active': editor.isActive('code') }">
-                  <img src="../assets/tiptap/code-line.svg">
+                  <img src="../assets/images/tiptap/code-line.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().toggleCodeBlock().run()"
                         :class="{ 'is-active': editor.isActive('codeBlock') }">
-                  <img src="../assets/tiptap/code-box-line.svg">
+                  <img src="../assets/images/tiptap/code-box-line.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().toggleBlockquote().run()"
                         :class="{ 'is-active': editor.isActive('blockquote') }">
-                  <img src="../assets/tiptap/double-quotes-l.svg">
+                  <img src="../assets/images/tiptap/double-quotes-l.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().setHorizontalRule().run()">
-                  <img src="../assets/tiptap/separator.svg">
+                  <img src="../assets/images/tiptap/separator.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().setHardBreak().run()">
-                  <img src="../assets/tiptap/text-wrap.svg">
+                  <img src="../assets/images/tiptap/text-wrap.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().undo().run()">
-                  <img src="../assets/tiptap/arrow-go-back-line.svg">
+                  <img src="../assets/images/tiptap/arrow-go-back-line.svg">
                 </button>
                 <button type="button" @click="editor.chain().focus().redo().run()">
-                  <img src="../assets/tiptap/arrow-go-forward-line.svg">
+                  <img src="../assets/images/tiptap/arrow-go-forward-line.svg">
                 </button>
                 <button type="button" @click="toggleImageModal">
-                  <img src="../assets/tiptap/image-line.svg">
+                  <img src="../assets/images/tiptap/image-line.svg">
                 </button>
                 <button type="button" @click="setLink(editor)"
                         :class="{ 'is-active': editor.isActive('link') }">
-                  <img src="../assets/tiptap/link.svg">
+                  <img src="../assets/images/tiptap/link.svg">
                 </button>
               </div>
               <div v-if="imageModal">

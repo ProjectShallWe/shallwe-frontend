@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <Header />
     <BoardCategoryList />
     <TwoPostLists />
     <PostListMain />
@@ -8,7 +7,6 @@
 </template>
 
 <script>
-import Header from "@/components/Header";
 import BoardCategoryList from "@/components/BoardCategoryList";
 import PostListMain from "@/components/PostListMain";
 import TwoPostLists from "@/components/TwoPostLists";
@@ -17,7 +15,6 @@ export default {
   components: {
     TwoPostLists,
     BoardCategoryList,
-    Header,
     PostListMain,
   }
 }

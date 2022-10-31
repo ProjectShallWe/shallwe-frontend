@@ -6,10 +6,11 @@
 </template>
 
 <script>
-import Header from "@/components/Header";
 import UserInfo from "@/components/UserInfo";
 export default {
-  components: {Header, UserInfo}
+  components: {
+    UserInfo
+  }
 }
 </script>
 

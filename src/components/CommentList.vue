@@ -255,7 +255,7 @@ export default {
 .comment-like-count::before {
   display: inline-block;
   content: "";
-  background-image: url("../assets/thumb_up_black_24dp.svg");
+  background-image: url("../assets/images/thumb_up_black_24dp.svg");
   background-repeat: no-repeat;
   background-size: 100%;
   width: 14px;
