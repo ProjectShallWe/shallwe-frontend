@@ -2,6 +2,17 @@
 // Project Default Color
 $PRIMARY_COLOR: #fff;
 $SECONDARY_COLOR: #222;
+$TERTIARY_COLOR: #D3D3D3;
 
 // Text Color and Font Size
-$TEXT_DEFAULT_SIZE: 16px;
+.fs {
+  &-sm {
+    font-size: 12px;
+  }
+  &-m {
+    font-size: 16px;
+  }
+  &-lg {
+    font-size: 24px;
+  }
+}
