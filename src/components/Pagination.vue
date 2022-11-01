@@ -10,6 +10,10 @@
                 :to="addPageParamUrl(calcPreviousButton($props.page, displayCount))"
                 @click="onClick(calcPreviousButton($props.page, displayCount))"
             >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path fill="none" d="M0 0h24v24H0z"/>
+                <path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"/>
+              </svg>
               이전
             </router-link>
           </li>
@@ -32,6 +36,10 @@
                 @click="onClick(calcNextButton($props.page, displayCount))"
             >
               다음
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path fill="none" d="M0 0h24v24H0z"/>
+                <path d="M13.172 12l-4.95-4.95 1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"/>
+              </svg>
             </router-link>
           </li>
         </ul>
@@ -77,8 +85,8 @@ export default {
       스프링 서버에서 전달 받는 Page 객체는 0페이지부터 시작한다.
       이를 조정하기 위해 page-1 값을 전달한다.
       */
-      context.emit('on-click', page-1);
-      console.log("page : " + (page-1));
+      context.emit('on-click', page - 1);
+      console.log("page : " + (page - 1));
     };
 
     const startPageNum = (page, displayCount) => {
@@ -86,7 +94,7 @@ export default {
     };
 
     const endPageNum = (totalPages, startPage, displayCount) => {
-      return totalPages < startPage + displayCount -1 ? totalPages : startPage + displayCount - 1;
+      return totalPages < startPage + displayCount - 1 ? totalPages : startPage + displayCount - 1;
     };
 
     const pageNumList = (page, totalPages, displayCount) => {
@@ -131,23 +139,32 @@ export default {
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .page-list {
   display: flex;
   justify-content: center;
   margin: 0;
   padding: 16px;
+
+  .previous-page,
+  .next-page,
+  .page {
+    display: flex;
+    padding: 6px;
+  }
+
+  .previous-page,
+  .next-page {
+    a {
+      display: flex;
+    }
+  }
+
+  .inactive {
+    pointer-events: none;
+    color: $TERTIARY_COLOR;
+    fill: $TERTIARY_COLOR;
+  }
 }
 
-.previous-page,
-.next-page,
-.page {
-  display: flex;
-  padding: 6px;
-}
-
-.inactive {
-  pointer-events: none;
-  color: #D3D3D3;
-}
 </style>
