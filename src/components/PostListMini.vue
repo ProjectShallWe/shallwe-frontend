@@ -1,33 +1,35 @@
 <template>
   <div class="col-6">
-    <h2 class="board-title">
-      {{ recommendPostList.boardTitle }}
-    </h2>
-    <ul class="board-recommend">
-      <li class="empty"
-          v-if="isEmpty()"
-      >
-          추천글이 없습니다.
-      </li>
-      <li v-for="post in recommendPostList.recommendPosts"
-          :key="post.postId"
-          class="recommend-post"
-      >
-        <router-link
-            :to="`/community/${post.boardId}/${post.postId}`"
+    <div class="wrapper">
+      <h2 class="board-title">
+        {{ recommendPostList.boardTitle }}
+      </h2>
+      <ul class="board-recommend">
+        <li class="empty"
+            v-if="isEmpty()"
         >
-          <div class="recommend-postCategory">
-            {{ post.postCategory }}
-          </div>
-          <div class="recommend-title">
-            {{ post.title }}
-          </div>
-          <div class="recommend-commentCount">
-            [{{ post.commentCount }}]
-          </div>
-        </router-link>
-      </li>
-    </ul>
+          추천글이 없습니다.
+        </li>
+        <li v-for="post in recommendPostList.recommendPosts"
+            :key="post.postId"
+            class="recommend-post"
+        >
+          <router-link
+              :to="`/community/${post.boardId}/${post.postId}`"
+          >
+            <div class="recommend-postCategory">
+              [{{ post.postCategory }}]
+            </div>
+            <div class="recommend-title">
+              {{ post.title }}
+            </div>
+            <div class="recommend-commentCount">
+              [{{ post.commentCount }}]
+            </div>
+          </router-link>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -58,43 +60,54 @@ export default {
 }
 </script>
 
-<style scoped>
-.board-title {
-  text-align: center;
-  border-bottom: #8977AD solid 1px;
-  color: #000000;
-  font-size: 18px;
-  padding: 10px 8px;
-}
+<style lang="scss" scoped>
+.wrapper {
+  margin-bottom: 16px;
+  border-bottom: $TERTIARY_COLOR solid 1px;
 
-.board-recommend .empty{
-  padding: 8px 0;
-  font-size: 14px;
-  color: #000000;
-  text-align: center;
-}
+  .board-title {
+    text-align: center;
+    border-bottom: $TERTIARY_COLOR solid 1px;
+    font-size: 18px;
+    padding: 8px 0;
+  }
 
-.recommend-post a {
-  display: flex;
-  font-size: 14px;
-  padding: 10px 8px;
-}
+  .board-recommend {
+    display: block;
+    min-height: 200px;
 
-.recommend-post a div {
-  width: auto;
-  display: block;
-}
+    .empty {
+      line-height: 200px;
+      padding: 8px 0;
+      font-size: 14px;
+      text-align: center;
+    }
 
-.recommend-postCategory {
-  color: #8977AD;
-  margin-right: 10px;
-}
+    .recommend-post {
+      a {
+        display: flex;
+        font-size: 14px;
+        padding: 8px 0;
 
-.recommend-title {
-  margin-right: 6px;
-}
+        .recommend-postCategory {
+          color: $POINT_COLOR;
+          margin-right: 8px;
+        }
 
-.recommend-commentCount {
-  color: #8977AD;
+        .recommend-title {
+          max-width: 80%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          margin-right: 8px;
+        }
+
+        .recommend-commentCount {
+          font-size: 12px;
+          color: $POINT_COLOR;
+        }
+      }
+    }
+  }
 }
 </style>
