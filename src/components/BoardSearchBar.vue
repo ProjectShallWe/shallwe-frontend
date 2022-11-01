@@ -67,31 +67,39 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 form {
   display: flex;
   justify-content: center;
   padding: 16px;
-}
 
-input {
-  height: 40px;
-  width: 100%;
-  border: #D3D3D3 solid 2px;
-  border-radius: 8px;
-  margin-right: 8px;
-}
+  select {
+    margin-right: 8px;
+  }
 
-select {
-  margin-right: 8px;
-}
+  input {
+    height: 40px;
+    width: 240px;
+    border: $TERTIARY_COLOR solid 1px;
+    border-radius: 8px;
+    padding: 8px;
+    margin-right: 8px;
 
-button {
-  height: 40px;
-  width: 80px;
-  border-radius: 8px;
-  color: #FFFFFF;
-  background-color: #8977AD;
-}
+    &:focus {
+      border: $SECONDARY_COLOR solid 1px;
+    }
+  }
 
+  button {
+    height: 40px;
+    width: 80px;
+    border: $TERTIARY_COLOR solid 1px;
+    border-radius: 8px;
+
+    &:hover {
+      color: $PRIMARY_COLOR;
+      background-color: $SECONDARY_COLOR;
+    }
+  }
+}
 </style>
