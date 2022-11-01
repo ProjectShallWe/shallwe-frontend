@@ -69,7 +69,7 @@
                   {{ post.title }}
                 </div>
                 <div class="comment-count">
-                  [{{post.commentCount}}]
+                  [{{ post.commentCount }}]
                 </div>
               </router-link>
             </td>
@@ -230,7 +230,7 @@ export default {
       return page;
     }
 
-    getPosts(pageParamResolver(pageParam.value -1), typeParam.value, keywordParam.value, categoryId);
+    getPosts(pageParamResolver(pageParam.value - 1), typeParam.value, keywordParam.value, categoryId);
 
     return {
       posts,
@@ -257,107 +257,120 @@ export default {
 }
 </script>
 
-<style scoped>
-td {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+<style lang="scss" scoped>
+.wrapper {
+  .post-list-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+
+    .board-title {
+      font-size: 18px;
+      padding: 8px 0;
+    }
+
+    .post-create-button {
+      height: 40px;
+      width: 80px;
+      border: $TERTIARY_COLOR solid 1px;
+      border-radius: 8px;
+
+      &:hover {
+        color: $PRIMARY_COLOR;
+        background-color: $SECONDARY_COLOR;
+      }
+    }
+  }
+
+  .post-category-list {
+    display: inline-flex;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+
+    a {
+      font-size: 14px;
+      padding: 4px 6px;
+      margin: 4px 4px 4px 0;
+      border: $TERTIARY_COLOR solid 1px;
+      border-radius: 8px;
+
+      &:hover {
+        color: $PRIMARY_COLOR;
+        background-color: $SECONDARY_COLOR;
+      }
+    }
+  }
+
+  .post-list {
+    display: table;
+    text-align: center;
+    table-layout: fixed;
+    width: 100%;
+    font-size: 14px;
+
+    thead {
+      border-bottom: $SECONDARY_COLOR solid 1px;
+    }
+
+    tbody {
+      tr {
+        td {
+          border-bottom: $TERTIARY_COLOR solid 1px;
+        }
+
+        border-bottom: $TERTIARY_COLOR solid 1px;
+
+        .title {
+          text-align: left;
+        }
+      }
+    }
+
+    * {
+      .category {
+        width: 10%;
+        padding: 8px 0;
+      }
+
+      .title {
+        width: 60%;
+
+        a {
+          display: flex;
+        }
+
+        div {
+          max-width: 95%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          margin-right: 8px;
+
+          &:last-child {
+            font-size: 12px;
+            color: $POINT_COLOR;
+            margin-right: 0;
+          }
+        }
+      }
+
+      .nickname {
+        width: 12%;
+      }
+
+      .create_date {
+        width: 6%;
+      }
+
+      .hits {
+        width: 6%;
+      }
+
+      .like_count {
+        width: 6%;
+      }
+    }
+  }
 }
 
-.post-list-top {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-
-}
-
-.post-create-button {
-  height: 40px;
-  width: 80px;
-  color: #F8F8F8;
-  background-color: #8977AD;
-  border-radius: 8px;
-}
-
-.board-title {
-  font-size: 17px;
-  padding: 8px 0;
-}
-
-.wrapper table {
-  display: table;
-  text-align: center;
-  table-layout: fixed;
-  width: 100%;
-  font-size: 14px;
-}
-
-.post-category-list {
-  display: inline-flex;
-  flex-wrap: wrap;
-  margin-bottom: 8px;
-}
-
-.post-category-list a {
-  font-size: 14px;
-  padding: 4px 6px;
-  margin: 4px 4px 4px 0;
-  color: #FFFFFF;
-  background-color: #8977AD;
-  border-radius: 8px;
-}
-
-.post-list thead {
-  border-bottom: #8977AD solid 1px;
-}
-
-.post-list tbody tr td {
-  border-bottom: #D3D3D3 solid 1px;
-}
-
-tbody tr td.title {
-  text-align: left;
-}
-
-.category {
-  width: 10%;
-  padding: 8px;
-}
-
-.title {
-  width: 60%;
-  padding: 6px;
-}
-
-.title a {
-  display: flex;
-}
-
-.title div {
-  margin-right: 6px;
-}
-
-.title div:last-child {
-  color: #8977AD;
-  margin-right: 0;
-}
-
-.nickname {
-  width: 12%;
-  padding: 6px;
-}
-
-.create_date {
-  width: 6%;
-  padding: 6px;
-}
-
-.hits {
-  width: 6%;
-}
-
-.like_count {
-  width: 6%;
-  padding: 6px;
-}
 </style>
