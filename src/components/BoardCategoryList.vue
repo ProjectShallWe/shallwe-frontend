@@ -1,11 +1,23 @@
 <template>
   <div class="row">
     <div class="col-12">
-      <ul class="board-category">
+      <h2 class="board-category-list fs-m"
+          @click="changeClicked">
+        게시판 목록
+        <span v-if="!isClicked"
+            class="open-icon"
+        />
+        <span v-if="isClicked"
+              class="close-icon"
+        />
+      </h2>
+      <ul v-if="isClicked"
+          class="board-category"
+      >
         <li
             v-for="boardCategory in boardCategories"
             :key="boardCategory.boardCategoryId"
-            class="board-category-title"
+            class="category-title"
         >
           <router-link to="#">
             {{ boardCategory.topic }}
@@ -30,69 +42,98 @@
 </template>
 
 <script>
-import {computed} from "vue";
+import {ref, computed} from "vue";
 import {useStore} from "vuex"
 
 export default {
   setup() {
     const store = useStore();
+    const isClicked = ref(false);
 
     const boardCategories = computed(() => store.state.boardCategoryList.boardCategories)
     const getBoardCategoryWithBoards = async () => {
       await store.dispatch('boardCategoryList/getBoardCategoryWithBoards');
     };
 
+    const changeClicked = () => {
+      isClicked.value = !isClicked.value;
+    }
+
     getBoardCategoryWithBoards();
 
     return {
+      isClicked,
       boardCategories,
+      changeClicked,
     };
   },
 }
 </script>
 
-<style scoped>
-.board-category {
-  display: flex;
-  text-align: center;
-  width: 100%;
-  height: 64px;
-  background-color: #8977AD;
-}
+<style lang="scss" scoped>
 
-.board-category-title {
-  position: relative;
-  flex: 1;
-  color: #FFFFFF;
-  border: #D3D3D3 solid 1px;
-}
-
-.board-category-title a{
+.board-category-list {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  color: $SECONDARY_COLOR;
+  background-color: $PRIMARY_COLOR;
+  padding: 8px 0;
+  border-bottom: $TERTIARY_COLOR solid 1px;
+
+  .open-icon,
+  .close-icon {
+    display: block;
+    width: 18px;
+    height: 18px;
+    margin-left: 4px;
+  }
+
+  .open-icon {
+    background-image: url("../assets/images/add-circle-line.svg");
+  }
+
+  .close-icon {
+    background-image: url("../assets/images/indeterminate-circle-line.svg");
+  }
 }
 
-.board {
-  display: none;
-  position: absolute;
-  background-color: #D3D3D3;
-  z-index: 1;
-  width: 100%;
-}
+.category-title {
+  font-size: 20px;
+  padding: 8px 0;
 
-.board li {
-  padding: 10px 6px;
-  border: #FFFFFF solid 1px;
-}
+  > a:hover {
+    border-bottom: $EMPHASIS_COLOR solid 2px;
+    margin-bottom: -2px;
+  }
 
-.board-category-title:hover .board {
-  display: block;
-  opacity: 1;
-}
+  &:hover .board li {
+    display: flex;
+  }
 
-.board li {
-  color: black;
+  .board {
+    font-size: 16px;
+    display: flex;
+    flex-wrap: wrap;
+
+    li {
+      display: none;
+      margin: 4px 0px;
+
+      &:after {
+        content: "·";
+        margin: 0 8px;
+      }
+
+      &:last-child:after {
+        content: "";
+      }
+
+      a:hover {
+        border-bottom: $EMPHASIS_COLOR solid 1px;
+        margin-bottom: -1px;
+      }
+    }
+  }
 }
 </style>
