@@ -29,11 +29,16 @@ export default {
     const type = ref('ticon');
 
     const url = ref(window.location.href);
+    const isPageParam = new URL(url.value).searchParams.has("page");
     const isTypeParam = new URL(url.value).searchParams.has("type");
     const isKeywordParam = new URL(url.value).searchParams.has("keyword");
 
     const addSearchParamUrl = (type, keyword) => {
       const changedUrl = new URL(url.value);
+
+      if (isPageParam) {
+        changedUrl.searchParams.delete("page");
+      }
 
       if (isTypeParam) {
         changedUrl.searchParams.delete("type");
