@@ -118,55 +118,62 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .board-result {
   margin-bottom: 20px;
+
+  h1 {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .board-list {
+    .board {
+      margin-bottom: 16px;
+
+      .board-title {
+        font-size: 16px;
+
+        a {
+          color: #1a0dab;
+        }
+      }
+    }
+  }
 }
 
-.board-result h1 {
-  font-size: 20px;
-  margin-bottom: 16px;
+.post-result {
+  h1 {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .post-list {
+    .post {
+      margin-bottom: 16px;
+
+      .post-title {
+        color: #1a0dab;
+        font-size: 18px;
+      }
+
+      .post-content {
+        padding: 0;
+        margin: 8px 0;
+      }
+
+      .post-info {
+        font-size: 14px;
+        display: flex;
+
+        .post-board {
+          color: #3a7c45;
+          margin-right: 16px;
+        }
+      }
+    }
+  }
 }
 
-.board {
-  margin-bottom: 16px;
-}
-
-.board-title {
-  font-size: 16px;
-}
-
-.board-title a {
-  color: #1a0dab;
-}
-
-.post-result h1 {
-  font-size: 20px;
-  margin-bottom: 16px;
-}
-
-.post {
-  margin-bottom: 16px;
-}
-
-.post-title {
-  color: #1a0dab;
-  font-size: 18px;
-}
-
-.post-content {
-  padding: 0;
-  margin: 8px 0;
-}
-
-.post-info {
-  font-size: 14px;
-  display: flex;
-}
-
-.post-board {
-  color: #3a7c45;
-  margin-right: 16px;
-}
 
 </style>
