@@ -8,19 +8,27 @@
         <form
             @submit.prevent="write"
         >
-          <div class="post-title">
-            <select v-model="category">
-              <option value="default">카테고리 선택</option>
-              <option
-                  v-for="postCategory in board[0]?.postCategories"
-                  :key="postCategory.postCategoryId"
-                  :value="postCategory.postCategoryId"
-              >
-                {{ postCategory.topic }}
-              </option>
-            </select>
-            <input type="text" placeholder="제목을 입력하세요." v-model="title">
-          </div>
+          <table class="post-title">
+            <tbody>
+            <tr>
+              <td>
+                <select v-model="category">
+                  <option value="default">카테고리 선택</option>
+                  <option
+                      v-for="postCategory in board[0]?.postCategories"
+                      :key="postCategory.postCategoryId"
+                      :value="postCategory.postCategoryId"
+                  >
+                    {{ postCategory.topic }}
+                  </option>
+                </select>
+              </td>
+              <td width="100%">
+                <input type="text" placeholder="제목을 입력하세요." v-model="title">
+              </td>
+            </tr>
+            </tbody>
+          </table>
           <div class="post-content">
             <!-- tiptap editor start -->
             <div class="editor">
@@ -96,36 +104,43 @@
                   <img src="../assets/images/tiptap/link.svg">
                 </button>
               </div>
-              <div v-if="imageModal">
+              <div class="image-wrapper" v-if="imageModal">
+                <h2>이미지 삽입</h2>
                 <div
                     class="image-url"
                 >
-                  <h3>URL</h3>
-                  <input
-                      v-model="url"
-                      type="text"
-                      placeholder="이미지의 URL을 입력해주세요"
-                  >
-                  <button
-                      type="button"
-                      @click="setImage(editor)"
-                  >
-                    확인
-                  </button>
+                  <h3>이미지 주소</h3>
+                  <div class="image-content">
+                    <input
+                        v-model="url"
+                        type="text"
+                        placeholder="이미지의 URL을 입력해주세요"
+                    >
+                    <button
+                        type="button"
+                        @click="setImage(editor)"
+                    >
+                      확인
+                    </button>
+                  </div>
                 </div>
                 <div>
                   <div
                       class="image-upload"
                   >
-                    <h3>upload</h3>
-                    <input type="file" @change="onInputImage">
-                    <button
-                      type="button"
-                      @click="uploadImage(editor)"
-                    >
-                     확인
-                    </button>
-
+                    <h3>이미지 파일</h3>
+                    <div class="image-content">
+                      <input type="file"
+                             accept="image/png, image/gif, image/jpg, image/jpeg, image/bmp"
+                             @change="onInputImage"
+                      >
+                      <button
+                          type="button"
+                          @click="uploadImage(editor)"
+                      >
+                        확인
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -204,7 +219,7 @@ export default {
     }
 
     const setImage = (editor) => {
-      editor.chain().focus().setImage({src : url.value}).run();
+      editor.chain().focus().setImage({src: url.value}).run();
 
       initModal();
     }
@@ -259,7 +274,7 @@ export default {
           .chain()
           .focus()
           .extendMarkRange('link')
-          .setLink({ href: linkUrl })
+          .setLink({href: linkUrl})
           .run()
     }
 
@@ -311,54 +326,63 @@ export default {
 }
 </script>
 
-<style>
-.post-write-title {
-  font-size: 18px;
-  padding: 8px 0;
+<style lang="scss">
+
+.post-write {
+  .post-write-title {
+    font-size: 18px;
+    padding: 8px 0;
+  }
+
+  form {
+    .post-title {
+      display: table;
+
+      tbody {
+        tr {
+          td select {
+            margin-right: 8px;
+          }
+
+          td input {
+            width: 100%;
+            border: $TERTIARY_COLOR solid 1px;
+
+            &:focus {
+              border: $SECONDARY_COLOR solid 1px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .post-content {
+    padding: 8px 0;
+  }
 }
 
-.post-title {
-  display: flex;
-  padding: 8px 0;
-}
-
-.post-title select {
-  margin-right: 8px;
-}
-
-.post-title input {
-  width: 100%;
-  border: #D3D3D3 solid 1px;
-}
-
-.post-content {
-  padding: 8px 0;
-}
-
-.post-content textarea {
-  width: 100%;
-  height: 500px;
-  border: #D3D3D3 solid 1px;
-}
 
 .button-group {
   display: flex;
   justify-content: space-between;
   padding: 8px 0;
-}
 
-.button-group button {
-  border-radius: 8px;
-  padding: 8px;
-}
+  button {
+    width: 80px;
+    height: 40px;
+    border-radius: 8px;
+    padding: 8px;
+    border: $TERTIARY_COLOR solid 1px;
 
-.button-group .button-submit {
-  color: #FFFFFF;
-  background-color: #8977AD;
+    &:hover {
+      color: $PRIMARY_COLOR;
+      background-color: $SECONDARY_COLOR
+    }
+  }
 }
 
 /* tiptap css 설정 */
-
 .ProseMirror {
   height: 400px;
 }
@@ -428,51 +452,89 @@ export default {
 }
 
 .editor {
-  border: 1px solid #D3D3D3;
-}
+  border: 1px solid $TERTIARY_COLOR;
 
-.editor-menu {
-  background-color: #F0F0F0;
-  border-bottom: 1px solid #D3D3D3;
-}
+  .editor-menu {
+    background-color: $PRIMARY_COLOR;
+    border-bottom: 1px solid $TERTIARY_COLOR;
 
-.editor-menu button {
-  border-right: #D3D3D3 solid 1px;
-}
+    button {
+      border-right: $TERTIARY_COLOR solid 1px;
+      padding: 4px;
 
-.editor-menu button:last-child {
-  border-style: none;
-}
+      &:last-child {
+        border-style: none;
+      }
 
-.image-url {
-  display: flex;
-  text-align: center;
-  width: 100%;
-  color: #F8F8F8;
-  background-color: #8977AD;
-  border: #8977AD solid 2px;
-  border-radius: 8px;
-}
+      &:hover {
+        background-color: $TERTIARY_COLOR;
+      }
+    }
 
-.image-url h3 {
-  width: 80px;
-  font-size: 18px;
-}
+    .is-active {
+      background-color: $TERTIARY_COLOR;
+    }
+  }
 
-.image-url input {
-  width: 100%;
-}
+  .editor-content {
+    height: 400px;
+    overflow: auto;
+    padding: 16px 25px 0 25px;
+  }
 
-.image-url button {
-  width: 80px;
-  font-size: 18px;
-  background-color: #8977AD;
-  color: #F8F8F8;
-}
+  .image-wrapper {
+    position: absolute;
+    background-color: $PRIMARY_COLOR;
+    border: $TERTIARY_COLOR solid 1px;
+    z-index: 999;
 
-.editor-content {
-  height: 400px;
-  overflow: auto;
-  padding: 16px 25px 0 25px;
+    h2 {
+      font-size: 20px;
+      padding: 8px;
+      border-bottom: $TERTIARY_COLOR solid 1px;
+    }
+
+    .image-url,
+    .image-upload {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      padding: 8px;
+
+      h3 {
+        font-size: 16px;
+        margin-right: 8px;
+      }
+
+      .image-content {
+        input {
+          padding: 4px;
+          border: $TERTIARY_COLOR solid 1px;
+          margin-right: 8px;
+
+          &:focus {
+            border: $SECONDARY_COLOR solid 1px;
+          }
+        }
+
+        button {
+          width: 60px;
+          font-size: 16px;
+          border-radius: 8px;
+          border: $TERTIARY_COLOR solid 1px;
+
+          &:hover {
+            color: $PRIMARY_COLOR;
+            background-color: $SECONDARY_COLOR;
+          }
+        }
+      }
+    }
+
+    .image-url {
+      border-bottom: $TERTIARY_COLOR solid 1px;
+    }
+  }
 }
 </style>
