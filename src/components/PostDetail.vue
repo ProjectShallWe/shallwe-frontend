@@ -82,7 +82,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .post-category {
   font-size: 14px;
   padding: 8px 16px;
@@ -134,7 +134,7 @@ export default {
   }
 }
 
-.post-content {
+::v-deep(.post-content) {
   padding: 16px;
 
   a {
