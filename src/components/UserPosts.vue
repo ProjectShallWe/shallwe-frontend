@@ -4,60 +4,60 @@
   </h2>
   <table class="post-list">
     <thead>
-    <tr>
-      <th scope="col" class="post-num">
-        번호
-      </th>
-      <th scope="col" class="post-board">
-        게시판
-      </th>
-      <th scope="col" class="post-title">
-        제목
-      </th>
-      <th scope="col" class="post-create_date">
-        날짜
-      </th>
-      <th scope="col" class="post-hits">
-        조회 수
-      </th>
-      <th scope="col" class="post-like_count">
-        좋아요
-      </th>
-    </tr>
+      <tr>
+        <th scope="col" class="post-num">
+          번호
+        </th>
+        <th scope="col" class="post-board">
+          게시판
+        </th>
+        <th scope="col" class="post-title">
+          제목
+        </th>
+        <th scope="col" class="post-create_date">
+          날짜
+        </th>
+        <th scope="col" class="post-hits">
+          조회 수
+        </th>
+        <th scope="col" class="post-like_count">
+          좋아요
+        </th>
+      </tr>
     </thead>
     <tbody>
-    <tr
-        v-for="post in posts"
-        :key="post.postId"
-    >
-      <td class="page-num">
-        {{ post.postId }}
-      </td>
-      <td class="post-board">
-        {{ post.boardTitle }}
-      </td>
-      <td class="post-title">
-        <router-link
-            :to="`/community/${post.boardId}/${post.postId}`"
-        >
-          <div>
-            {{ post.title }}
-          </div>
-          <div class="post-comment-count">
-            [{{post.commentCount}}]
-          </div>
-        </router-link>
-      </td>
-      <td class="post-create_date">
-        {{ post.createdDate }}
-      </td>
-      <td class="post-hits">
-        {{ post.hits }}
-      </td>
-      <td class="post-like_count">
-        {{ post.likeCount }}
-      </td>
-    </tr>
+      <tr
+          v-for="post in posts"
+          :key="post.postId"
+      >
+        <td class="page-num">
+          {{ post.postId }}
+        </td>
+        <td class="post-board">
+          {{ post.boardTitle }}
+        </td>
+        <td class="post-title">
+          <router-link
+              :to="`/community/${post.boardId}/${post.postId}`"
+          >
+            <div>
+              {{ post.title }}
+            </div>
+            <div class="post-comment-count">
+              [{{ post.commentCount }}]
+            </div>
+          </router-link>
+        </td>
+        <td class="post-create_date">
+          {{ post.createdDate }}
+        </td>
+        <td class="post-hits">
+          {{ post.hits }}
+        </td>
+        <td class="post-like_count">
+          {{ post.likeCount }}
+        </td>
+      </tr>
     </tbody>
   </table>
   <Pagination
@@ -101,7 +101,7 @@ export default {
       store.dispatch("userPosts/getPostsByNickname", {page})
     };
 
-    getPostsByNickname(pageParamResolver(pageParam.value-1));
+    getPostsByNickname(pageParamResolver(pageParam.value - 1));
 
     return {
       posts,
@@ -113,58 +113,75 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .info-title {
   font-size: 20px;
-  border-bottom: #8977AD solid 2px;
+  border-bottom: $TERTIARY_COLOR solid 2px;
   margin-bottom: 16px;
   padding-bottom: 16px;
 }
 
-.post-list thead {
-  border-bottom: #8977AD solid 1px;
+.post-list {
   text-align: center;
-}
+  font-size: 14px;
+  width: 100%;
+  table-layout: fixed;
 
-.post-list tbody tr td {
-  border-bottom: #D3D3D3 solid 1px;
-}
+  thead {
+    border-bottom: $TERTIARY_COLOR solid 1px;
 
-tbody tr td.post-title {
-  text-align: left;
-}
+    tr {
+      .post-num {
+        width: 8%;
+      }
+      .post-board {
+        width: 16%;
+      }
+      .post-title {
+        width: 52%;
+      }
+      .post-create_date {
+        width: 8%;
+      }
+      .post-hits {
+        width: 8%;
+      }
+      .post-like_count {
+        width: 8%;
+      }
+    }
+  }
 
-.post-board {
-  width: 10%;
-  padding: 8px;
-}
+  tbody {
+    tr {
+      td {
+        border-bottom: $TERTIARY_COLOR solid 1px;
+      }
 
-.post-title {
-  width: 72%;
-  padding: 6px;
-  display: table-cell;
-}
+      .post-title {
+        text-align: left;
 
-.post-title a {
-  display: flex;
-}
+        a {
+          display: flex;
 
-.post-title div {
-  margin-right: 6px;
-}
+          div {
+            max-width: 80%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
 
-.post-title div:last-child {
-  color: #8977AD;
-  margin-right: 0;
-}
+        div {
+          margin-right: 6px;
 
-.post-create_date {
-  width: 6%;
-  padding: 6px;
-}
-
-.post-like_count {
-  width: 12%;
-  padding: 6px;
+          &:last-child {
+            color: $POINT_COLOR;
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
 }
 </style>

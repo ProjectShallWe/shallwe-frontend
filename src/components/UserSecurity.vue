@@ -64,41 +64,47 @@ export default {
 }
 </script>
 
-<style scoped>
-input {
-  border: #D3D3D3 solid 2px;
+<style lang="scss" scoped>
+
+.info-title {
+  font-size: 20px;
+  border-bottom: $TERTIARY_COLOR solid 2px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
 }
 
 .info-content {
   display: flex;
   justify-content: center;
+
+  .info-form {
+    width: 50%;
+
+    .password {
+      display: flex;
+      flex-direction: column;
+
+      input {
+        padding: 8px;
+        margin-bottom: 8px;
+        border: $TERTIARY_COLOR solid 1px;
+      }
+    }
+
+    .info-submit {
+      width: 100%;
+      height: 40px;
+      border-radius: 8px;
+      color: $SECONDARY_COLOR;
+      background-color: $PRIMARY_COLOR;
+      border: $TERTIARY_COLOR solid 1px;
+
+      &:hover {
+        color: $PRIMARY_COLOR;
+        background-color: $SECONDARY_COLOR;
+      }
+    }
+  }
 }
 
-.info-title {
-  font-size: 20px;
-  border-bottom: #8977AD solid 2px;
-  margin-bottom: 16px;
-  padding-bottom: 16px;
-}
-
-.info-form {
-  width: 60%;
-}
-
-.info-submit {
-  width: 100%;
-  height: 40px;
-  border-radius: 8px;
-  color: #F8F8F8;
-  background-color: #8977AD;
-}
-
-.password {
-  display: flex;
-  flex-direction: column;
-}
-
-.password input {
-  margin-bottom: 8px;
-}
 </style>

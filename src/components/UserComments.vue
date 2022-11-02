@@ -2,53 +2,53 @@
   <h2 class="info-title">
     댓글
   </h2>
-  <table class="post-list">
+  <table class="comment-list">
     <thead>
-    <tr>
-      <th scope="col" class="comment-num">
-        번호
-      </th>
-      <th scope="col" class="post-board">
-        게시판
-      </th>
-      <th scope="col" class="post-title">
-        내용
-      </th>
-      <th scope="col" class="post-create_date">
-        날짜
-      </th>
-      <th scope="col" class="post-like_count">
-        좋아요
-      </th>
-    </tr>
+      <tr>
+        <th scope="col" class="comment-num">
+          번호
+        </th>
+        <th scope="col" class="comment-board">
+          게시판
+        </th>
+        <th scope="col" class="comment-content">
+          내용
+        </th>
+        <th scope="col" class="comment-create_date">
+          날짜
+        </th>
+        <th scope="col" class="comment-like_count">
+          좋아요
+        </th>
+      </tr>
     </thead>
     <tbody>
-    <tr
-        v-for="comment in comments"
-        :key="comment.commentId"
-    >
-      <td class="comment-num">
-        {{comment.commentId}}
-      </td>
-      <td class="post-category">
-        {{ comment.boardTitle }}
-      </td>
-      <td class="post-title">
-        <router-link
-            :to="`/community/${comment.boardId}/${comment.postId}`"
-        >
-          <div>
-            {{ comment.content }}
-          </div>
-        </router-link>
-      </td>
-      <td class="post-create_date">
-        {{ comment.createdDate }}
-      </td>
-      <td class="post-like_count">
-        {{ comment.likeCommentCount }}
-      </td>
-    </tr>
+      <tr
+          v-for="comment in comments"
+          :key="comment.commentId"
+      >
+        <td class="comment-num">
+          {{comment.commentId}}
+        </td>
+        <td class="comment-board">
+          {{ comment.boardTitle }}
+        </td>
+        <td class="comment-content">
+          <router-link
+              :to="`/community/${comment.boardId}/${comment.postId}`"
+          >
+            <div>
+              {{ comment.content }}
+            </div>
+          </router-link>
+        </td>
+        <td class="comment-create_date">
+          {{ comment.createdDate }}
+        </td>
+        <td class="comment-like_count">
+          {{ comment.likeCommentCount }}
+        </td>
+      </tr>
     </tbody>
   </table>
   <Pagination
@@ -104,58 +104,63 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .info-title {
   font-size: 20px;
-  border-bottom: #8977AD solid 2px;
+  border-bottom: $TERTIARY_COLOR solid 2px;
   margin-bottom: 16px;
   padding-bottom: 16px;
 }
 
-.post-list thead {
-  border-bottom: #8977AD solid 1px;
+.comment-list {
   text-align: center;
-}
+  font-size: 14px;
+  width: 100%;
+  table-layout: fixed;
 
-.post-list tbody tr td {
-  border-bottom: #D3D3D3 solid 1px;
-}
+  thead {
+    border-bottom: $TERTIARY_COLOR solid 1px;
 
-tbody tr td.post-title {
-  text-align: left;
-}
+    tr {
+      .comment-num {
+        width: 8%;
+      }
+      .comment-board {
+        width: 16%;
+      }
+      .comment-content {
+        width: 60%;
+      }
+      .comment-create_date {
+        width: 8%;
+      }
+      .comment-like_count {
+        width: 8%;
+      }
+    }
+  }
 
-.post-board {
-  width: 10%;
-  padding: 8px;
-}
+  tbody {
+    tr {
+      td {
+        border-bottom: $TERTIARY_COLOR solid 1px;
+      }
 
-.post-title {
-  width: 72%;
-  padding: 6px;
-  display: table-cell;
-}
+      .comment-content {
+        text-align: left;
 
-.post-title a {
-  display: flex;
-}
+        a {
+          display: flex;
 
-.post-title div {
-  margin-right: 6px;
-}
-
-.post-title div:last-child {
-  color: #8977AD;
-  margin-right: 0;
-}
-
-.post-create_date {
-  width: 6%;
-  padding: 6px;
-}
-
-.post-like_count {
-  width: 12%;
-  padding: 6px;
+          div {
+            max-width: 80%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
 }
 </style>

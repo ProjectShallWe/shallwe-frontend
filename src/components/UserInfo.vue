@@ -156,26 +156,24 @@ export default {
 }
 </script>
 
-<style scoped>
-input {
-  border: #D3D3D3 solid 2px;
-}
+<style lang="scss" scoped>
 
 .info-menu-wrapper {
   display: flex;
   justify-content: center;
-}
+  padding: 40px 0;
 
-.info-menu {
-  width: 100%;
-  color: #F8F8F8;
-  background-color: #8977AD;
-}
+  .info-menu {
+    width: 100%;
+    color: $SECONDARY_COLOR;
+    background-color: $PRIMARY_COLOR;
 
-.info-menu li {
-  padding: 16px 40px;
-  border: #F8F8F8 solid 2px;
-  text-align: center;
+    li {
+      padding: 16px 40px;
+      border: $TERTIARY_COLOR solid 2px;
+      text-align: center;
+    }
+  }
 }
 
 .info-wrapper {
@@ -183,66 +181,77 @@ input {
   flex-direction: column;
   width: 100%;
   height: 100%;
-  border-left: #D3D3D3 solid 2px;
-  padding-left: 24px;
-}
+  border-left: $TERTIARY_COLOR solid 2px;
+  padding: 40px 24px;
 
-.info-content {
-  display: flex;
-  justify-content: center;
-}
+  .info-title {
+    font-size: 20px;
+    border-bottom: $TERTIARY_COLOR solid 2px;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
 
-.info-title {
-  font-size: 20px;
-  border-bottom: #8977AD solid 2px;
-  margin-bottom: 16px;
-  padding-bottom: 16px;
-}
+  }
 
-.info-form {
-  width: 60%;
-}
+  .info-content {
+    display: flex;
+    justify-content: center;
 
-.nickname {
-  display: flex;
-  margin: 16px 0;
-}
+    .info-form {
+      width: 50%;
 
-.nickname h3 {
-  width: 150px;
-  font-size: 16px;
-  margin: 8px 0;
-}
+      .nickname {
+        display: flex;
+        justify-items: center;
+        align-items: center;
 
-.new-nickname {
-  width: 100%;
-  margin-right: 8px;
-}
+        margin: 16px 0;
 
-.nowUse,
-.regExp,
-.duplicate,
-.not-duplicate {
-  font-size: 14px;
-  margin-bottom: 16px;
-}
+        h3 {
+          width: 30%;
+          font-size: 16px;
+        }
 
-.nowUse,
-.regExp,
-.duplicate {
-  color: red;
-}
+        .new-nickname {
+          width: 70%;
+          border: $TERTIARY_COLOR solid 1px;
+          padding: 8px;
+        }
+      }
 
-.not-duplicate {
-  color: green;
-}
+      .nowUse,
+      .regExp,
+      .duplicate,
+      .not-duplicate {
+        font-size: 14px;
+        margin-bottom: 16px;
+      }
 
-.info-submit {
-  width: 100%;
-  height: 40px;
-  border-radius: 8px;
-  color: #F8F8F8;
-  background-color: #8977AD;
+      .nowUse,
+      .regExp,
+      .duplicate {
+        color: red;
+      }
+
+      .not-duplicate {
+        color: green;
+      }
+
+      .info-submit {
+        width: 100%;
+        height: 40px;
+        border-radius: 8px;
+        color: $SECONDARY_COLOR;
+        background-color: $PRIMARY_COLOR;
+        border: $TERTIARY_COLOR solid 1px;
+
+        &:hover {
+          color: $PRIMARY_COLOR;
+          background-color: $SECONDARY_COLOR;
+        }
+      }
+    }
+  }
+
 }
 
 </style>
