@@ -19,6 +19,7 @@ const addSubscriber = (callback) => {
 /** axiosBasic */
 const axiosBasic = axios.create({
     baseURL: 'http://localhost:8080/',
+    withCredentials:true,
 })
 
 axiosBasic.interceptors.request.use(
@@ -45,6 +46,7 @@ axiosBasic.interceptors.response.use(
 /** axiosAuth */
 const axiosAuth = axios.create({
     baseURL: 'http://localhost:8080/',
+    withCredentials:true,
 })
 
 axiosAuth.interceptors.request.use(
