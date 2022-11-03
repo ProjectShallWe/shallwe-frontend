@@ -37,6 +37,20 @@
           </span>
         </a>
       </div>
+      <div v-if="loggedIn" class="post-edit">
+        <h3>
+          <router-link to="">
+          수정
+          </router-link>
+        </h3>
+        <h3>
+          <button type="button"
+                  @click="deletePost"
+          >
+          삭제
+          </button>
+        </h3>
+      </div>
       <div class="comment-list-header">
         <h3>댓글</h3>
         <span>({{ postDetail.commentCount }})</span>
@@ -55,7 +69,10 @@ export default {
     const store = useStore();
     const route = useRoute();
     const postId = route.params.postId;
+    const boardId = route.params.boardId;
     const postDetail = ref(computed(() => store.state.postDetail.postDetail));
+
+    const loggedIn = computed(() => store.getters["login/loggedIn"]);
 
     const getPostDetails = async () => {
       await store.dispatch("postDetail/getPostDetails", {
@@ -71,12 +88,25 @@ export default {
       });
     }
 
+    const deletePost = async () => {
+      const agree = confirm("글을 삭제하시겠습니까?");
+
+      if (agree) {
+        await store.dispatch("postDetail/deletePost", {
+          postId,
+          boardId,
+        })
+      }
+    }
+
     getPostDetails();
 
     return {
+      loggedIn,
       postDetail,
       getPostDetails,
       addLikeCount,
+      deletePost,
     }
   },
 }
@@ -172,6 +202,29 @@ export default {
         height: 21px;
         margin-right: 4px;
       }
+    }
+  }
+}
+
+.post-edit {
+  display: flex;
+  justify-content: right;
+
+  h3 {
+    font-size: 14px;
+    margin-right: 8px;
+    border: $TERTIARY_COLOR solid 1px;
+    border-radius: 8px;
+    padding: 4px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &:hover {
+      color: $PRIMARY_COLOR;
+      background-color: $SECONDARY_COLOR;
+      border: $SECONDARY_COLOR solid 1px;
     }
   }
 }
