@@ -19,12 +19,12 @@ const addSubscriber = (callback) => {
 /** axiosBasic */
 const axiosBasic = axios.create({
     baseURL: 'http://localhost:8080/',
-    withCredentials: true,
 })
 
 axiosBasic.interceptors.request.use(
     function (config) {
         config.headers["Content-Type"] = "application/json; charset=utf-8";
+        config.headers['Access-Control-Allow-Origin'] = '*';
 
         return config
     },
@@ -45,7 +45,6 @@ axiosBasic.interceptors.response.use(
 /** axiosAuth */
 const axiosAuth = axios.create({
     baseURL: 'http://localhost:8080/',
-    withCredentials: true,
 })
 
 axiosAuth.interceptors.request.use(
@@ -53,6 +52,7 @@ axiosAuth.interceptors.request.use(
 
         config.headers["Content-Type"] = "application/json; charset=utf-8";
         config.headers["Authorization"] = cookies.get("accessToken");
+        config.headers['Access-Control-Allow-Origin'] = '*';
 
         return config
     },
