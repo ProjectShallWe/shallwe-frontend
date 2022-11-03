@@ -11,6 +11,19 @@ import SignUp from "@/page/user/signUp";
 
 const router = createRouter({
     history: createWebHistory(),
+    scrollBehavior(to, from, savedPosition) {
+        // 뒤로 가기, 앞으로 가기 버튼 클릭시 이전에 보던 scroll 위치를 반환
+        if (savedPosition) {
+            return savedPosition;
+        }
+        // page query, category query가 변경되면 화면 최상단으로 이동하지 않는다.
+        if (to.query.page !== from.query.page
+            || to.query.category !== from.query.category) {
+            return
+        }
+        // 화면 최상단으로 이동한다.
+        return { top: 0 };
+    },
     routes: [
         {
             path: '/',
