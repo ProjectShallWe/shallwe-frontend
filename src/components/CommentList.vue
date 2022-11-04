@@ -3,7 +3,7 @@
     <div class="col-12">
       <ul class="comment-list">
         <!-- 댓글 작성 양식 -->
-        <div v-if="loggedIn"
+        <li v-if="loggedIn"
              class="reply-write-form"
         >
           <h3>댓글 작성</h3>
@@ -21,7 +21,7 @@
               <button type="submit">등록</button>
             </div>
           </form>
-        </div>
+        </li>
         <!-- post 내 작성된 댓글이 없을 때 -->
         <li v-if="isEmpty(commentList)"
             class="empty"
@@ -37,8 +37,11 @@
               <div>
                 <span class="comment-writer">{{ comment.nickname }}</span>
                 <span class="comment-created-date">({{ comment.createdDate }})</span>
+                <span v-if="isWriter(comment.nickname)"
+                      @click="deleteComment(comment.commentId)"
+                      class="comment-delete-button">삭제</span>
               </div>
-              <div class="comment-reaction">
+              <div v-if="comment.status === 'ENABLE'" class="comment-reaction">
                 <div @click="addLikeCount(comment.commentId)"
                      class="comment-like-button">
                   <span class="comment-like-count">
@@ -94,8 +97,11 @@
                   <div>
                     <span class="comment-writer">{{ reply.nickname }}</span>
                     <span class="comment-created-date">({{ reply.createdDate }})</span>
+                    <span v-if="isWriter(reply.nickname)"
+                          @click="deleteComment(reply.commentId)"
+                          class="comment-delete-button">삭제</span>
                   </div>
-                  <div class="comment-reaction">
+                  <div v-if="reply.status === 'ENABLE'" class="comment-reaction">
                     <div @click="addLikeCount(reply.commentId)"
                          class="comment-like-button">
                     <span class="comment-like-count">
@@ -132,6 +138,23 @@ export default {
     const childContent = ref("");
 
     const loggedIn = computed(() => store.getters["login/loggedIn"]);
+
+    const nickname = computed(() => store.state.login.nickname);
+
+    const isWriter = (object) => {
+      return nickname.value === object;
+    }
+
+    const deleteComment = async (commentId) => {
+      const agree = confirm("댓글을 삭제하시겠습니까?")
+
+      if (agree) {
+        await store.dispatch("commentList/deleteComment", {
+          id: commentId,
+        })
+        await getCommentsInPost();
+      }
+    }
 
     const isEmpty = (list) => {
       const arr = list;
@@ -200,7 +223,9 @@ export default {
       parentContent,
       childContent,
       loggedIn,
+      isWriter,
       isEmpty,
+      deleteComment,
       getCommentsInPost,
       showReplyWriteForm,
       writeParentComment,
@@ -281,13 +306,24 @@ export default {
     justify-content: space-between;
     margin-bottom: 8px;
 
-    .comment-writer {
-      font-size: 14px;
-      margin-right: 8px;
-    }
+    div {
+      .comment-writer {
+        font-size: 14px;
+        margin-right: 8px;
+      }
 
-    .comment-created-date {
-      font-size: 12px;
+      .comment-created-date {
+        font-size: 12px;
+        margin-right: 8px;
+      }
+
+      .comment-delete-button {
+        font-size: 0.75rem;
+
+        &:hover {
+          color: $EMPHASIS_COLOR;
+        }
+      }
     }
 
     .comment-reaction {

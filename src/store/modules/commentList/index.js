@@ -48,6 +48,17 @@ export default {
                     return alert("이미 공감하신 댓글입니다.");
                 }
             });
+        },
+        async deleteComment({commit}, {id}) {
+            await axiosAuth.delete(
+                `api/comment/${id}`
+            ).then((res) => {
+                if (res.data === Number(id)) {
+                    alert("댓글 삭제가 완료되었습니다.")
+                }
+            }).catch(() => {
+                alert("댓글 삭제에 실패했습니다.")
+            })
         }
     },
 }
