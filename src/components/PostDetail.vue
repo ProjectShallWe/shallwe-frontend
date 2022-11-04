@@ -37,9 +37,10 @@
           </span>
         </a>
       </div>
-      <div v-if="loggedIn" class="post-edit">
+      <div v-if="isWriter(postDetail.nickname)" class="post-edit">
         <h3>
-          <router-link to="">
+          <router-link
+              :to="`/community/${boardId}/edit?category=${postDetail.postCategoryId}&postId=${postDetail.postId}&mode=update`">
           수정
           </router-link>
         </h3>
@@ -72,7 +73,8 @@ export default {
     const boardId = route.params.boardId;
     const postDetail = ref(computed(() => store.state.postDetail.postDetail));
 
-    const loggedIn = computed(() => store.getters["login/loggedIn"]);
+    const loggedIn = computed(() => store.getters.login.loggedIn);
+    const nickname = computed(() => store.state.login.nickname);
 
     const getPostDetails = async () => {
       await store.dispatch("postDetail/getPostDetails", {
@@ -86,6 +88,10 @@ export default {
       }).then(() => {
         getPostDetails();
       });
+    }
+
+    const isWriter = (object) => {
+      return nickname.value === object
     }
 
     const deletePost = async () => {
@@ -102,8 +108,10 @@ export default {
     getPostDetails();
 
     return {
+      boardId,
       loggedIn,
       postDetail,
+      isWriter,
       getPostDetails,
       addLikeCount,
       deletePost,

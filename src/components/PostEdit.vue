@@ -5,9 +5,7 @@
         <h1 class="post-write-title">
           {{ board[0]?.title }} 게시판 글쓰기
         </h1>
-        <form
-            @submit.prevent="write"
-        >
+        <form @submit.prevent="write">
           <table class="post-title">
             <tbody>
             <tr>
@@ -182,21 +180,27 @@ export default {
   },
   setup() {
     const store = useStore();
-    const boardId = useRoute().params.boardId;
-    const category = ref(useRoute().query.category);
+    const route = useRoute();
 
-    const title = ref("");
+    const boardId = route.params.boardId;
+    const category = ref(route.query.category);
+    const postId = route.query.postId;
+    const mode = route.query.mode;
+
+    const board = computed(() => store.state.postListMain.board);
+    const postDetail = computed(() => store.state.postDetail.postDetail);
+
+    const title = ref(postDetail.value.title);
+    const content = ref(postDetail.value.content);
 
     const imageModal = ref(false);
     const url = ref('');
 
     const image = ref('');
-    const imageUrl = computed(() => store.state.postCreate.imageUrl);
-
-    const board = computed(() => store.state.postListMain.board);
+    const imageUrl = computed(() => store.state.postEdit.imageUrl);
 
     const editor = useEditor({
-      content: "",
+      content: content.value,
       extensions: [
         StarterKit,
         Image,
@@ -229,7 +233,7 @@ export default {
     }
 
     const uploadImage = async (editor) => {
-      await store.dispatch("postCreate/uploadPostImage", {
+      await store.dispatch("postEdit/uploadPostImage", {
         file: image.value
       })
 
@@ -249,8 +253,6 @@ export default {
       if (!linkUrl.match('^https?://')) {
         linkUrl = 'https://' + linkUrl;
       }
-
-      console.log(linkUrl);
 
       // cancelled
       if (linkUrl === null) {
@@ -283,12 +285,24 @@ export default {
         return alert("카테고리를 선택해주세요.");
       }
 
-      await store.dispatch("postCreate/writePost", {
-        boardId: boardId,
-        categoryId: category.value,
-        title: title.value,
-        content: editor.value.getHTML(),
-      });
+      if (mode !== "update") {
+        await store.dispatch("postEdit/writePost", {
+          boardId: boardId,
+          categoryId: category.value,
+          title: title.value,
+          content: editor.value.getHTML(),
+        });
+      }
+
+      if (mode === "update") {
+        await store.dispatch("postEdit/updatePost", {
+          postId: postId,
+          boardId: boardId,
+          categoryId: category.value,
+          title: title.value,
+          content: editor.value.getHTML(),
+        });
+      }
     }
 
     const cancel = () => {
@@ -300,6 +314,7 @@ export default {
     }
 
     return {
+      postId,
       title,
       url,
       imageUrl,
@@ -316,6 +331,7 @@ export default {
       editor,
       write,
       cancel,
+      mode,
     }
   },
   created() {

@@ -21,7 +21,7 @@ export default {
     const store = useStore();
 
     const boardsRecommendPosts = computed(() => store.state.postListMini.boardsRecommendPosts);
-    console.log(boardsRecommendPosts);
+
     const getRecommendPostsInBoardsFromRedis = async () => {
       await store.dispatch("postListMini/getRecommendPostsInBoardsFromRedis", {
         boardCategoryIdLists: [1, 3, 6, 4, 9, 11]

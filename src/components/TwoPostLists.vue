@@ -26,9 +26,6 @@ export default {
     const allRecommendPosts = computed(() => store.state.postListMini.allRecommendPosts);
     const boardRecommendPosts = computed(() => store.state.postListMini.boardRecommendPosts);
 
-    console.log(allRecommendPosts);
-    console.log(boardRecommendPosts);
-
     const getRecommendPostsFromRedis = async () => {
       await store.dispatch("postListMini/getRecommendPostsFromRedis");
     };

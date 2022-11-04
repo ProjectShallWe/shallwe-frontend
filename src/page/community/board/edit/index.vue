@@ -1,16 +1,16 @@
 <template>
   <div class="container">
     <BoardCategoryList />
-    <PostCreate />
+    <PostEdit />
   </div>
 </template>
 
 <script>
 import BoardCategoryList from "@/components/BoardCategoryList";
-import PostCreate from "@/components/PostCreate";
+import PostEdit from "@/components/PostEdit";
 export default {
   components: {
-    PostCreate,
+    PostEdit,
     BoardCategoryList,
   }
 }

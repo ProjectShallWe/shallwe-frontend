@@ -10,7 +10,7 @@
               v-if="loggedIn"
               type="button"
               class="post-create-button"
-              @click="movePostCreate"
+              @click="movePostEdit"
           >
             글쓰기
           </button>
@@ -131,14 +131,14 @@ export default {
 
     const board = computed(() => store.state.postListMain.board);
 
-    const movePostCreate = () => {
-      const basicUrl = `/community/${boardId}/create`;
+    const movePostEdit = () => {
+      const basicUrl = `/community/${boardId}/edit`;
 
       if (categoryId) {
         return location.href = basicUrl + `?category=${categoryId}`;
       }
 
-      return location.href = `/community/${boardId}/create`
+      return location.href = `/community/${boardId}/edit`
     }
 
     const getPostDetailUrl = (post) => {
@@ -240,7 +240,7 @@ export default {
       pageNum,
       totalPages,
       loggedIn,
-      movePostCreate,
+      movePostEdit,
       setPaginationParam,
       setSearchConditionParam,
       getPostDetailUrl,

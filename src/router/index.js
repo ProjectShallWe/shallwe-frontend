@@ -2,7 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router';
 import Home from "@/page/index";
 import Community from "@/page/community/index";
 import Board from "@/page/community/board/_id"
-import PostCreate from "@/page/community/board/create"
+import PostEdit from "@/page/community/board/edit"
 import PostDetail from "@/page/community/board/post/_id"
 import Search from "@/page/community/board/search/index"
 import Info from "@/page/user/index"
@@ -41,9 +41,9 @@ const router = createRouter({
             component: Board
         },
         {
-            path: '/community/:boardId/create',
-            name: 'postCreate',
-            component: PostCreate
+            path: '/community/:boardId/edit',
+            name: 'postEdit',
+            component: PostEdit
         },
         {
             path: '/community/:boardId/:postId',

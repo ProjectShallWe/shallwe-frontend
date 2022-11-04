@@ -11,7 +11,8 @@ export default createStore({
                 'boardSearchBar',
                 'boardCategoryList',
                 'postListMain',
-                'postListMini'
+                'postListMini',
+                'postDetail'
             ]
         }),
     ]

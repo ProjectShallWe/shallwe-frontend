@@ -53,6 +53,23 @@ export default {
             }).catch(() => {
                 alert("글 등록에 실패했습니다.")
             })
+        },
+
+        async updatePost({commit}, {postId, boardId, categoryId, title, content}) {
+            await axiosAuth.put(
+                `api/post/${postId}?category=${categoryId}`,
+                {
+                    title,
+                    content,
+                }
+            ).then((res) => {
+                if (res.data === Number(postId)) {
+                    alert("수정하신 글이 정상 등록되었습니다.")
+                    router.push(`/community/${boardId}?category=${categoryId}`)
+                }
+            }).catch(() => {
+                alert("글 수정에 실패했습니다.")
+            })
         }
     }
 }

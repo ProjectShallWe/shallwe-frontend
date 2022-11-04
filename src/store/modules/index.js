@@ -1,6 +1,6 @@
 import postListMain from "@/store/modules/postListMain";
 import postListMini from "@/store/modules/postListMini";
-import postCreate from "@/store/modules/postCreate";
+import postEdit from "@/store/modules/postEdit";
 import postDetail from "@/store/modules/postDetail";
 import boardCategoryList from "@/store/modules/boardCategoryList"
 import commentList from "@/store/modules/commentList";
@@ -15,7 +15,7 @@ import login from "@/store/modules/login"
 export default {
     postListMain,
     postListMini,
-    postCreate,
+    postEdit,
     postDetail,
     boardCategoryList,
     commentList,
