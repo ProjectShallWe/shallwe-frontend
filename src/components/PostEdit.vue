@@ -190,8 +190,8 @@ export default {
     const board = computed(() => store.state.postListMain.board);
     const postDetail = computed(() => store.state.postDetail.postDetail);
 
-    const title = ref(postDetail.value.title);
-    const content = ref(postDetail.value.content);
+    const title = ref(mode === "update" ? postDetail.value.title : "");
+    const content = ref(mode ==="update" ? postDetail.value.content: "");
 
     const imageModal = ref(false);
     const url = ref('');
