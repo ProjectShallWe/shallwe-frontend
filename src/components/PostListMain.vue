@@ -192,10 +192,6 @@ export default {
     }
 
     const getPosts = (page, type, keyword, categoryId) => {
-      console.log("page = " + page);
-      console.log("type = " + type);
-      console.log("keyword = " + keyword);
-      console.log("categoryId = " + categoryId);
       // SearchCondition 을 유지하면서 Pagination 하기 위해 변수에 저장
       if (type !== undefined && keyword !== undefined) {
         types.value = type;
@@ -204,21 +200,17 @@ export default {
 
       // Category Yes, SearchCondition No
       if (categoryId && !isSearchCondition(types, keywords)) {
-        console.log("getPostsInPostCategory");
         return getPostsInPostCategory(categoryId, page);
       }
       // Category No, SearchCondition Yes
       if (!categoryId && isSearchCondition(types, keywords)) {
-        console.log("getPostsBySearchKeywordInBoard");
         return getPostsBySearchKeywordInBoard(page, types.value, keywords.value);
       }
       // Category Yes, SearchCondition Yes
       if (categoryId && isSearchCondition(types, keywords)) {
-        console.log("getPostsBySearchKeywordInPostCategory");
         return getPostsBySearchKeywordInPostCategory(categoryId, page, types.value, keywords.value);
       }
       // Category No, SearchCondition No
-      console.log("getPostsInBoard")
       return getPostsInBoard(page);
     };
 

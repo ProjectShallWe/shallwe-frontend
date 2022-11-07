@@ -86,7 +86,6 @@ export default {
       이를 조정하기 위해 page-1 값을 전달한다.
       */
       context.emit('on-click', page - 1);
-      console.log("page : " + (page - 1));
     };
 
     const startPageNum = (page, displayCount) => {
