@@ -18,7 +18,7 @@ const addSubscriber = (callback) => {
 
 /** axiosBasic */
 const axiosBasic = axios.create({
-    baseURL: 'http://localhost:8080/',
+    baseURL: process.env.VUE_APP_API_URL,
 })
 
 axiosBasic.interceptors.request.use(
@@ -44,7 +44,7 @@ axiosBasic.interceptors.response.use(
 
 /** axiosAuth */
 const axiosAuth = axios.create({
-    baseURL: 'http://localhost:8080/',
+    baseURL: process.env.VUE_APP_API_URL,
 })
 
 axiosAuth.interceptors.request.use(
@@ -84,7 +84,7 @@ const setTokenHandling = async (error) => {
             isAlreadyFetchingAccessToken = true;
 
             const {data} = await axios.post(
-                `http://localhost:8080/api/auth/reissue`,
+                `${process.env.VUE_APP_API_URL}api/auth/reissue`,
                 {
                     refreshToken: cookies.get('refreshToken'),
                 },
