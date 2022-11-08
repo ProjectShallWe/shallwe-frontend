@@ -106,10 +106,9 @@
               :key="boardCategory.boardCategoryId"
               class="category-title"
           >
-            <router-link to="#"
-                         @click="selectBoardCategory(boardCategory.boardCategoryId)">
-              {{ boardCategory.topic }}
-            </router-link>
+            <h2 @click="selectBoardCategory(boardCategory.boardCategoryId)">
+            {{ boardCategory.topic }}
+            </h2>
             <ul class="board">
               <template
                   v-for="board in boardCategory.boards"
@@ -225,7 +224,7 @@ export default {
     };
   },
   watch: {
-    '$route' (to, from) {
+    '$route'(to, from) {
       if (to.fullPath !== from.fullPath) {
         this.initClicked();
       }
@@ -348,12 +347,18 @@ export default {
 }
 
 .category-title {
-  font-size: 20px;
-  padding: 8px 0;
+  font-size: 1.25rem;
+  margin: 4px 0;
 
-  > a:hover {
-    border-bottom: $EMPHASIS_COLOR solid 2px;
-    margin-bottom: -2px;
+  h2 {
+    font-size: 1.25rem;
+    padding: 4px 0;
+
+    > &:hover {
+      cursor: pointer;
+      border-bottom: $EMPHASIS_COLOR solid 2px;
+      margin-bottom: -2px;
+    }
   }
 
   .isSelected {
