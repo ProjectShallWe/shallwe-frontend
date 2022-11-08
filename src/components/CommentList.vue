@@ -37,7 +37,7 @@
               <div>
                 <span class="comment-writer">{{ comment.nickname }}</span>
                 <span class="comment-created-date">({{ comment.createdDate }})</span>
-                <span v-if="isWriter(comment.nickname)"
+                <span v-if="isWriter(comment.nickname, comment.status)"
                       @click="deleteComment(comment.commentId)"
                       class="comment-delete-button">삭제</span>
               </div>
@@ -97,7 +97,7 @@
                   <div>
                     <span class="comment-writer">{{ reply.nickname }}</span>
                     <span class="comment-created-date">({{ reply.createdDate }})</span>
-                    <span v-if="isWriter(reply.nickname)"
+                    <span v-if="isWriter(reply.nickname, reply.status)"
                           @click="deleteComment(reply.commentId)"
                           class="comment-delete-button">삭제</span>
                   </div>
@@ -141,8 +141,8 @@ export default {
 
     const nickname = computed(() => store.state.login.nickname);
 
-    const isWriter = (object) => {
-      return nickname.value === object;
+    const isWriter = (writer, status) => {
+      return nickname.value === writer && status === "ENABLE";
     }
 
     const deleteComment = async (commentId) => {
