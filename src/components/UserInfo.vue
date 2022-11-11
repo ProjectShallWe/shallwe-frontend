@@ -6,28 +6,28 @@
         <ul class="info-menu">
           <li class="info-user">
             <router-link
-                :to="`/user/${nickname}`"
+                :to="`/user/${nowNickname}`"
             >
               내 정보
             </router-link>
           </li>
           <li class="info-security">
             <router-link
-                :to="`/user/${nickname}?mode=security`"
+                :to="`/user/${nowNickname}?mode=security`"
             >
               보안 설정
             </router-link>
           </li>
           <li class="info-post">
             <router-link
-                :to="`/user/${nickname}?mode=post`"
+                :to="`/user/${nowNickname}?mode=post`"
             >
               게시글
             </router-link>
           </li>
           <li class="info-comment">
             <router-link
-                :to="`/user/${nickname}?mode=comment`"
+                :to="`/user/${nowNickname}?mode=comment`"
             >
               댓글
             </router-link>
@@ -43,27 +43,18 @@
         </h2>
         <div class="info-content">
           <form
-              @submit.prevent="change"
+              @submit.prevent="changeNickname"
               class="info-form">
             <div class="nickname">
               <h3>닉네임</h3>
               <input type="text"
                      class="new-nickname"
                      placeholder="변경할 닉네임을 입력해주세요."
-                     v-model="changeNickname"
+                     v-model="newNickname"
               >
             </div>
-            <h3 class="nowUse" v-if="isChange && nickname === changeNickname">
-              "현재 사용중인 닉네임입니다."
-            </h3>
-            <h3 class="regExp" v-else-if="isChange && !ruleCheck(changeNickname)">
-              "닉네임은 2글자 이상 10글자 이하 한글, 영문 대소문자, 숫자를 사용할 수 있습니다."
-            </h3>
-            <h3 class="duplicate" v-else-if="(isChange && !ruleCheck(changeNickname)) || duplicateCheck">
-              "사용중인 닉네임 입니다."
-            </h3>
-            <h3 class="not-duplicate" v-else-if="isChange && ruleCheck(changeNickname) && !duplicateCheck">
-              "사용할 수 있는 닉네임입니다."
+            <h3 class="error">
+              {{ errorMessage }}
             </h3>
             <button type="submit"
                     class="info-submit"
@@ -90,12 +81,13 @@
 </template>
 
 <script>
-import {ref, computed, watch} from "vue";
+import {ref, computed} from "vue";
 import {useRoute} from "vue-router";
 import {useStore} from "vuex";
 import UserComments from "@/components/UserComments";
 import UserPosts from "@/components/UserPosts";
 import UserSecurity from "@/components/UserSecurity";
+import {nicknameValidCheck} from "@/utils/userValid";
 
 export default {
   components: {UserSecurity, UserPosts, UserComments},
@@ -103,54 +95,33 @@ export default {
     const route = useRoute();
     const store = useStore();
     const modeQuery = route.query.mode;
-    const nickname = computed(() => store.state.login.nickname);
-    const changeNickname = ref("");
-    const isChange = ref(false);
-    const duplicateCheck = computed(() => store.state.userInfo.duplicateCheck);
+    const nowNickname = computed(() => store.state.login.nickname);
+    const newNickname = ref("");
+    const errorMessage = ref("");
 
-    changeNickname.value = nickname.value;
+    newNickname.value = nowNickname.value;
 
-    const ruleCheck = (nickname) => {
-      const regexp = /^[ㄱ-ㅎ가-힣A-Za-z0-9]{2,10}$/
-      return regexp.test(nickname);
-    };
-
-    let timeout = 0;
-    watch(changeNickname, async () => {
-      clearTimeout(timeout);
-      isChange.value = true;
-
-      if (ruleCheck(changeNickname.value)) {
-        timeout = setTimeout(async () => {
-          await store.dispatch("userInfo/checkNicknameDuplicate", {
-            nickname: changeNickname.value
-          });
-        }, 500);
+    const changeNickname = async () => {
+      if (!(await nicknameValidCheck(nowNickname.value, newNickname.value)).valid) {
+        errorMessage.value = (await nicknameValidCheck(nowNickname.value, newNickname.value)).message;
+        return
       }
-    });
 
-    const change = async () => {
-      if (isChange.value && ruleCheck(changeNickname.value) && !duplicateCheck.value) {
-        await store.dispatch("userInfo/changeNickname", {
-          nickname: changeNickname.value,
-        }).then(
-            await store.dispatch("login/changeNickname", {
-              nickname: changeNickname.value,
-            })
-        )
-      } else {
-        alert("사용할 수 없는 닉네임입니다.")
-      }
+      await store.dispatch("userInfo/changeNickname", {
+        nickname: newNickname.value,
+      });
+
+      await store.dispatch("login/changeNickname", {
+        nickname: newNickname.value,
+      })
     };
 
     return {
-      changeNickname,
       modeQuery,
-      nickname,
-      isChange,
-      duplicateCheck,
-      change,
-      ruleCheck
+      nowNickname,
+      newNickname,
+      changeNickname,
+      errorMessage,
     }
   }
 }
@@ -218,22 +189,10 @@ export default {
         }
       }
 
-      .nowUse,
-      .regExp,
-      .duplicate,
-      .not-duplicate {
-        font-size: 14px;
+      .error  {
+        color: $EMPHASIS_COLOR;
+        font-size: 0.875rem;
         margin-bottom: 16px;
-      }
-
-      .nowUse,
-      .regExp,
-      .duplicate {
-        color: red;
-      }
-
-      .not-duplicate {
-        color: green;
       }
 
       .info-submit {

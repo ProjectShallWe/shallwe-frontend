@@ -5,15 +5,27 @@ export default {
     namespaced: true,
     state: {
         userId: 0,
+        emailDuplicateCheck: false,
     },
     mutations: {
         setUserId(state, payload) {
             state.userId = payload;
         },
+        setEmailDuplicateCheck(state, payload) {
+            state.emailDuplicateCheck = payload;
+        }
     },
     actions: {
+        async checkEmailDuplicate({commit}, {email}) {
+            await axiosBasic.post(
+                `/api/user/check/email`, {
+                    email
+                }
+            ).then((res) => {
+                commit("setEmailDuplicateCheck", res.data)
+            })
+        },
         async signUp({commit}, {email, password, nickname}) {
-
             await axiosBasic.post(
                 `/api/user`, {
                     email,

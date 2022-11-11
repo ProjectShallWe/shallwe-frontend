@@ -3,21 +3,21 @@ import {axiosAuth, axiosBasic} from "@/axios";
 export default {
     namespaced: true,
     state: {
-        duplicateCheck: false,
+        nicknameDuplicateCheck: true,
     },
     mutations: {
-        setDuplicateCheck(state, payload) {
-            state.duplicateCheck = payload;
+        setNicknameDuplicateCheck(state, payload) {
+            state.nicknameDuplicateCheck = payload;
         }
     },
     actions: {
         async checkNicknameDuplicate({commit}, {nickname}) {
-            await axiosAuth.post(
-                `api/user/check`, {
+            await axiosBasic.post(
+                `api/user/check/nickname`, {
                     nickname
                 }
             ).then((res) => {
-                commit("setDuplicateCheck", res.data)
+                commit("setNicknameDuplicateCheck", res.data)
             })
         },
         async changeNickname({commit}, {nickname}) {

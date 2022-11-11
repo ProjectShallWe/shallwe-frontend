@@ -4,7 +4,7 @@
   </h2>
   <div class="info-content">
     <form
-        @submit.prevent="change"
+        @submit.prevent="changePassword"
         class="info-form"
     >
       <div class="password">
@@ -26,6 +26,9 @@
             placeholder="새 비밀번호 확인"
             v-model="confirmPassword"
         >
+        <h3 class="error">
+          {{ errorMessage }}
+        </h3>
       </div>
       <button type="submit"
               class="info-submit"
@@ -39,6 +42,7 @@
 <script>
 import {ref} from "vue";
 import {useStore} from "vuex";
+import {passwordValidCheckInSecurity} from "@/utils/userValid";
 
 export default {
   setup() {
@@ -46,8 +50,13 @@ export default {
     const nowPassword = ref("");
     const newPassword = ref("");
     const confirmPassword = ref("");
+    const errorMessage = ref("");
 
-    const change = async () => {
+    const changePassword = async () => {
+      if (!(await passwordValidCheckInSecurity(nowPassword.value, newPassword.value, confirmPassword.value)).valid) {
+        return errorMessage.value = (await passwordValidCheckInSecurity(nowPassword.value, newPassword.value, confirmPassword.value)).message;
+      }
+
       await store.dispatch("userSecurity/changePassword", {
         nowPassword: nowPassword.value,
         newPassword: newPassword.value
@@ -55,10 +64,11 @@ export default {
     }
 
     return {
-      change,
       nowPassword,
       newPassword,
       confirmPassword,
+      changePassword,
+      errorMessage
     }
   }
 }
@@ -88,6 +98,12 @@ export default {
         padding: 8px;
         margin-bottom: 8px;
         border: $TERTIARY_COLOR solid 1px;
+      }
+
+      h3 {
+        font-size: 0.875rem;
+        color: $EMPHASIS_COLOR;
+        margin-bottom: 16px;
       }
     }
 

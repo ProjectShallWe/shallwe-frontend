@@ -6,8 +6,12 @@
           @submit.prevent="signUp"
       >
         <input type="email" placeholder="이메일 주소" v-model="user.form.email">
-        <input type="password" placeholder="비밀번호 (8자리 이상)" v-model="user.form.password">
-        <input type="text" placeholder="닉네임" v-model="user.form.nickname">
+        <h3 class="emailError">{{ emailErrorMsg }}</h3>
+        <input type="password" placeholder="비밀번호 (8자리 이상 20자리 이하)" v-model="user.form.password">
+        <input type="password" placeholder="비밀번호 확인" v-model="user.form.verifyPassword">
+        <h3 class="emailError">{{ passwordErrorMsg }}</h3>
+        <input type="text" placeholder="닉네임 (2자리 이상 10자리 이하)" v-model="user.form.nickname">
+        <h3 class="emailError">{{ nicknameErrorMsg }}</h3>
         <button type="submit">회원가입</button>
       </form>
     </div>
@@ -17,6 +21,7 @@
 <script>
 import {ref} from "vue";
 import {useStore} from "vuex";
+import {emailValidCheck, passwordValidCheckInSignUp, nicknameValidCheck} from "@/utils/userValid";
 
 export default {
   setup() {
@@ -24,12 +29,36 @@ export default {
       form: {
         email: '',
         password: '',
+        verifyPassword: '',
         nickname: '',
       }
     });
 
+    const emailErrorMsg = ref("");
+    const passwordErrorMsg = ref("");
+    const nicknameErrorMsg = ref("");
+
     const store = useStore();
     const signUp = async () => {
+
+      if (!(await emailValidCheck(user.value.form.email)).valid) {
+        return emailErrorMsg.value = (await emailValidCheck(user.value.form.email)).message;
+      } else {
+        emailErrorMsg.value = "";
+      }
+
+      if (!passwordValidCheckInSignUp(user.value.form.password, user.value.form.verifyPassword).valid) {
+        return passwordErrorMsg.value = passwordValidCheckInSignUp(user.value.form.password, user.value.form.verifyPassword).message;
+      } else {
+        passwordErrorMsg.value = "";
+      }
+
+      if (!(await nicknameValidCheck("ADMIN", user.value.form.nickname)).valid) {
+        return nicknameErrorMsg.value = (await nicknameValidCheck("ADMIN", user.value.form.nickname)).message;
+      } else {
+        nicknameErrorMsg.value = "";
+      }
+
       await store.dispatch("signUp/signUp", {
         email: user.value.form.email,
         password: user.value.form.password,
@@ -39,6 +68,9 @@ export default {
 
     return {
       user,
+      emailErrorMsg,
+      passwordErrorMsg,
+      nicknameErrorMsg,
       signUp
     }
   }
@@ -103,6 +135,12 @@ export default {
       &:hover {
         opacity: 0.8;
       }
+    }
+
+    h3 {
+      font-size: 14px;
+      color: $EMPHASIS_COLOR;
+      margin-bottom: 8px;
     }
   }
 }
