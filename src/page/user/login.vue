@@ -52,64 +52,72 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .login {
   width: 100%;
   height: 100vh;
-  background-color: #D3D3D3;
-}
+  background-color: $TERTIARY_COLOR;
 
-.wrapper {
-  /* 항상 화면 정중앙에 배치*/
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  .wrapper {
+    /* 항상 화면 정중앙에 배치*/
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  border: #D3D3D3 solid 2px;
-  width: 280px;
-  height: 420px;
-  padding: 20px;
-  background-color: #FFFFFF;
-}
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    border: $TERTIARY_COLOR solid 2px;
+    width: 280px;
+    height: 420px;
+    padding: 20px;
+    background-color: $PRIMARY_COLOR;
 
-.wrapper h1 {
-  font-size: 24px;
-  margin-bottom: 16px;
-}
+    h1 {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
 
-.wrapper form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+    form {
+      display: flex;
+      flex-direction: column;
 
-.wrapper input,
-.wrapper button {
-  height: 40px;
-  width: 100%;
-  border-radius: 4px;
-}
+      input,
+      button {
+        height: 40px;
+        width: 100%;
+        border-radius: 4px;
+      }
 
-.wrapper input {
-  font-size: 12px;
-  border: #D3D3D3 solid 1px;
-  color: #D3D3D3;
-  margin-bottom: 8px;
-}
+      input {
+        font-size: 12px;
+        border: $TERTIARY_COLOR solid 1px;
+        color: $TERTIARY_COLOR;
+        padding: 4px;
+        margin-bottom: 8px;
+      }
 
-.wrapper button {
-  font-size: 16px;
-  color: #FFFFFF;
-  background-color: #8977AD;
-  margin-bottom: 16px;
-}
+      button {
+        font-size: 16px;
+        color: $PRIMARY_COLOR;
+        background-color: $SECONDARY_COLOR;
+        margin-bottom: 8px;
 
-.wrapper button:hover {
-  opacity: 0.8;
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+
+    a {
+      border: $TERTIARY_COLOR solid 1px;
+      height: 40px;
+      width: 100%;
+      border-radius: 4px;
+      padding-top: 6px;
+    }
+  }
 }
 </style>
