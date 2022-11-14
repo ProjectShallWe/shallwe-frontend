@@ -1,6 +1,7 @@
 import axios from "axios";
 import {useCookies} from "vue3-cookies";
 import store from "@/store";
+import router from "@/router";
 
 const {cookies} = useCookies();
 
@@ -48,7 +49,27 @@ const axiosAuth = axios.create({
 })
 
 axiosAuth.interceptors.request.use(
-    function (config) {
+    async function (config) {
+
+        if (cookies.get("refreshToken") === null) {
+            await store.commit("login/logout");
+            alert("토큰이 만료되어 로그아웃됩니다.");
+            await router.push({name: 'login'});
+            return;
+        }
+
+        if (cookies.get("accessToken") === null) {
+
+            const {data} = await axios.post(
+                `${process.env.VUE_APP_API_URL}api/auth/reissue`,
+                {
+                    refreshToken: cookies.get('refreshToken'),
+                },
+            );
+
+            await cookies.set('accessToken', data.grantType + data.accessToken, new Date(data.accessTokenExpiresIn).toString());
+            await cookies.set('refreshToken', data.grantType + data.refreshToken, new Date(data.refreshTokenExpiresIn).toString());
+        }
 
         config.headers["Content-Type"] = "application/json; charset=utf-8";
         config.headers["Authorization"] = cookies.get("accessToken");
