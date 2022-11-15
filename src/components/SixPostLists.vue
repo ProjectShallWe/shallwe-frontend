@@ -22,13 +22,15 @@ export default {
 
     const boardsRecommendPosts = computed(() => store.state.postListMini.boardsRecommendPosts);
 
-    const getRecommendPostsInBoardsFromRedis = async () => {
+    const getRecommendPostsInBoards = async () => {
+      await store.dispatch("postListMini/getRecommendBoardsFromRedis");
+
       await store.dispatch("postListMini/getRecommendPostsInBoardsFromRedis", {
-        boardCategoryIdLists: [1, 3, 6, 4, 9, 11]
+        boardRecommendIdList: store.state.postListMini.recommendBoards.boardRecommendIdList,
       })
     };
 
-    getRecommendPostsInBoardsFromRedis();
+    getRecommendPostsInBoards();
 
     return {
       boardsRecommendPosts,

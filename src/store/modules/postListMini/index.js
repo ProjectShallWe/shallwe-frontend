@@ -6,6 +6,8 @@ export default {
         allRecommendPosts: [],
         boardRecommendPosts: [],
         boardsRecommendPosts: [],
+        recommendBoards: {},
+
     },
     mutations: {
         setAllRecommendPosts(state, payload) {
@@ -17,6 +19,9 @@ export default {
         setBoardsRecommendPosts(state, payload) {
             state.boardsRecommendPosts = payload;
         },
+        setRecommendBoards(state, payload) {
+            state.recommendBoards = payload;
+        }
     },
     actions: {
         async getRecommendPostsFromRedis({commit}) {
@@ -33,11 +38,21 @@ export default {
             );
             commit('setBoardRecommendPosts', res.data);
         },
-        async getRecommendPostsInBoardsFromRedis({commit}, {boardCategoryIdLists}) {
+        async getRecommendBoardsFromRedis({commit}) {
+            const res = await axiosBasic.get(
+              `/api/board/recommend`
+            );
+            commit('setRecommendBoards', res.data);
+        },
+        async getRecommendPostsInBoardsFromRedis({commit}, {boardRecommendIdList}) {
 
             const boardArr = [];
+            // 현재 추천할 게시판의 개수가 6개 이상이면 추천 로직을 적용한다.
+            if (boardRecommendIdList.length >= 6) {
+                boardRecommendIdList = boardRecommendIdList.slice(0,7);
+            }
 
-            for (const id of boardCategoryIdLists) {
+            for (const id of boardRecommendIdList) {
                 const res = await axiosBasic.get(
                     `/api/post/recommend?board=${id}`
                 );
