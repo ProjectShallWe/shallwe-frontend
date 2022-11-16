@@ -47,9 +47,18 @@ export default {
         async getRecommendPostsInBoardsFromRedis({commit}, {boardRecommendIdList}) {
 
             const boardArr = [];
+            const listLength = boardRecommendIdList.length;
+            // 현재 추천할 게시판의 수가 6개 미만이면 앞에서 6개가 될 때 까지 채운다.
+            if (listLength < 6) {
+                for (let i = 1; i <= 6-listLength; i++) {
+                    if (!boardRecommendIdList.includes(i)) {
+                        boardRecommendIdList.push(i);
+                    }
+                }
+            }
             // 현재 추천할 게시판의 개수가 6개 이상이면 추천 로직을 적용한다.
-            if (boardRecommendIdList.length >= 6) {
-                boardRecommendIdList = boardRecommendIdList.slice(0,7);
+            if (listLength >= 6) {
+                boardRecommendIdList = boardRecommendIdList.slice(0,6);
             }
 
             for (const id of boardRecommendIdList) {
