@@ -20,12 +20,14 @@ const addSubscriber = (callback) => {
 /** axiosBasic */
 const axiosBasic = axios.create({
     baseURL: process.env.VUE_APP_API_URL,
+    withCredentials: true,
 })
 
 axiosBasic.interceptors.request.use(
     function (config) {
         config.headers["Content-Type"] = "application/json; charset=utf-8";
-        config.headers['Access-Control-Allow-Origin'] = '*';
+        config.headers['Access-Control-Allow-Origin'] = process.env.VUE_APP_API_URL;
+        config.headers['Access-Control-Allow-Credentials'] = true;
 
         return config
     },
@@ -46,6 +48,7 @@ axiosBasic.interceptors.response.use(
 /** axiosAuth */
 const axiosAuth = axios.create({
     baseURL: process.env.VUE_APP_API_URL,
+    withCredentials: true,
 })
 
 axiosAuth.interceptors.request.use(
@@ -73,7 +76,8 @@ axiosAuth.interceptors.request.use(
 
         config.headers["Content-Type"] = "application/json; charset=utf-8";
         config.headers["Authorization"] = cookies.get("accessToken");
-        config.headers['Access-Control-Allow-Origin'] = '*';
+        config.headers['Access-Control-Allow-Origin'] = process.env.VUE_APP_API_URL;
+        config.headers['Access-Control-Allow-Credentials'] = true;
 
         return config
     },

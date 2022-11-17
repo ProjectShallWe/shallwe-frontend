@@ -15,10 +15,7 @@ export default {
         async getPostDetails ({commit}, {id}) {
 
             const res = await axiosBasic.get(
-                `api/post/${id}`,
-                {
-                    withCredentials: true
-                }
+                `api/post/${id}`
             )
 
             commit("setPostDetails", res.data)
