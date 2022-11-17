@@ -285,12 +285,26 @@ export default {
         return alert("카테고리를 선택해주세요.");
       }
 
+      // 어떤 이미지가 수정되고 삭제되었는지 알기 위해
+      // 작성한 글에 포함된 이미지들의 URL리스트를 백엔드에 넘긴다.
+      const imageUrls = [];
+      const words = editor.value.getHTML()
+          .split('"')
+          .map(e => e.trim());
+      const targetImageUrl = "https://shallwe.s3"
+      for (let w = 0; w < words.length; w++) {
+        if (words[w].includes(targetImageUrl)) {
+          imageUrls.push(words[w]);
+        }
+      }
+
       if (mode !== "update") {
         await store.dispatch("postEdit/writePost", {
           boardId: boardId,
           categoryId: category.value,
           title: title.value,
           content: editor.value.getHTML(),
+          images : imageUrls,
         });
       }
 
@@ -301,6 +315,7 @@ export default {
           categoryId: category.value,
           title: title.value,
           content: editor.value.getHTML(),
+          images : imageUrls,
         });
       }
     }

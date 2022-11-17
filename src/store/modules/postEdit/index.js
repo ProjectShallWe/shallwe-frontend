@@ -40,12 +40,13 @@ export default {
             await commit('setImageUrl', res.data);
         },
 
-        async writePost({commit}, {boardId, categoryId, title, content}) {
+        async writePost({commit}, {boardId, categoryId, title, content, images}) {
             await axiosAuth.post(
                 `api/post?category=${categoryId}`,
                 {
-                        title,
-                        content,
+                    title,
+                    content,
+                    images
                 },
             ).then(() => {
                 alert("작성하신 글이 정상 등록되었습니다.")
@@ -55,12 +56,13 @@ export default {
             })
         },
 
-        async updatePost({commit}, {postId, boardId, categoryId, title, content}) {
+        async updatePost({commit}, {postId, boardId, categoryId, title, content, images}) {
             await axiosAuth.put(
                 `api/post/${postId}?category=${categoryId}`,
                 {
                     title,
                     content,
+                    images
                 }
             ).then((res) => {
                 if (res.data === Number(postId)) {
