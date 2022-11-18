@@ -6,15 +6,40 @@ import router from "@/router";
 const {cookies} = useCookies();
 
 let isAlreadyFetchingAccessToken = false;
-let subscribers = [];
+let works = [];
 
-const onAccessTokenFetched = (accessToken) => {
-    subscribers.forEach((callback) => callback(accessToken));
-    subscribers = [];
-};
+const isExpired = (token) => {
+    return cookies.get(token) === null;
+}
 
-const addSubscriber = (callback) => {
-    subscribers.push(callback);
+const logOut = async () => {
+    await store.commit("login/logout");
+
+    alert("토큰이 만료되어 로그아웃됩니다.");
+
+    await router.push({name: 'login'});
+}
+
+const reissueToken = async () => {
+    const {data} = await axios.post(
+        `${process.env.VUE_APP_API_URL}api/auth/reissue`,
+        {
+            refreshToken: cookies.get('refreshToken'),
+        },
+    );
+
+    return data;
+}
+
+const setCookies = async (data) => {
+    await cookies.set('accessToken', data.grantType + data.accessToken, new Date(data.accessTokenExpiresIn).toString());
+    await cookies.set('refreshToken', data.grantType + data.refreshToken, new Date(data.refreshTokenExpiresIn).toString());
+}
+
+const commonAxiosHeaderConfig = (config) => {
+    config.headers["Content-Type"] = "application/json; charset=utf-8";
+    config.headers['Access-Control-Allow-Origin'] = process.env.VUE_APP_API_URL;
+    config.headers['Access-Control-Allow-Credentials'] = true;
 }
 
 /** axiosBasic */
@@ -24,10 +49,9 @@ const axiosBasic = axios.create({
 })
 
 axiosBasic.interceptors.request.use(
-    function (config) {
-        config.headers["Content-Type"] = "application/json; charset=utf-8";
-        config.headers['Access-Control-Allow-Origin'] = process.env.VUE_APP_API_URL;
-        config.headers['Access-Control-Allow-Credentials'] = true;
+    async function (config) {
+
+        commonAxiosHeaderConfig(config);
 
         return config
     },
@@ -54,30 +78,17 @@ const axiosAuth = axios.create({
 axiosAuth.interceptors.request.use(
     async function (config) {
 
-        if (cookies.get("refreshToken") === null) {
-            await store.commit("login/logout");
-            alert("토큰이 만료되어 로그아웃됩니다.");
-            await router.push({name: 'login'});
-            return;
+        if (isExpired("refreshToken")) {
+            await logOut();
         }
 
-        if (cookies.get("accessToken") === null) {
-
-            const {data} = await axios.post(
-                `${process.env.VUE_APP_API_URL}api/auth/reissue`,
-                {
-                    refreshToken: cookies.get('refreshToken'),
-                },
-            );
-
-            await cookies.set('accessToken', data.grantType + data.accessToken, new Date(data.accessTokenExpiresIn).toString());
-            await cookies.set('refreshToken', data.grantType + data.refreshToken, new Date(data.refreshTokenExpiresIn).toString());
+        if (isExpired("accessToken")) {
+            const data = await reissueToken();
+            await setCookies(data);
         }
 
-        config.headers["Content-Type"] = "application/json; charset=utf-8";
+        commonAxiosHeaderConfig(config);
         config.headers["Authorization"] = cookies.get("accessToken");
-        config.headers['Access-Control-Allow-Origin'] = process.env.VUE_APP_API_URL;
-        config.headers['Access-Control-Allow-Credentials'] = true;
 
         return config
     },
@@ -90,16 +101,21 @@ axiosAuth.interceptors.response.use(
     function (res) {
         return res;
     },
-     function (error) {
-         return setTokenHandling(error);
-     }
+    function (error) {
+        return setTokenHandling(error);
+    }
 )
 
 const setTokenHandling = async (error) => {
+    if (error.response.data.errorCode === "JWT_REFRESH_TOKEN_EXPIRED") {
+        await logOut();
+        return Promise.reject(error);
+    }
+
     if (error.response.data.errorCode === "JWT_ACCESS_TOKEN_EXPIRED") {
 
         const retryOriginalRequest = new Promise((resolve) => {
-            addSubscriber(async (accessToken) => {
+            works.push(async (accessToken) => {
                 error.config.headers.Authorization = "Bearer " + accessToken;
                 resolve(axiosAuth(error.config));
             });
@@ -108,37 +124,24 @@ const setTokenHandling = async (error) => {
         if (!isAlreadyFetchingAccessToken) {
             isAlreadyFetchingAccessToken = true;
 
-            const {data} = await axios.post(
-                `${process.env.VUE_APP_API_URL}api/auth/reissue`,
-                {
-                    refreshToken: cookies.get('refreshToken'),
-                },
-            );
+            const data = await reissueToken();
 
             if (data.errorCode === "JWT_REFRESH_TOKEN_EXPIRED") {
-                await store.dispatch("login/logout");
-                window.location.reload();
+                await logOut();
                 return Promise.reject(error);
             }
 
-            await cookies.set('accessToken', data.grantType + data.accessToken, new Date(data.accessTokenExpiresIn).toString());
-            await cookies.set('refreshToken', data.grantType + data.refreshToken, new Date(data.refreshTokenExpiresIn).toString());
+            await setCookies(data);
 
             axios.defaults.headers.common.Authorization = `Bearer ${data.accessToken}`;
 
-            window.location.reload();
+            isAlreadyFetchingAccessToken = false;
 
-            onAccessTokenFetched(data.accessToken);
+            works.forEach((callback) => callback(data.accessToken));
+            works = [];
         }
-
         return retryOriginalRequest;
     }
-
-    if (error.response.data.errorCode === "JWT_REFRESH_TOKEN_EXPIRED") {
-        await store.dispatch("login/logout");
-        return Promise.reject(error);
-    }
-
     return Promise.reject(error);
 }
 
