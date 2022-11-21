@@ -71,6 +71,11 @@
                 <div class="comment-count">
                   [{{ post.commentCount }}]
                 </div>
+                <div v-if="!isEmptyString(post.thumbnailUrl)"
+                     class="image-icon"
+                >
+                  <img src="../assets/images/image-2-fill.svg">
+                </div>
               </router-link>
             </td>
             <td class="nickname">
@@ -222,6 +227,10 @@ export default {
       return page;
     }
 
+    const isEmptyString = (value) => {
+      return value.length === 0;
+    }
+
     getPosts(pageParamResolver(pageParam.value - 1), typeParam.value, keywordParam.value, categoryId);
 
     return {
@@ -239,6 +248,7 @@ export default {
       getPostsInPostCategory,
       getPostsInBoard,
       getPosts,
+      isEmptyString,
     };
   },
   created() {
@@ -310,10 +320,13 @@ export default {
           border-bottom: $TERTIARY_COLOR solid 1px;
         }
 
-        border-bottom: $TERTIARY_COLOR solid 1px;
-
         .title {
           text-align: left;
+
+          .image-icon {
+            width: 16px;
+            height: auto;
+          }
         }
       }
     }
@@ -329,19 +342,23 @@ export default {
 
         a {
           display: flex;
-        }
+          align-items: center;
 
-        div {
-          max-width: 95%;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          margin-right: 8px;
+          div {
+            max-width: 95%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-right: 4px;
 
-          &:last-child {
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+
+          .comment-count {
             font-size: 12px;
             color: $POINT_COLOR;
-            margin-right: 0;
           }
         }
       }
