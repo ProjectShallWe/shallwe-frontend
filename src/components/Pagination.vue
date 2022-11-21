@@ -3,7 +3,8 @@
     <div class="col-12">
       <nav>
         <ul class="page-list">
-          <li class="previous-page"
+          <li
+              class="previous-page"
               :class="{inactive : isPreviousButtonInactive($props.page, displayCount)}"
           >
             <router-link
@@ -67,6 +68,7 @@ export default {
     const url = ref(window.location.href);
     const isPageParam = new URL(url.value).searchParams.has("page");
 
+    // Pagination내 숫자 몇개단위로
     const displayCount = ref(10);
 
     const addPageParamUrl = (page) => {
@@ -115,7 +117,7 @@ export default {
     };
 
     const isNextButtonInactive = (page, totalPages, displayCount) => {
-      return page + 1 > Math.floor(totalPages / displayCount) * displayCount;
+      return totalPages <= endPageNum(totalPages, startPageNum(page, displayCount), displayCount);
     };
 
     const calcNextButton = (page, displayCount) => {
@@ -162,7 +164,11 @@ export default {
   .inactive {
     pointer-events: none;
     color: $TERTIARY_COLOR;
-    fill: $TERTIARY_COLOR;
+    a {
+       svg {
+         fill: $TERTIARY_COLOR;
+       }
+    }
   }
 }
 
