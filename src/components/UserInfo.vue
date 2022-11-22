@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <!-- UserMenu -->
-    <div class="col-2">
+    <div class="col-12">
       <div class="info-menu-wrapper">
         <ul class="info-menu">
           <li class="info-user">
@@ -34,8 +34,6 @@
           </li>
         </ul>
       </div>
-    </div>
-    <div class="col-10">
       <div v-if="modeQuery===undefined"
            class="info-wrapper">
         <h2 class="info-title">
@@ -130,19 +128,32 @@ export default {
 <style lang="scss" scoped>
 
 .info-menu-wrapper {
-  display: flex;
-  justify-content: center;
-  padding: 40px 0;
+  margin: 16px 0;
 
   .info-menu {
-    width: 100%;
+    display: flex;
     color: $SECONDARY_COLOR;
     background-color: $PRIMARY_COLOR;
 
     li {
-      padding: 16px 40px;
+      flex: 0 25%;
       border: $TERTIARY_COLOR solid 2px;
+      border-radius: 8px;
+      margin-right: 8px;
       text-align: center;
+
+      &:hover {
+        color: $PRIMARY_COLOR;
+        background-color: $SECONDARY_COLOR;
+        border: $PRIMARY_COLOR solid 2px;
+      }
+
+      a {
+        width: auto;
+        height: 56px;
+        line-height: 56px;
+
+      }
     }
   }
 }
@@ -152,8 +163,6 @@ export default {
   flex-direction: column;
   width: 100%;
   height: 100%;
-  border-left: $TERTIARY_COLOR solid 2px;
-  padding: 40px 24px;
 
   .info-title {
     font-size: 20px;
@@ -189,7 +198,7 @@ export default {
         }
       }
 
-      .error  {
+      .error {
         color: $EMPHASIS_COLOR;
         font-size: 0.875rem;
         margin-bottom: 16px;
