@@ -416,70 +416,70 @@ export default {
 /* tiptap css 설정 */
 .ProseMirror {
   height: 400px;
-}
 
-.ProseMirror > * + * {
-  margin-top: 0.75em;
-}
+  * + * {
+    margin-top: 0.75em;
+  }
 
-.ProseMirror:focus {
-  outline: none;
-}
+  &:focus {
+    outline: none;
+  }
 
-.ProseMirror ul, ol {
-  padding: 0 1rem;
-}
+  ul, ol {
+    padding: 0 1rem;
+  }
 
-.ProseMirror ul {
-  list-style-type: disc;
-}
+  ul {
+    list-style-type: disc;
+  }
 
-.ProseMirror ol {
-  list-style-type: decimal;
-}
+  ol {
+    list-style-type: decimal;
+  }
 
-.ProseMirror h1, h2, h3 {
-  line-height: 1.1;
-}
+  h1, h2, h3 {
+    line-height: 1.1;
+  }
 
-.ProseMirror code {
-  background-color: rgba(97, 97, 97, 0.1);
-  color: #616161;
-}
+  code {
+    background-color: rgba(97, 97, 97, 0.1);
+    color: #616161;
+  }
 
-.ProseMirror pre {
-  background: #0D0D0D;
-  color: #FFF;
-  font-family: 'JetBrainsMono', monospace;
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-}
+  pre {
+    background: #0D0D0D;
+    color: #FFF;
+    font-family: 'JetBrainsMono', monospace;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
 
-.ProseMirror pre code {
-  color: inherit;
-  padding: 0;
-  background: none;
-  font-size: 0.8rem;
-}
+    code {
+      color: inherit;
+      padding: 0;
+      background: none;
+      font-size: 0.8rem;
+    }
+  }
 
-.ProseMirror img {
-  max-width: 100%;
-  height: auto;
-}
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 
-.ProseMirror blockquote {
-  padding-left: 1rem;
-  border-left: 2px solid rgba(13, 13, 13, 0.1);
-}
+  blockquote {
+    padding-left: 1rem;
+    border-left: 2px solid rgba(13, 13, 13, 0.1);
+  }
 
-.ProseMirror hr {
-  border: none;
-  border-top: 2px solid rgba(13, 13, 13, 0.1);
-  margin: 2rem 0;
-}
+  hr {
+    border: none;
+    border-top: 2px solid rgba(13, 13, 13, 0.1);
+    margin: 2rem 0;
+  }
 
-.ProseMirror a {
-  color: #1a0dab;
+  a {
+    color: #1a0dab;
+  }
 }
 
 .editor {
