@@ -11,6 +11,7 @@ import userPosts from "@/store/modules/userPosts"
 import userComments from "@/store/modules/userComments";
 import signUp from "@/store/modules/signUp"
 import login from "@/store/modules/login"
+import realTimeBest from "@/store/modules/realTimeBest";
 
 export default {
     postListMain,
@@ -26,4 +27,5 @@ export default {
     userComments,
     signUp,
     login,
+    realTimeBest,
 }

@@ -12,7 +12,6 @@ export default createStore({
                 'boardCategoryList',
                 'postListMain',
                 'postListMini',
-                'postDetail'
             ]
         }),
     ]
